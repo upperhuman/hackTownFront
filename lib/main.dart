@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '/pages/main_pages/main_page.dart';
 
+final themeNotifier = ValueNotifier(ThemeMode.dark);
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -23,8 +25,46 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier, 
+      builder: (context, value, child) {
+      return MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales, 
+        locale: context.locale,
+        debugShowCheckedModeBanner: false,
+        title: 'LocalLens',
+        themeMode: value,
+        theme: ThemeData(
+          useMaterial3: true,
+          brightness: Brightness.light,
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.transparent,
+          ),
+          snackBarTheme: const SnackBarThemeData(
+            backgroundColor: Colors.white,
+            actionTextColor: Colors.black,
+            contentTextStyle: TextStyle(
+              color: Colors.black
+            )
+          )
+        ),
+        darkTheme: ThemeData(
+          useMaterial3: true,
+          brightness: Brightness.dark,
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.transparent,
+          ),
+          snackBarTheme: const SnackBarThemeData(
+            backgroundColor: Colors.black,
+            actionTextColor: Colors.white,
+            contentTextStyle: TextStyle(
+              color: Colors.white
+            )
+          )
+        ),
       home: MainPage(),
     );
+    });
   }
 }

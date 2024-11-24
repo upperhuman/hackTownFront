@@ -12,7 +12,7 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth < 600) {
+        if (constraints.maxWidth < constraints.maxHeight) {
           return const MobileMainPage();
         } else {
           return const DesktopMainPage();
@@ -22,15 +22,21 @@ class MainPage extends StatelessWidget {
   }
 }
 
-class DesktopMainPage extends StatelessWidget {
+class DesktopMainPage extends StatefulWidget {
   const DesktopMainPage({super.key});
 
   @override
+  State<DesktopMainPage> createState() => _DesktopMainPage();
+}
+
+class _DesktopMainPage extends State<DesktopMainPage> {
+  @override
+  
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Row(
         children: [
-          NavigationPanel(), // Левая панель
+          NavigationPanel(),
           Expanded(
             child: Column(
               children: [
@@ -45,20 +51,27 @@ class DesktopMainPage extends StatelessWidget {
   }
 }
 
-class MobileMainPage extends StatelessWidget {
+class MobileMainPage extends StatefulWidget {
   const MobileMainPage({super.key});
-
+  
   @override
+  State<MobileMainPage> createState() => _MobileMainPage();
+}
+
+class _MobileMainPage extends State<MobileMainPage> {
+  @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const SearchBarMobile(), // Верхняя панель: поисковая строка, UserProfile, Settings
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false, // Убираем стандартную кнопку "назад"
+        title: const SearchBarMobile(),
+        automaticallyImplyLeading: false,
       ),
-      body: const ContentArea(), // Основной контент
-      bottomNavigationBar: const BottomNavigationPanel(), // Нижняя навигационная панель
+      body: const ContentArea(),
+      bottomNavigationBar: const BottomNavigationPanel(),
     );
   }
 }
+
+
 

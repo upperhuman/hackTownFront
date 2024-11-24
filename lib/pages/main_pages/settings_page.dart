@@ -20,7 +20,6 @@ class SettingsPage extends StatelessWidget {
           ),
           AppBar(
             title: const Text('Settings'),
-            backgroundColor: Colors.transparent,
             elevation: 0,
           ),
           const Align(
@@ -41,7 +40,6 @@ class SettingsButtons extends StatelessWidget {
     final ButtonStyle buttonStyle = TextButton.styleFrom(
       foregroundColor: Colors.black,
       textStyle: const TextStyle(
-        fontFamily: 'InknutAntiqua',
         fontSize: 30,
       )
     );
@@ -53,7 +51,7 @@ class SettingsButtons extends StatelessWidget {
           children: [
             TextButton(
               style: buttonStyle,
-              child: const Text('Language'),
+              child: const Text('Мова'),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -64,7 +62,7 @@ class SettingsButtons extends StatelessWidget {
             const SizedBox(height: 20),
             TextButton(
               style: buttonStyle,
-              child: const Text('Region'),
+              child: const Text('Регіон'),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -75,7 +73,7 @@ class SettingsButtons extends StatelessWidget {
             const SizedBox(height: 20),
             TextButton(
               style: buttonStyle,
-              child: const Text('Theme'),
+              child: const Text('Тема застосунку'),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -86,7 +84,7 @@ class SettingsButtons extends StatelessWidget {
             const SizedBox(height: 20),
             TextButton(
               style: buttonStyle,
-              child: const Text('Security'),
+              child: const Text('Безпека'),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -97,7 +95,7 @@ class SettingsButtons extends StatelessWidget {
             const SizedBox(height: 20),
             TextButton(
               style: buttonStyle,
-              child: const Text('Notification'),
+              child: const Text('Повідомлення'),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -108,7 +106,7 @@ class SettingsButtons extends StatelessWidget {
             const SizedBox(height: 20),
             TextButton(
               style: buttonStyle,
-              child: const Text('FAQ'),
+              child: const Text('Відповіді на запитання'),
               onPressed: () {
                 Navigator.push(
                   context,

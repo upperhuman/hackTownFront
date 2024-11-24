@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   mime: ^1.0.6
   easy_localization: ^3.0.7
+  dropdown_button2: ^2.3.8
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,8 @@ flutter:
         - asset: assets\fonts\InknutAntiqua-SemiBold.ttf
   assets:
     - assets/images/SettingsBackground.jpg
+    - assets/images/SettingsBackground2.jpg
+    - assets/translations/
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
