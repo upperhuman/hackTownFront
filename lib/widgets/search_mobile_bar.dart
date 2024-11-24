@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hack_town_front/main.dart';
 import '/pages/main_pages/settings_page.dart';
 import '/pages/main_pages/user_profile_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class SearchBarMobile extends StatelessWidget {
   const SearchBarMobile({super.key});
@@ -29,11 +31,11 @@ class SearchBarMobile extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: Colors.black),
             ),
-            child: const TextField(
+            child: TextField(
               decoration: InputDecoration(
-                hintText: 'Знайти івент...',
+                hintText: "search_modile_bar.find_event".tr(),
                 border: InputBorder.none,
-                prefixIcon: Icon(Icons.search, color: Colors.black),
+                prefixIcon: Icon(Icons.search, color: const Color.fromARGB(255, 172, 158, 158)),
               ),
             ),
           ),

@@ -20,7 +20,6 @@ class SettingsPage extends StatelessWidget {
           ),
           AppBar(
             title: const Text('Settings'),
-            backgroundColor: Colors.transparent,
             elevation: 0,
           ),
           const Align(

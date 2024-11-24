@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/pages/main_pages/user_profile_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class DesktopSearchBar extends StatelessWidget {
   const DesktopSearchBar({super.key});
@@ -14,7 +15,7 @@ class DesktopSearchBar extends StatelessWidget {
           Expanded(
             child: TextField(
               decoration: InputDecoration(
-                hintText: "Знайти івент...",
+                hintText: "search_modile_bar.find_event".tr(),
                 prefixIcon: IconButton(
                   icon: const Icon(Icons.search_outlined, color: Colors.black, size: 35),
                   onPressed: () {},
