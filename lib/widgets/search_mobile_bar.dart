@@ -9,11 +9,16 @@ class SearchBarMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          icon: const Icon(Icons.settings_outlined, color: Colors.black),
+          icon: Icon(
+            Icons.settings_outlined,
+            color: colorScheme.onBackground, // Залежно від теми
+          ),
           onPressed: () {
             Navigator.push(
               context,
@@ -24,24 +29,30 @@ class SearchBarMobile extends StatelessWidget {
         ),
         Expanded(
           child: Container(
-            height: 40,
+            margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.black),
-            ),
             child: TextField(
               decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(5),
                 hintText: "search_modile_bar.find_event".tr(),
-                border: InputBorder.none,
-                prefixIcon: Icon(Icons.search, color: const Color.fromARGB(255, 172, 158, 158)),
+                prefixIcon: IconButton(
+                  icon: const Icon(Icons.search_outlined,
+                      size: 35),
+                  onPressed: () {},
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                filled: true,
               ),
             ),
           ),
         ),
         IconButton(
-          icon: const Icon(Icons.account_circle_outlined, color: Colors.black),
+          icon: Icon(
+            Icons.account_circle_outlined,
+            color: colorScheme.onBackground, // Залежно від теми
+          ),
           onPressed: () {
             Navigator.push(
               context,
