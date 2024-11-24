@@ -38,7 +38,7 @@ class SettingsButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     
     final ButtonStyle buttonStyle = TextButton.styleFrom(
-      foregroundColor: Colors.black,
+      //foregroundColor: Colors.black,
       textStyle: const TextStyle(
         fontSize: 30,
       )

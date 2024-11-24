@@ -9,15 +9,17 @@ class BottomNavigationPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return BottomAppBar(
-      color: Colors.white,
+      color: colorScheme.surface, // Динамічний фон
       shape: const CircularNotchedRectangle(),
       notchMargin: 6.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           IconButton(
-            icon: const Icon(Icons.location_on_outlined, color: Colors.black),
+            icon: Icon(Icons.location_on_outlined, color: colorScheme.primary),
             onPressed: () {
               Navigator.push(
                 context,
@@ -27,7 +29,7 @@ class BottomNavigationPanel extends StatelessWidget {
             iconSize: 30,
           ),
           IconButton(
-            icon: const Icon(Icons.route_outlined, color: Colors.black),
+            icon: Icon(Icons.route_outlined, color: colorScheme.primary),
             onPressed: () {
               Navigator.push(
                 context,
@@ -36,36 +38,29 @@ class BottomNavigationPanel extends StatelessWidget {
             },
             iconSize: 30,
           ),
-          
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-              color: Colors.grey[350],
-              borderRadius: BorderRadius.circular(20)
+              color: colorScheme.surface,
+              borderRadius: BorderRadius.circular(20),
             ),
             child: Row(
               children: [
-                const Icon(Icons.mic_none_rounded, color: Colors.black, size: 30),
-                
+                Icon(Icons.mic_none_rounded, color: colorScheme.primary, size: 30),
                 Transform.scale(
                   scale: 0.8,
                   child: Switch(
                     value: false,
                     onChanged: (value) {},
-                    activeColor: Colors.grey[350],
-                    inactiveThumbColor: Colors.grey[350],
-                    activeTrackColor: Colors.white,
-                    inactiveTrackColor: Colors.white,
+                    activeColor: colorScheme.primary,
                   ),
                 ),
-                
-                const Icon(Icons.keyboard_alt_outlined, color: Colors.black, size: 30),
+                Icon(Icons.keyboard_alt_outlined, color: colorScheme.primary, size: 30),
               ],
             ),
           ),
-
           IconButton(
-            icon: const Icon(Icons.history_outlined, color: Colors.black),
+            icon: Icon(Icons.history_outlined, color: colorScheme.primary),
             onPressed: () {
               Navigator.push(
                 context,
@@ -75,7 +70,7 @@ class BottomNavigationPanel extends StatelessWidget {
             iconSize: 30,
           ),
           IconButton(
-            icon: const Icon(Icons.calendar_month_outlined, color: Colors.black),
+            icon: Icon(Icons.calendar_month_outlined, color: colorScheme.primary),
             onPressed: () {
               Navigator.push(
                 context,

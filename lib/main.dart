@@ -37,7 +37,12 @@ class MyApp extends StatelessWidget {
         themeMode: value,
         theme: ThemeData(
           useMaterial3: true,
+          primaryColor: Colors.blue,
           brightness: Brightness.light,
+          scaffoldBackgroundColor: Colors.grey[100],
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(color: Colors.black),
+          ),
           appBarTheme: AppBarTheme(
             backgroundColor: Colors.transparent,
           ),
@@ -51,7 +56,12 @@ class MyApp extends StatelessWidget {
         ),
         darkTheme: ThemeData(
           useMaterial3: true,
+          primaryColor: Colors.blueGrey,
+          scaffoldBackgroundColor: Colors.black,
           brightness: Brightness.dark,
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(color: Colors.white),
+          ),
           appBarTheme: AppBarTheme(
             backgroundColor: Colors.transparent,
           ),

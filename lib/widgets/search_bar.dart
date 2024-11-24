@@ -9,7 +9,7 @@ class DesktopSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8.0),
-      color: Colors.white,
+      //color: Colors.white,
       child: Row(
         children: [
           Expanded(
@@ -17,14 +17,14 @@ class DesktopSearchBar extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: "search_modile_bar.find_event".tr(),
                 prefixIcon: IconButton(
-                  icon: const Icon(Icons.search_outlined, color: Colors.black, size: 35),
+                  icon: const Icon(Icons.search_outlined,
+                      size: 35),
                   onPressed: () {},
                   ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
                 filled: true,
-                fillColor: Colors.white,
               ),
             ),
           ),
@@ -33,32 +33,35 @@ class DesktopSearchBar extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-              color: Colors.grey[350],
               borderRadius: BorderRadius.circular(20)
             ),
             child: Row(
               children: [
-                const Icon(Icons.mic_none_rounded, color: Colors.black, size: 35),
+                const Icon(Icons.mic_none_rounded,
+                    //color: Colors.black,
+                    size: 35),
                 
                 Transform.scale(
                   scale: 0.8,
                   child: Switch(
                     value: false,
                     onChanged: (value) {},
-                    activeColor: Colors.grey[350],
-                    inactiveThumbColor: Colors.grey[350],
-                    activeTrackColor: Colors.white,
-                    inactiveTrackColor: Colors.white,
+                    //activeColor: Colors.grey[350],
+                    //inactiveThumbColor: Colors.grey[350],
+                    //activeTrackColor: Colors.white,
+                    //inactiveTrackColor: Colors.white,
                   ),
                 ),
                 
-                const Icon(Icons.keyboard_alt_outlined, color: Colors.black, size: 35),
+                const Icon(Icons.keyboard_alt_outlined,
+                    //color: Colors.black,
+                    size: 35),
               ],
             ),
           ),
           const Spacer(),
           IconButton(
-            icon: const Icon(Icons.account_circle_outlined, color: Colors.black),
+            icon: const Icon(Icons.account_circle_outlined),
             onPressed: () {
                   Navigator.push(
                     context,
