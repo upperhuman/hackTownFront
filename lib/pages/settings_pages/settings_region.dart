@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 // Region Page
@@ -8,7 +9,7 @@ class SettingsRegionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Region'),
+        title: Text("settings_page.region".tr()),
       ),
       body: const Align(
         child: RegionButtons()

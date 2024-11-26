@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 // Route page
@@ -8,7 +9,7 @@ class RoutePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Route'),
+        title: Text("route_page".tr()),
       ),
       body: const Align(
         child: RouteButtons()

@@ -1,5 +1,23 @@
 {
-  "home_page.welcome": "Welcome",
-  "home_page.get_started": "Get started",
-  "search_modile_bar.find_event": "Find the event..."
+  "search_modile_bar.find_event": "Find the event...",
+  
+  "settings_page": "Settings",
+  "settings_page.language": "Language",
+  "settings_page.region": "Region",
+  "settings_page.theme": "Theme",
+  "settings_page.security": "Security",
+  "settings_page.notifications": "Notifications",
+  "settings_page.faq": "FAQ",
+
+  "calendar_page": "Events calendar",
+
+  "history_page": "Your history",
+
+  "location_page": "Your location",
+
+  "route_page": "Routes",
+
+  "user_profile_page": "Your profile",
+
+  "select_a_language": "Choose a language"
 }

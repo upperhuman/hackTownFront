@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 // FAQ Page
@@ -8,7 +9,7 @@ class SettingsFAQPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('FAQ'),
+        title: Text("settings_page.faq".tr()),
       ),
       body: const Align(
         child: FAQButtons()

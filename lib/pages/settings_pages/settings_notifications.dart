@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 // Notifications Page
@@ -8,7 +9,7 @@ class SettingsNotificationsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notifications'),
+        title: Text("settings_page.notifications".tr()),
       ),
       body: const Align(
         child: NotificationsButtons()

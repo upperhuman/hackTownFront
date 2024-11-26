@@ -1,5 +1,24 @@
 {
-  "home_page.welcome": "Ласкаво просимо",
-  "home_page.lets_get_started": "Почати",
-  "search_modile_bar.find_event": "Знайти івент..."
+  "search_modile_bar.find_event": "Знайти івент...",
+  
+  "settings_page": "Налаштування",
+  
+  "settings_page.language": "Мова",
+  "select_a_language": "Оберіть мову",
+  
+  "settings_page.region": "Регіон",
+  "settings_page.theme": "Тема застосунку",
+  "settings_page.security": "Безпека",
+  "settings_page.notifications": "Повідомлення",
+  "settings_page.faq": "Відповіді на запитання",
+
+  "calendar_page": "Календар івентів",
+
+  "history_page": "Історія",
+
+  "location_page": "Ваша локація",
+
+  "route_page": "Маршрути",
+
+  "user_profile_page": "Ваш профіль"
 }
