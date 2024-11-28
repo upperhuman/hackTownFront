@@ -73,7 +73,9 @@ class NavigationPanel extends StatelessWidget {
               );
             },
             iconSize: 45,
+
           ),
+
         ],
       ),
     );
