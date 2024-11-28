@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           textTheme: const TextTheme(
             bodyLarge: TextStyle(color: Colors.black),
           ),
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             backgroundColor: Colors.transparent,
           ),
           snackBarTheme: const SnackBarThemeData(
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
           textTheme: const TextTheme(
             bodyLarge: TextStyle(color: Colors.white),
           ),
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             backgroundColor: Colors.transparent,
           ),
           snackBarTheme: const SnackBarThemeData(
@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
             )
           )
         ),
-      home: MainPage(),
+      home: const MainPage(),
     );
     });
   }

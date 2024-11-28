@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hack_town_front/main.dart';
 import '/pages/main_pages/settings_page.dart';
 import '/pages/main_pages/user_profile_page.dart';
 import 'package:easy_localization/easy_localization.dart';

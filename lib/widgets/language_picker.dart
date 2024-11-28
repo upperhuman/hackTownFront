@@ -11,8 +11,8 @@ class LanguageButtons extends StatefulWidget {
 
 class _LanguageButtonsState extends State<LanguageButtons> {
   final List<Map<String, dynamic>> languages = [
-    {'locale': Locale('uk', 'UA'), 'name': '🇺🇦 Українська'},
-    {'locale': Locale('en', 'US'), 'name': '🇺🇸 English'},
+    {'locale': const Locale('uk', 'UA'), 'name': '🇺🇦 Українська'},
+    {'locale': const Locale('en', 'US'), 'name': '🇺🇸 English'},
   ];
 
   Locale? selectedLocale;
@@ -32,7 +32,7 @@ class _LanguageButtonsState extends State<LanguageButtons> {
           const SizedBox(height: 8),
           Text(
             "select_a_language".tr(),
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 30),
           DropdownButtonFormField2<Locale>(

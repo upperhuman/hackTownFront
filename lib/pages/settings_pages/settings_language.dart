@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hack_town_front/widgets/language_picker.dart'; // Новый файл с кнопками выбора языка
+import 'package:hack_town_front/widgets/language_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class SettingsLanguagePage extends StatelessWidget {
-  const SettingsLanguagePage({Key? key}) : super(key: key);
+  const SettingsLanguagePage({super.key});
 
   @override
   Widget build(BuildContext context) {

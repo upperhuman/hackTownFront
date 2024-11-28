@@ -12,7 +12,7 @@ class BottomNavigationPanel extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return BottomAppBar(
-      color: colorScheme.surface, // Динамічний фон
+      color: colorScheme.surface,
       shape: const CircularNotchedRectangle(),
       notchMargin: 6.0,
       child: Row(

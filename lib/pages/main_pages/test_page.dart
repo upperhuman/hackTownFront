@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import '/widgets/navigation_panel.dart';
-import '/pages/main_pages/user_profile_page.dart';
-import '/widgets/search_bar.dart';
+import '/widgets/test_page_buttons.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '/pages/main_pages/main_page.dart';
+import '/widgets/navigation_panel.dart';
+import 'package:flutter/material.dart';
+import '/widgets/search_bar.dart';
 
 class TestPage extends StatelessWidget {
   const TestPage({super.key});
@@ -68,22 +68,22 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            "Привіт, давай визначимо твої побажання",
+                          Text(
+                            "test_page.greeting".tr(),
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 20),
-                          _buildTextField("Тип події"),
+                          buildTextField("test_page.event_type".tr()),
                           const SizedBox(height: 10),
-                          _buildTextField("Оберіть кількість людей"),
+                          buildTextField("test_page.number_of_people".tr()),
                           const SizedBox(height: 10),
-                          _buildTextField("Оберіть свій бюджет"),
+                          buildTextField("test_page.budget".tr()),
                           const SizedBox(height: 10),
-                          _buildTextField("Тривалість події"),
+                          buildTextField("test_page.duration".tr()),
                           const SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: () {
@@ -95,11 +95,11 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              backgroundColor: Colors.teal,
+                              backgroundColor: Colors.grey,
                             ),
-                            child: const Text(
-                              "Знайти",
-                              style: TextStyle(fontSize: 18, color: Colors.white),
+                            child: Text(
+                              "test_page.find".tr(),
+                              style: const TextStyle(fontSize: 18, color: Colors.white),
                             ),
                           ),
                         ],
@@ -111,20 +111,6 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildTextField(String label) {
-    return SizedBox(
-      width: 400, // Set the width here
-      child: TextField(
-        decoration: InputDecoration(
-          labelText: label,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-        ),
       ),
     );
   }
@@ -142,12 +128,12 @@ class _MobileMainPageState extends State<MobileMainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Мобільна версія'),
+        title: Text("test_page.mobile".tr()),
       ),
-      body: const Center(
+      body: Center(
         child: Text(
-          'Контент для мобільної версії',
-          style: TextStyle(fontSize: 18),
+           "test_page.mobile_content".tr(),
+          style: const TextStyle(fontSize: 18),
         ),
       ),
     );

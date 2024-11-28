@@ -1,6 +1,4 @@
 {
-  "search_modile_bar.find_event": "Find the event...",
-  
   "settings_page": "Settings",
   "settings_page.language": "Language",
   "settings_page.region": "Region",
@@ -8,14 +6,29 @@
   "settings_page.security": "Security",
   "settings_page.notifications": "Notifications",
   "settings_page.faq": "FAQ",
+  
+  "test_page.greeting": "Hello, let's determine your preferences",
+  "test_page.event_type": "Event type",
+  "test_page.number_of_people": "Select the number of people",
+  "test_page.budget": "Select your budget",
+  "test_page.duration": "The duration of the event",
+  "test_page.find": "Find",
+  "test_page.mobile": "Mobile version",
+  "test_page.mobile_content": "Content for mobile version",
 
+  "route_page": "Routes",
+  "route_page.cinema": "Cinema",
+  "route_page.restaurant": "Restaurant",
+  "route_page.shop": "Shop",
+  "route_page.parking": "Parking",
+  
+  "search_modile_bar.find_event": "Find the event...",
+  
   "calendar_page": "Events calendar",
 
   "history_page": "Your history",
 
   "location_page": "Your location",
-
-  "route_page": "Routes",
 
   "user_profile_page": "Your profile",
 
