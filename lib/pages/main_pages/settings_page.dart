@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../settings_pages/settings_language.dart';
 import '../settings_pages/settings_region.dart';
@@ -5,6 +6,7 @@ import '../settings_pages/settings_theme.dart';
 import '../settings_pages/settings_security.dart';
 import '../settings_pages/settings_notifications.dart';
 import '../settings_pages/settings_faq.dart';
+
 
 // Settings Page
 class SettingsPage extends StatelessWidget {
@@ -19,7 +21,7 @@ class SettingsPage extends StatelessWidget {
             child: Image.asset('assets/images/SettingsBackground.jpg', fit: BoxFit.cover),
           ),
           AppBar(
-            title: const Text('Settings'),
+            title: Text("settings_page".tr()),
             elevation: 0,
           ),
           const Align(
@@ -51,7 +53,7 @@ class SettingsButtons extends StatelessWidget {
           children: [
             TextButton(
               style: buttonStyle,
-              child: const Text('Мова'),
+              child: Text("settings_page.language".tr()),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -62,7 +64,7 @@ class SettingsButtons extends StatelessWidget {
             const SizedBox(height: 20),
             TextButton(
               style: buttonStyle,
-              child: const Text('Регіон'),
+              child: Text("settings_page.region".tr()),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -73,7 +75,7 @@ class SettingsButtons extends StatelessWidget {
             const SizedBox(height: 20),
             TextButton(
               style: buttonStyle,
-              child: const Text('Тема застосунку'),
+              child: Text("settings_page.theme".tr()),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -84,7 +86,7 @@ class SettingsButtons extends StatelessWidget {
             const SizedBox(height: 20),
             TextButton(
               style: buttonStyle,
-              child: const Text('Безпека'),
+              child: Text("settings_page.security".tr()),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -95,7 +97,7 @@ class SettingsButtons extends StatelessWidget {
             const SizedBox(height: 20),
             TextButton(
               style: buttonStyle,
-              child: const Text('Повідомлення'),
+              child: Text("settings_page.notifications".tr()),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -106,7 +108,7 @@ class SettingsButtons extends StatelessWidget {
             const SizedBox(height: 20),
             TextButton(
               style: buttonStyle,
-              child: const Text('Відповіді на запитання'),
+              child: Text("settings_page.faq".tr()),
               onPressed: () {
                 Navigator.push(
                   context,

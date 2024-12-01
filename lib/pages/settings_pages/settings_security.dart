@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 // Security Page
@@ -8,7 +9,7 @@ class SettingsSecurityPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Security'),
+        title: Text("settings_page.security".tr()),
       ),
       body: const Align(
         child: SecurityButtons()

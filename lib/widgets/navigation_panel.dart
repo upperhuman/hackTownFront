@@ -13,7 +13,7 @@ class NavigationPanel extends StatelessWidget {
 
     return Container(
       width: 70,
-      color: colorScheme.surface, // Фон панелі
+      color: colorScheme.surface,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -73,9 +73,7 @@ class NavigationPanel extends StatelessWidget {
               );
             },
             iconSize: 45,
-
           ),
-
         ],
       ),
     );

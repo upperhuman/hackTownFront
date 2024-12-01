@@ -1,5 +1,35 @@
 {
-  "home_page.welcome": "Ласкаво просимо",
-  "home_page.lets_get_started": "Почати",
-  "search_modile_bar.find_event": "Знайти івент..."
+  "settings_page": "Налаштування",
+  "settings_page.language": "Мова",
+  "select_a_language": "Оберіть мову",
+  "settings_page.region": "Регіон",
+  "settings_page.theme": "Тема застосунку",
+  "settings_page.security": "Безпека",
+  "settings_page.notifications": "Повідомлення",
+  "settings_page.faq": "Відповіді на запитання",
+  
+  "test_page.greeting": "Привіт, давай визначимо твої побажання",
+  "test_page.event_type": "Тип події",
+  "test_page.number_of_people": "Оберіть кількість людей",
+  "test_page.budget": "Оберіть свій бюджет",
+  "test_page.duration": "Тривалість події",
+  "test_page.find": "Знайти",
+  "test_page.mobile": "Мобільна версія",
+  "test_page.mobile_content": "Контент для мобільної версії",
+  
+  "route_page": "Маршрути",
+  "route_page.cinema": "Кінотеатр",
+  "route_page.restaurant": "Ресторан",
+  "route_page.shop": "Магазин",
+  "route_page.parking": "Паркінг",
+  
+  "search_modile_bar.find_event": "Знайти івент...",
+
+  "calendar_page": "Календар івентів",
+
+  "history_page": "Історія",
+
+  "location_page": "Ваша локація",
+
+  "user_profile_page": "Ваш профіль"
 }

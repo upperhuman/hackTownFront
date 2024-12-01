@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 // Theme Page
@@ -8,7 +9,7 @@ class SettingsThemePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Theme'),
+        title: Text("settings_page.theme".tr()),
       ),
       body: const Align(
         child: ThemeButtons()
