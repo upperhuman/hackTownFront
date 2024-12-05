@@ -38,6 +38,7 @@ dependencies:
   mime: ^1.0.6
   easy_localization: ^3.0.7
   dropdown_button2: ^2.3.8
+  http: ^0.13.3
 
 dev_dependencies:
   flutter_test:
