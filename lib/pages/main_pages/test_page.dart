@@ -37,7 +37,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
   String selectedEventType = 'Dating';
   int selectedNumberOfPeople = 1;
   String selectedBudget = 'low cost';
-  TimeOfDay selectedDuration = TimeOfDay.now();
+  TimeOfDay selectedDuration = TimeOfDay(hour: 1, minute: 0);
 
   @override
   Widget build(BuildContext context) {
