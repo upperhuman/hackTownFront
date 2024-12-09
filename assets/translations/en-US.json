@@ -16,7 +16,7 @@
   "test_page.mobile": "Mobile version",
   "test_page.mobile_content": "Content for mobile version",
 
-  "route_page": "Routes",
+  "route_page.choose": "Choose your route",
   "route_page.cinema": "Cinema",
   "route_page.restaurant": "Restaurant",
   "route_page.shop": "Shop",

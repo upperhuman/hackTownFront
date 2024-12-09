@@ -17,7 +17,7 @@
   "test_page.mobile": "Мобільна версія",
   "test_page.mobile_content": "Контент для мобільної версії",
   
-  "route_page": "Маршрути",
+  "route_page.choose": "Оберіть свій маршрут",
   "route_page.cinema": "Кінотеатр",
   "route_page.restaurant": "Ресторан",
   "route_page.shop": "Магазин",

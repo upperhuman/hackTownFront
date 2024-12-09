@@ -9,18 +9,15 @@ class NavigationPanel extends StatelessWidget {
   const NavigationPanel({super.key});
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Container(
       width: 70,
-      color: colorScheme.surface,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             children: [
               IconButton(
-                icon: Icon(Icons.location_on_outlined, color: colorScheme.primary),
+                icon: Icon(Icons.location_on_outlined, color: Theme.of(context).iconTheme.color),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -31,7 +28,7 @@ class NavigationPanel extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               IconButton(
-                icon: Icon(Icons.route_outlined, color: colorScheme.primary),
+                icon: Icon(Icons.route_outlined, color: Theme.of(context).iconTheme.color),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -42,7 +39,7 @@ class NavigationPanel extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               IconButton(
-                icon: Icon(Icons.calendar_month_outlined, color: colorScheme.primary),
+                icon: Icon(Icons.calendar_month_outlined, color: Theme.of(context).iconTheme.color),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -53,7 +50,7 @@ class NavigationPanel extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               IconButton(
-                icon: Icon(Icons.history_outlined, color: colorScheme.primary),
+                icon: Icon(Icons.history_outlined, color: Theme.of(context).iconTheme.color),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -65,7 +62,7 @@ class NavigationPanel extends StatelessWidget {
             ],
           ),
           IconButton(
-            icon: Icon(Icons.settings_outlined, color: colorScheme.primary),
+            icon: Icon(Icons.settings_outlined, color: Theme.of(context).iconTheme.color),
             onPressed: () {
               Navigator.push(
                 context,
