@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hack_town_front/widgets/navigation_panel.dart';
+import '/pages/route_pages/cinema_page.dart';
+import '/pages/route_pages/restaurant_page.dart';
+import '/pages/route_pages/shop_page.dart';
+import '/pages/route_pages/parking_page.dart';
 
 class RouteButtons extends StatelessWidget {
   const RouteButtons({super.key});
@@ -90,86 +93,6 @@ class RouteButtons extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-// Пример страниц
-class CinemaPage extends StatelessWidget {
-  const CinemaPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Scaffold(
-      body: Stack(
-        children: [
-          Row(
-            children: [
-              const NavigationPanel(),
-              Expanded(
-                child: Container(
-                  color: colorScheme.background,
-                  child: Center(
-                    child: Text(
-                      'Main Content',
-                      style: TextStyle(fontSize: 24, color: colorScheme.onBackground),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Positioned(
-            left: 70, // Сдвигаем стрелку вправо (70 ширина панели + 16 отступ)
-            child: IconButton(
-              icon: Icon(Icons.arrow_back, color: colorScheme.primary),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              iconSize: 45,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-
-class RestaurantPage extends StatelessWidget {
-  const RestaurantPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Restaurant")),
-      body: const NavigationPanel()
-    );
-  }
-}
-
-class ShopPage extends StatelessWidget {
-  const ShopPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Shop")),
-      body: const NavigationPanel()
-    );
-  }
-}
-
-class ParkingPage extends StatelessWidget {
-  const ParkingPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Parking")),
-      body: const NavigationPanel()
     );
   }
 }

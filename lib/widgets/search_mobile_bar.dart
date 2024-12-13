@@ -24,7 +24,7 @@ class SearchBarMobile extends StatelessWidget {
               MaterialPageRoute(builder: (context) => const SettingsPage()),
             );
           },
-          iconSize: 30,
+          iconSize: 35,
         ),
         Expanded(
           child: Container(
@@ -40,9 +40,10 @@ class SearchBarMobile extends StatelessWidget {
                   onPressed: () {},
                 ),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(30.0),   
                 ),
                 filled: true,
+                fillColor: Theme.of(context).scaffoldBackgroundColor
               ),
             ),
           ),
@@ -58,7 +59,7 @@ class SearchBarMobile extends StatelessWidget {
               MaterialPageRoute(builder: (context) => const UserProfilePage()),
             );
           },
-          iconSize: 30,
+          iconSize: 35,
         ),
       ],
     );

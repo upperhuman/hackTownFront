@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '/pages/main_pages/main_page.dart';
 
-final themeNotifier = ValueNotifier(ThemeMode.dark);
+final themeNotifier = ValueNotifier(ThemeMode.light);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           primaryColor: Colors.blue,
           brightness: Brightness.light,
-          scaffoldBackgroundColor: Colors.grey[100],
+          scaffoldBackgroundColor: Colors.white,
           textTheme: const TextTheme(
             bodyLarge: TextStyle(color: Colors.black),
           ),
@@ -55,6 +55,9 @@ class MyApp extends StatelessWidget {
             contentTextStyle: TextStyle(
               color: Colors.black
             )
+          ),
+          bottomAppBarTheme: const BottomAppBarTheme(
+            color: Colors.white
           )
         ),
         darkTheme: ThemeData(
@@ -77,6 +80,9 @@ class MyApp extends StatelessWidget {
             contentTextStyle: TextStyle(
               color: Colors.white
             )
+          ),
+          bottomAppBarTheme: const BottomAppBarTheme(
+            color: Colors.black
           )
         ),
       home: const MainPage(),

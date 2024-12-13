@@ -37,6 +37,7 @@ class _DesktopSearchBarState extends State<DesktopSearchBar> {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
                 filled: true,
+                fillColor: Theme.of(context).scaffoldBackgroundColor
               ),
             ),
           ),

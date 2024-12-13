@@ -11,6 +11,7 @@ class BottomNavigationPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
+      color: Theme.of(context).bottomAppBarTheme.color,
       shape: const CircularNotchedRectangle(),
       notchMargin: 6.0,
       child: Row(
