@@ -13,6 +13,8 @@
   "test_page.budget": "Select your budget",
   "test_page.duration": "The duration of the event",
   "test_page.find": "Find",
+  "test_page.or": "Or",
+  "test_page.voice": "Voice input",
   "test_page.mobile": "Mobile version",
   "test_page.mobile_content": "Content for mobile version",
 

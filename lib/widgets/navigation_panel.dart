@@ -9,7 +9,7 @@ class NavigationPanel extends StatelessWidget {
   const NavigationPanel({super.key});
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 70,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

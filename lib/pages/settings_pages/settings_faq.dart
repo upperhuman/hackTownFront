@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+// import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 // FAQ Page
@@ -8,11 +8,19 @@ class SettingsFAQPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("settings_page.faq".tr()),
-      ),
-      body: const Align(
-        child: FAQButtons()
+      body: Stack(
+        children: [
+          Positioned(
+            left: 0,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              iconSize: 45,
+            ),
+          ),
+        ],
       )
     );
   }

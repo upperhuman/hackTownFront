@@ -8,7 +8,6 @@ class SearchBarMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -16,7 +15,7 @@ class SearchBarMobile extends StatelessWidget {
         IconButton(
           icon: Icon(
             Icons.settings_outlined,
-            color: colorScheme.onBackground, // Залежно від теми
+            color: Theme.of(context).scaffoldBackgroundColor
           ),
           onPressed: () {
             Navigator.push(
@@ -51,7 +50,7 @@ class SearchBarMobile extends StatelessWidget {
         IconButton(
           icon: Icon(
             Icons.account_circle_outlined,
-            color: colorScheme.onBackground, // Залежно від теми
+            color: Theme.of(context).scaffoldBackgroundColor
           ),
           onPressed: () {
             Navigator.push(
