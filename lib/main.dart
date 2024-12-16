@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '/pages/main_pages/main_page.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 
 final themeNotifier = ValueNotifier(ThemeMode.dark);
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await dotenv.load(fileName:"assets/.env");
 
   runApp(
     EasyLocalization(

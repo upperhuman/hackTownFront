@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/pages/main_pages/main_page.dart';
 import '/widgets/navigation_panel.dart';
 import '/widgets/search_bar.dart';
@@ -8,7 +9,8 @@ import 'dart:convert';
 import 'dart:io';
 
 class TestPage extends StatelessWidget {
-  const TestPage({super.key});
+  TestPage({super.key});
+  final String? baseUrl = dotenv.env["BASE_URL"];
 
   @override
   Widget build(BuildContext context) {
@@ -212,14 +214,23 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
         onPressed: () async {
           // Collect the data
           final data = {
+            'userId': 1,
             'eventType': selectedEventType,
-            'numberOfPeople': selectedNumberOfPeople,
-            'budget': selectedBudget,
-            'duration': selectedDuration.format(context),
+            'peopleCount': selectedNumberOfPeople,
+            'eventTime': selectedDuration.format(context),
+            'costTier': selectedBudget,
           };
 
+          // Log the collected data
+          print('Collected data: $data');
+
           // Send the data to the server
-          final response = await sendDataToServer(data);
+          final jsonData = jsonEncode(data);
+          final response = await http.post(
+            Uri.parse(dotenv.env["BASE_URL"]!),
+            body: jsonData,
+            headers: {'Content-Type': 'application/json'},
+          );
 
           // Log the response
           print('Response status: ${response.statusCode}');
@@ -256,7 +267,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
 
     try {
       final request = await client.postUrl(
-          Uri.parse('https://385238ef-6c7a-41a1-9893-a886d9fbee7f.mock.pstmn.io/'));
+          Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests'));
       request.headers.set('Content-Type', 'application/json; charset=UTF-8');
       request.write(jsonEncode(data));
       final response = await request.close();
