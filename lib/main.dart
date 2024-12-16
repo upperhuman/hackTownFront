@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           primaryColor: Colors.blue,
           brightness: Brightness.light,
-          scaffoldBackgroundColor: Colors.grey[100],
+          scaffoldBackgroundColor: Colors.white,
           textTheme: const TextTheme(
             bodyLarge: TextStyle(color: Colors.black),
           ),
@@ -55,6 +55,9 @@ class MyApp extends StatelessWidget {
             contentTextStyle: TextStyle(
               color: Colors.black
             )
+          ),
+          bottomAppBarTheme: const BottomAppBarTheme(
+            color: Colors.white
           )
         ),
         darkTheme: ThemeData(
@@ -77,6 +80,9 @@ class MyApp extends StatelessWidget {
             contentTextStyle: TextStyle(
               color: Colors.white
             )
+          ),
+          bottomAppBarTheme: const BottomAppBarTheme(
+            color: Colors.black
           )
         ),
       home: const MainPage(),

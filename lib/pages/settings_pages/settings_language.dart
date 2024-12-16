@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hack_town_front/widgets/language_picker.dart';
-import 'package:easy_localization/easy_localization.dart';
+// import 'package:easy_localization/easy_localization.dart';
 
 class SettingsLanguagePage extends StatelessWidget {
   const SettingsLanguagePage({super.key});
@@ -16,16 +16,15 @@ class SettingsLanguagePage extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          AppBar(
-            title: Text("settings_page.language".tr()),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
+          Positioned(
+            left: 0,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
+              iconSize: 45,
             ),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
           ),
           const Align(
             child: LanguageButtons(),

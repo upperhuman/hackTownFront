@@ -39,6 +39,7 @@ dependencies:
   easy_localization: ^3.0.7
   dropdown_button2: ^2.3.8
   http: ^0.13.3
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:
