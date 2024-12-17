@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hack_town_front/main.dart';
 import 'package:hack_town_front/widgets/language_picker.dart';
 // import 'package:easy_localization/easy_localization.dart';
 
@@ -11,11 +12,8 @@ class SettingsLanguagePage extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset(
-              'assets/images/SettingsBackground2.jpg',
-              fit: BoxFit.cover,
+            child: ThemedImageWidget(),
             ),
-          ),
           Positioned(
             left: 0,
             child: IconButton(

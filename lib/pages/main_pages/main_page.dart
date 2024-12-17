@@ -33,12 +33,9 @@ class DesktopMainPage extends StatefulWidget {
 }
 
 class _DesktopMainPageState extends State<DesktopMainPage> {
-  bool isKeyboardInput = false; // Переменная для отслеживания текущего режима (клавиатура/голос)
-
-  // Параметры, которые ранее использовались на TestPage
-  String selectedEventType = 'Dating';
+  String selectedEventType = "test_page.dating".tr();
   int selectedNumberOfPeople = 1;
-  String selectedBudget = 'low cost';
+  String selectedBudget = "test_page.low_cost".tr();
   TimeOfDay selectedDuration = TimeOfDay(hour: 1, minute: 0);
 
   @override
@@ -81,10 +78,10 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                           ),
                           const SizedBox(height: 20),
                           buildDropdown("test_page.event_type".tr(), [
-                            'Dating',
-                            'Business meet',
-                            'Walk',
-                            'Hang out'
+                            "test_page.dating".tr(),
+                            "test_page.business_meet".tr(),
+                            "test_page.walk".tr(),
+                            "test_page.hang_out".tr()
                           ], selectedEventType, (value) {
                             setState(() {
                               selectedEventType = value!;
@@ -100,9 +97,9 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                               }),
                           const SizedBox(height: 10),
                           buildDropdown("test_page.budget".tr(), [
-                            'low cost',
-                            'medium cost',
-                            'high cost'
+                             "test_page.low_cost".tr(),
+                             "test_page.medium_cost".tr(),
+                             "test_page.high_cost".tr()
                           ], selectedBudget, (value) {
                             setState(() {
                               selectedBudget = value!;
@@ -159,7 +156,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
 
   Widget buildDropdown(String label, List<String> items, String selectedValue, ValueChanged<String?> onChanged) {
     return SizedBox(
-      width: 400, // Фиксированная ширина для всех полей ввода
+      width: 400,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -168,20 +165,33 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
+              color: Colors.white,
+              border: Border.all(color: Colors.black),
               borderRadius: BorderRadius.circular(15.0),
             ),
-            child: DropdownButton<String>(
-              value: selectedValue,
-              onChanged: onChanged,
-              isExpanded: true,
-              underline: Container(),
-              items: items.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                canvasColor: Colors.white,
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: selectedValue,
+                  isExpanded: true,
+                  onChanged: onChanged,
+                  dropdownColor: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  style: const TextStyle(color: Colors.black),
+                  items: items.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(value),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
             ),
           ),
         ],
@@ -201,7 +211,8 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
             width: 400,
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
+              color: Colors.white,
+              border: Border.all(color: Colors.black),
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: ElevatedButton(
@@ -209,7 +220,28 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                 final TimeOfDay? picked = await showTimePicker(
                   context: context,
                   initialTime: selectedTime,
+                  builder: (BuildContext context, Widget? child) {
+                    return Theme(
+                      data: ThemeData.light().copyWith(
+                        primaryColor: Colors.black,
+                        timePickerTheme: const TimePickerThemeData(
+                          backgroundColor: Colors.white, // Фон часов
+                          hourMinuteColor: Colors.black12,
+                          hourMinuteTextColor: Colors.black,
+                          dialHandColor: Colors.black12,
+                          dialTextColor: Colors.black,
+                        ),
+                        colorScheme: const ColorScheme.light(
+                          primary: Colors.black,
+                          onPrimary: Colors.white,
+                          onSurface: Colors.black,
+                        ),
+                      ),
+                      child: child!,
+                    );
+                  },
                 );
+
                 if (picked != null && picked != selectedTime) {
                   onChanged(picked);
                 }
@@ -222,7 +254,10 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                   borderRadius: BorderRadius.circular(15.0),
                 ),
               ),
-              child: Text(selectedTime.format(context)),
+              child: Text(
+                selectedTime.format(context),
+                style: const TextStyle(color: Colors.black),
+              ),
             ),
           ),
         ],
@@ -235,7 +270,6 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
       width: 400,
       child: ElevatedButton(
         onPressed: () {
-          // Логика для кнопки "Найти"
           print({
             'eventType': selectedEventType,
             'numberOfPeople': selectedNumberOfPeople,
@@ -301,7 +335,6 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
     return http.Response(responseData, response.statusCode, headers: headers);
   }
 }
-
 
 class MobileMainPage extends StatefulWidget {
   const MobileMainPage({super.key});

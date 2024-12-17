@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '/pages/main_pages/main_page.dart';
 
-final themeNotifier = ValueNotifier(ThemeMode.dark);
+final themeNotifier = ValueNotifier(ThemeMode.light);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -88,5 +88,23 @@ class MyApp extends StatelessWidget {
       home: const MainPage(),
     );
     });
+  }
+}
+
+class ThemedImageWidget extends StatelessWidget {
+  const ThemedImageWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier,
+      builder: (context, themeMode, child) {
+        final imagePath = themeMode == ThemeMode.dark
+            ? 'assets/images/dark_theme_image.png'
+            : 'assets/images/light_theme_image.png';
+
+        return Image.asset(imagePath);
+      },
+    );
   }
 }
