@@ -40,6 +40,7 @@ dependencies:
   dropdown_button2: ^2.3.8
   http: ^0.13.3
   provider: ^6.0.5
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +73,7 @@ flutter:
     - assets/images/SettingsBackground.jpg
     - assets/images/SettingsBackground2.jpg
     - assets/translations/
+    - assets/.env
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

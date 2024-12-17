@@ -7,9 +7,11 @@ import '/widgets/navigation_panel.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class MainPage extends StatelessWidget {
-  const MainPage({super.key});
+  MainPage({super.key});
+  final String? baseUrl = dotenv.env["BASE_URL"];
 
   @override
   Widget build(BuildContext context) {
@@ -48,108 +50,100 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
         children: [
           const NavigationPanel(),
           Positioned(
-                  right: 0,
-                  child: IconButton(
-                    icon: Icon(Icons.account_circle_outlined, 
-                    color: Theme.of(context).iconTheme.color),
-                    onPressed: () {
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => const UserProfilePage()),
-                        );
-                      },
-                      iconSize: 45,
-                  ),
-                ),
-          Expanded(
-            child: Column(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "test_page.greeting".tr(),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          buildDropdown("test_page.event_type".tr(), [
-                            'Dating',
-                            'Business meet',
-                            'Walk',
-                            'Hang out'
-                          ], selectedEventType, (value) {
-                            setState(() {
-                              selectedEventType = value!;
-                            });
-                          }),
-                          const SizedBox(height: 10),
-                          buildDropdown("test_page.number_of_people".tr(),
-                              List.generate(100, (index) => (index + 1).toString()),
-                              selectedNumberOfPeople.toString(), (value) {
-                                setState(() {
-                                  selectedNumberOfPeople = int.parse(value!);
-                                });
-                              }),
-                          const SizedBox(height: 10),
-                          buildDropdown("test_page.budget".tr(), [
-                            'low cost',
-                            'medium cost',
-                            'high cost'
-                          ], selectedBudget, (value) {
-                            setState(() {
-                              selectedBudget = value!;
-                            });
-                          }),
-                          const SizedBox(height: 10),
-                          buildTimePicker("test_page.duration".tr(), selectedDuration, (value) {
-                            setState(() {
-                              selectedDuration = value!;
-                            });
-                          }),
-                          const SizedBox(height: 20),
-                          buildFindButton(),
-                          const SizedBox(height: 20),
-                          Text(
-                            "test_page.or".tr(),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          IconButton(
-                            icon: Icon(Icons.mic_none_outlined, color: Theme.of(context).iconTheme.color),
-                            onPressed: () {
-                              /*Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => const ...()),
-                              );*/
-                            },
-                            iconSize: 100,
-                          ),
-                           Text(
-                            "test_page.voice".tr(),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
+            right: 0,
+            child: IconButton(
+              icon: Icon(Icons.account_circle_outlined,
+                  color: Theme.of(context).iconTheme.color),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const UserProfilePage()),
+                );
+              },
+              iconSize: 45,
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "test_page.greeting".tr(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  buildDropdown("test_page.event_type".tr(), [
+                    'Dating',
+                    'Business meet',
+                    'Walk',
+                    'Hang out'
+                  ], selectedEventType, (value) {
+                    setState(() {
+                      selectedEventType = value!;
+                    });
+                  }),
+                  const SizedBox(height: 10),
+                  buildDropdown("test_page.number_of_people".tr(),
+                      List.generate(100, (index) => (index + 1).toString()),
+                      selectedNumberOfPeople.toString(), (value) {
+                        setState(() {
+                          selectedNumberOfPeople = int.parse(value!);
+                        });
+                      }),
+                  const SizedBox(height: 10),
+                  buildDropdown("test_page.budget".tr(), [
+                    'low cost',
+                    'medium cost',
+                    'high cost'
+                  ], selectedBudget, (value) {
+                    setState(() {
+                      selectedBudget = value!;
+                    });
+                  }),
+                  const SizedBox(height: 10),
+                  buildTimePicker("test_page.duration".tr(), selectedDuration, (value) {
+                    setState(() {
+                      selectedDuration = value!;
+                    });
+                  }),
+                  const SizedBox(height: 20),
+                  buildFindButton(),
+                  const SizedBox(height: 20),
+                  Text(
+                    "test_page.or".tr(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  IconButton(
+                    icon: Icon(Icons.mic_none_outlined, color: Theme.of(context).iconTheme.color),
+                    onPressed: () {
+                      /*Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ...()),
+                      );*/
+                    },
+                    iconSize: 100,
+                  ),
+                  Text(
+                    "test_page.voice".tr(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -232,19 +226,43 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
 
   Widget buildFindButton() {
     return SizedBox(
-      width: 400,
+      width: 400, // Fixed width for the button
       child: ElevatedButton(
-        onPressed: () {
-          // Логика для кнопки "Найти"
-          print({
+        onPressed: () async {
+          // Collect the data
+          final data = {
+            'userId': 1,
             'eventType': selectedEventType,
-            'numberOfPeople': selectedNumberOfPeople,
-            'budget': selectedBudget,
-            'duration': selectedDuration.format(context),
-          });
+            'peopleCount': selectedNumberOfPeople,
+            'eventTime': selectedDuration.format(context),
+            'costTier': selectedBudget,
+          };
+
+          // Log the collected data
+          print('Collected data: $data');
+          // Send the data to the server
+          final jsonData = jsonEncode(data);
+          final response = await http.post(
+            Uri.parse(dotenv.env["BASE_URL"]!),
+            body: jsonData,
+            headers: {'Content-Type': 'application/json'},
+          );
+
+          // Log the response
+          print('Response status: ${response.statusCode}');
+          print('Response body: ${response.body}');
+
+          if (response.statusCode == 200) {
+            // Successfully sent data
+            print('Data sent successfully');
+          } else {
+            // Failed to send data
+            print('Failed to send data: ${response.statusCode}');
+          }
         },
         style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 40.0),
+          padding: const EdgeInsets.symmetric(
+              vertical: 15.0, horizontal: 40.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
@@ -265,7 +283,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
 
     try {
       final request = await client.postUrl(
-          Uri.parse('https://385238ef-6c7a-41a1-9893-a886d9fbee7f.mock.pstmn.io/'));
+          Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests'));
       request.headers.set('Content-Type', 'application/json; charset=UTF-8');
       request.write(jsonEncode(data));
       final response = await request.close();
@@ -301,7 +319,6 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
     return http.Response(responseData, response.statusCode, headers: headers);
   }
 }
-
 
 class MobileMainPage extends StatefulWidget {
   const MobileMainPage({super.key});
