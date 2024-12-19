@@ -40,7 +40,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
   // Параметры, которые ранее использовались на TestPage
   String selectedEventType = 'Dating';
   int selectedNumberOfPeople = 1;
-  String selectedBudget = 'low cost';
+  int selectedBudget = 1000;
   TimeOfDay selectedDuration = TimeOfDay(hour: 1, minute: 0);
 
   @override
@@ -97,13 +97,11 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                         });
                       }),
                   const SizedBox(height: 10),
-                  buildDropdown("test_page.budget".tr(), [
-                    'low cost',
-                    'medium cost',
-                    'high cost'
-                  ], selectedBudget, (value) {
+                  buildDropdown("test_page.budget".tr(),
+                    List.generate(10000, (index) => (index + 1).toString()),
+                      selectedBudget.toString(), (value) {
                     setState(() {
-                      selectedBudget = value!;
+                      selectedBudget = int.parse(value!);
                     });
                   }),
                   const SizedBox(height: 10),
@@ -240,25 +238,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
 
           // Log the collected data
           print('Collected data: $data');
-          // Send the data to the server
-          final jsonData = jsonEncode(data);
-          final response = await http.post(
-            Uri.parse(dotenv.env["BASE_URL"]!),
-            body: jsonData,
-            headers: {'Content-Type': 'application/json'},
-          );
-
-          // Log the response
-          print('Response status: ${response.statusCode}');
-          print('Response body: ${response.body}');
-
-          if (response.statusCode == 200) {
-            // Successfully sent data
-            print('Data sent successfully');
-          } else {
-            // Failed to send data
-            print('Failed to send data: ${response.statusCode}');
-          }
+          final response = await sendDataToServer(data);
         },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(
@@ -281,43 +261,35 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
       ..badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
 
+
     try {
-      final request = await client.postUrl(
-          Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests'));
-      request.headers.set('Content-Type', 'application/json; charset=UTF-8');
-      request.write(jsonEncode(data));
-      final response = await request.close();
 
-      // Log the request and response
-      print('Request sent to: ${request.uri}');
-      print('Response status: ${response.statusCode}');
+      var request = await http.post(
+        Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests'),
+        body: jsonEncode(data),
+        headers: {'Content-Type': 'application/json'}
+        );
 
-      // Handle redirects
-      if (response.statusCode == 307) {
-        final redirectUrl = response.headers.value('location');
-        if (redirectUrl != null) {
-          final redirectRequest = await client.postUrl(Uri.parse(redirectUrl));
-          redirectRequest.headers.set('Content-Type', 'application/json; charset=UTF-8');
-          redirectRequest.write(jsonEncode(data));
-          final redirectResponse = await redirectRequest.close();
-          return await convertHttpClientResponseToHttpResponse(redirectResponse);
-        }
-      }
+      // final request = await client.postUrl(
+      //     Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests'));
+      // request.headers.set('Content-Type', 'application/json; charset=UTF-8');
+      // request.write(jsonEncode(data));
+      // final response = await request.close();
 
-      return await convertHttpClientResponseToHttpResponse(response);
+      return request;
     } finally {
       client.close();
     }
   }
 
-  Future<http.Response> convertHttpClientResponseToHttpResponse(HttpClientResponse response) async {
-    final responseData = await response.transform(utf8.decoder).join();
-    final headers = <String, String>{};
-    response.headers.forEach((name, values) {
-      headers[name] = values.join(', ');
-    });
-    return http.Response(responseData, response.statusCode, headers: headers);
-  }
+  // Future<http.Response> convertHttpClientResponseToHttpResponse(HttpClientResponse response) async {
+  //   final responseData = await response.transform(utf8.decoder).join();
+  //   final headers = <String, String>{};
+  //   response.headers.forEach((name, values) {
+  //     headers[name] = values.join(', ');
+  //   });
+  //   return http.Response(responseData, response.statusCode, headers: headers);
+  // }
 }
 
 class MobileMainPage extends StatefulWidget {
