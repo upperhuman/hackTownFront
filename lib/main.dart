@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '/pages/main_pages/main_page.dart';
@@ -9,6 +11,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await dotenv.load(fileName:"assets/.env");
+
+  HttpOverrides.global = new DevHttpOverrides();
+
 
   runApp(
     EasyLocalization(
@@ -90,5 +95,12 @@ class MyApp extends StatelessWidget {
       home: MainPage(),
     );
     });
+  }
+}
+class DevHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(final SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
