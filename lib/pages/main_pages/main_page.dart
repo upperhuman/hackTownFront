@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hack_town_front/dtos/event_route.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});
@@ -239,6 +240,17 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
           // Log the collected data
           print('Collected data: $data');
           final response = await sendDataToServer(data);
+          Map<String, dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+
+          // List<dynamic> list = responseData[""];
+          // List<EventRouteDTO> routes = [];
+          //
+          // for(var item in list){
+          //   Map<String, dynamic> map = item;
+          //   routes.add(EventRouteDTO.fromMap(map));
+          // }
+          EventRouteDTO route = EventRouteDTO.fromMap(responseData);
+          print("---");
         },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(
