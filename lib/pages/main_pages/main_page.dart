@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:hack_town_front/pages/main_pages/route_page.dart';
 import '/pages/main_pages/user_profile_page.dart';
 import '/widgets/bottom_navigation_panel.dart';
-import '/widgets/search_mobile_bar.dart';
 import 'package:http/http.dart' as http;
 import '/widgets/navigation_panel.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hack_town_front/dtos/event_route.dart';
+
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});
@@ -37,18 +37,33 @@ class DesktopMainPage extends StatefulWidget {
 }
 
 class _DesktopMainPageState extends State<DesktopMainPage> {
-  bool isKeyboardInput = false; // Переменная для отслеживания текущего режима (клавиатура/голос)
+  bool isKeyboardInput = false;
 
-  // Параметры, которые ранее использовались на TestPage
-  String selectedEventType = 'Dating';
+  String selectedEventType = "dating"; // Уникальный ключ
   int selectedNumberOfPeople = 1;
   int selectedBudget = 1000;
   TimeOfDay selectedDuration = TimeOfDay(hour: 1, minute: 0);
+
+
+  List<Map<String, String>> eventTypesData = [
+    {"id": "dating", "label": "test_page.dating".tr()},
+    {"id": "business_meet", "label": "test_page.business_meet".tr()},
+    {"id": "walk", "label": "test_page.walk".tr()},
+    {"id": "hang_out", "label": "test_page.hang_out".tr()},
+  ];
 
   List<EventRouteDTO> routes = [];
 
   @override
   Widget build(BuildContext context) {
+    
+    eventTypesData = [
+      {"id": "dating", "label": "test_page.dating".tr()},
+      {"id": "business_meet", "label": "test_page.business_meet".tr()},
+      {"id": "walk", "label": "test_page.walk".tr()},
+      {"id": "hang_out", "label": "test_page.hang_out".tr()},
+    ];
+    
     return Scaffold(
       body: Stack(
         children: [
@@ -80,18 +95,47 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
+
                   ),
                   const SizedBox(height: 20),
-                  buildDropdown("test_page.event_type".tr(), [
-                    'Dating',
-                    'Business meet',
-                    'Walk',
-                    'Hang out'
-                  ], selectedEventType, (value) {
-                    setState(() {
-                      selectedEventType = value!;
-                    });
-                  }),
+                  Container(
+                    width: 400,
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(15.0), // Rounded corners
+                    ),
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        canvasColor: Colors.white, // Set the background of the dropdown items
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: selectedEventType,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedEventType = newValue!;
+                            });
+                          },
+                          items: eventTypesData.map<DropdownMenuItem<String>>((item) {
+                            return DropdownMenuItem<String>(
+                              value: item["id"],
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(item["label"]!),
+                              ),
+                            );
+                          }).toList(),
+                          icon: Icon(Icons.arrow_drop_down), // Down arrow icon
+                          isExpanded: true,
+                          dropdownColor: Colors.white, // White background for the dropdown menu
+                          style: const TextStyle(color: Colors.black), // Text color for items
+                          borderRadius: BorderRadius.circular(15), // Rounded corners for dropdown
+                        ),
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 10),
                   buildDropdown("test_page.number_of_people".tr(),
                       List.generate(100, (index) => (index + 1).toString()),
@@ -102,7 +146,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                       }),
                   const SizedBox(height: 10),
                   buildDropdown("test_page.budget".tr(),
-                    List.generate(10000, (index) => (index * 10).toString()),
+                    List.generate(10000, (index) => (index + 1).toString()),
                       selectedBudget.toString(), (value) {
                     setState(() {
                       selectedBudget = int.parse(value!);
@@ -144,6 +188,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+
                 ],
               ),
             ),
@@ -152,10 +197,10 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
       ),
     );
   }
-
+  
   Widget buildDropdown(String label, List<String> items, String selectedValue, ValueChanged<String?> onChanged) {
     return SizedBox(
-      width: 400, // Фиксированная ширина для всех полей ввода
+      width: 400,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -164,20 +209,33 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             decoration: BoxDecoration(
+              color: Colors.white,
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(15.0),
             ),
-            child: DropdownButton<String>(
-              value: selectedValue,
-              onChanged: onChanged,
-              isExpanded: true,
-              underline: Container(),
-              items: items.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                canvasColor: Colors.white,
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: selectedValue,
+                  isExpanded: true,
+                  onChanged: onChanged,
+                  dropdownColor: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  style: const TextStyle(color: Colors.black),
+                  items: items.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(value),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
             ),
           ),
         ],
@@ -205,12 +263,33 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                 final TimeOfDay? picked = await showTimePicker(
                   context: context,
                   initialTime: selectedTime,
+                  builder: (BuildContext context, Widget? child) {
+                    return Theme(
+                      data: ThemeData.light().copyWith(
+                        primaryColor: Colors.black,
+                        timePickerTheme: const TimePickerThemeData(
+                          backgroundColor: Colors.white, // Фон часов
+                          hourMinuteColor: Colors.black12,
+                          hourMinuteTextColor: Colors.black,
+                          dialHandColor: Colors.black12,
+                          dialTextColor: Colors.black,
+                          dayPeriodColor: Colors.black12, // Цвет фона кнопок AM/PM
+                        ),
+                        colorScheme: const ColorScheme.light(
+                          primary: Colors.black,
+                          onPrimary: Colors.white,
+                          onSurface: Colors.black,
+                        ),
+                      ),
+                      child: child!,
+                    );
+                  },
                 );
                 if (picked != null && picked != selectedTime) {
                   onChanged(picked);
                 }
               },
-              style: ElevatedButton.styleFrom(
+               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 foregroundColor: Colors.black,
                 elevation: 0,
@@ -218,13 +297,17 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                   borderRadius: BorderRadius.circular(15.0),
                 ),
               ),
-              child: Text(selectedTime.format(context)),
+              child: Text(
+                selectedTime.format(context),
+                style: const TextStyle(color: Colors.black),
+              ),
             ),
           ),
         ],
       ),
     );
   }
+
 
   Widget buildFindButton() {
     return SizedBox(
@@ -261,7 +344,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.black12,
         ),
         child: Text(
           "test_page.find".tr(),
@@ -319,7 +402,6 @@ class _MobileMainPageState extends State<MobileMainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const SearchBarMobile(),
         automaticallyImplyLeading: false,
       ),
       body: Text('data'),

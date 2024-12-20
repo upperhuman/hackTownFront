@@ -73,6 +73,7 @@ class _LanguageButtonsState extends State<LanguageButtons> {
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
+                    // ignore: deprecated_member_use
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 2,
                     blurRadius: 5,

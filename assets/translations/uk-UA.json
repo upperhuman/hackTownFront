@@ -10,8 +10,15 @@
   
   "test_page.greeting": "Привіт, давай визначимо твої побажання",
   "test_page.event_type": "Тип події",
+  "test_page.dating": "Побачення",
+  "test_page.business_meet": "Ділова зустріч",
+  "test_page.walk": "Прогулянка",
+  "test_page.hang_out": "Вечірка",
   "test_page.number_of_people": "Оберіть кількість людей",
   "test_page.budget": "Оберіть свій бюджет",
+  "test_page.low_cost": "Низька вартість",
+  "test_page.medium_cost": "Середня вартість",
+  "test_page.high_cost": "Висока вартість",
   "test_page.duration": "Тривалість події",
   "test_page.find": "Знайти",
   "test_page.or": "Або",
@@ -25,13 +32,5 @@
   "route_page.shop": "Магазин",
   "route_page.parking": "Паркінг",
   
-  "search_modile_bar.find_event": "Знайти івент...",
-
-  "calendar_page": "Календар івентів",
-
-  "history_page": "Історія",
-
-  "location_page": "Ваша локація",
-
-  "user_profile_page": "Ваш профіль"
+  "search_modile_bar.find_event": "Знайти івент..."
 }

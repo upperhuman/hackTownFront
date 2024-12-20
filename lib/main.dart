@@ -1,17 +1,50 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '/pages/main_pages/main_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-final themeNotifier = ValueNotifier(ThemeMode.dark);
+final themeNotifier = ValueNotifier(ThemeMode.light);
+
+class IFramePage extends StatelessWidget {
+  final String url;
+  const IFramePage({Key? key, required this.url}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("IFrame Viewer"),
+      ),
+      body: WebView(
+        initialUrl: url,
+        javascriptMode: JavascriptMode.unrestricted,
+      ),
+    );
+  }
+}
 
 void main() async {
+  // Ensure Flutter bindings are initialized first
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize localization
   await EasyLocalization.ensureInitialized();
-  await dotenv.load(fileName:"assets/.env");
-
+  
+  // Load environment variables
+  await dotenv.load(fileName: "assets/.env");
+  
+  // Initialize WebView platform
+  if (WebViewPlatform.instance == null) {
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      WebViewPlatform.instance = AndroidWebViewPlatform();
+    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+      WebViewPlatform.instance = CupertinoWebViewPlatform();
+    }
+  }
+  
   HttpOverrides.global = new DevHttpOverrides();
 
 
@@ -97,6 +130,25 @@ class MyApp extends StatelessWidget {
     });
   }
 }
+
+class ThemedImageWidget extends StatelessWidget {
+  const ThemedImageWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier,
+      builder: (context, themeMode, child) {
+        final imagePath = themeMode == ThemeMode.dark
+            ? 'assets/images/dark_theme_image.png'
+            : 'assets/images/light_theme_image.png';
+
+        return Image.asset(imagePath);
+      },
+    );
+  }
+}
+
 class DevHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(final SecurityContext? context) {

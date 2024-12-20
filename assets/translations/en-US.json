@@ -1,6 +1,7 @@
 {
   "settings_page": "Settings",
   "settings_page.language": "Language",
+  "select_a_language": "Choose a language",
   "settings_page.region": "Region",
   "settings_page.theme": "Theme",
   "settings_page.security": "Security",
@@ -9,8 +10,15 @@
   
   "test_page.greeting": "Hello, let's determine your preferences",
   "test_page.event_type": "Event type",
+  "test_page.dating": "Dating",
+  "test_page.business_meet": "Business meet",
+  "test_page.walk": "Walk",
+  "test_page.hang_out": "Hang out",
   "test_page.number_of_people": "Select the number of people",
   "test_page.budget": "Select your budget",
+  "test_page.low_cost": "Low cost",
+  "test_page.medium_cost": "Medium cost",
+  "test_page.high_cost": "High cost",
   "test_page.duration": "The duration of the event",
   "test_page.find": "Find",
   "test_page.or": "Or",
@@ -24,15 +32,5 @@
   "route_page.shop": "Shop",
   "route_page.parking": "Parking",
   
-  "search_modile_bar.find_event": "Find the event...",
-  
-  "calendar_page": "Events calendar",
-
-  "history_page": "Your history",
-
-  "location_page": "Your location",
-
-  "user_profile_page": "Your profile",
-
-  "select_a_language": "Choose a language"
+  "search_modile_bar.find_event": "Find the event..."
 }
