@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hack_town_front/widgets/iFrame.dart';
 import 'package:hack_town_front/dtos/event_route.dart';
+import '../main.dart';
 import '/pages/route_pages/cinema_page.dart';
 import '/pages/route_pages/restaurant_page.dart';
 import '/pages/route_pages/shop_page.dart';
