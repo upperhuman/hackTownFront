@@ -32,7 +32,7 @@ class NavigationPanel extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const RoutePage()),
+                    MaterialPageRoute(builder: (context) => RoutePage()),
                   );
                 },
                 iconSize: 45,

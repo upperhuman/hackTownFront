@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:hack_town_front/pages/main_pages/route_page.dart';
 import '/pages/main_pages/user_profile_page.dart';
 import '/widgets/bottom_navigation_panel.dart';
 import '/widgets/search_mobile_bar.dart';
@@ -43,6 +44,8 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
   int selectedNumberOfPeople = 1;
   int selectedBudget = 1000;
   TimeOfDay selectedDuration = TimeOfDay(hour: 1, minute: 0);
+
+  List<EventRouteDTO> routes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +102,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                       }),
                   const SizedBox(height: 10),
                   buildDropdown("test_page.budget".tr(),
-                    List.generate(10000, (index) => (index + 1).toString()),
+                    List.generate(10000, (index) => (index * 10).toString()),
                       selectedBudget.toString(), (value) {
                     setState(() {
                       selectedBudget = int.parse(value!);
@@ -242,15 +245,15 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
           final response = await sendDataToServer(data);
           Map<String, dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
 
-          // List<dynamic> list = responseData[""];
-          // List<EventRouteDTO> routes = [];
-          //
-          // for(var item in list){
-          //   Map<String, dynamic> map = item;
-          //   routes.add(EventRouteDTO.fromMap(map));
-          // }
-          EventRouteDTO route = EventRouteDTO.fromMap(responseData);
-          print("---");
+          List<dynamic> list = responseData["routes"];
+
+          for(var item in list){
+            Map<String, dynamic> map = item;
+            routes.add(EventRouteDTO.fromMap(map));
+          }
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => RoutePage(routeData: routes))
+          );
         },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(
