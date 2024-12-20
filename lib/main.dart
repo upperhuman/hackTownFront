@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '/pages/main_pages/main_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 final themeNotifier = ValueNotifier(ThemeMode.light);
@@ -41,6 +44,9 @@ void main() async {
       WebViewPlatform.instance = CupertinoWebViewPlatform();
     }
   }
+  
+  HttpOverrides.global = new DevHttpOverrides();
+
 
   runApp(
     EasyLocalization(
@@ -140,5 +146,13 @@ class ThemedImageWidget extends StatelessWidget {
         return Image.asset(imagePath);
       },
     );
+  }
+}
+
+class DevHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(final SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }

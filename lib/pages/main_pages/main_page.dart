@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:hack_town_front/pages/main_pages/route_page.dart';
 import '/pages/main_pages/user_profile_page.dart';
 import '/widgets/bottom_navigation_panel.dart';
 import 'package:http/http.dart' as http;
@@ -7,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-// import 'package:hack_town_front/dtos/event_route.dart';
+import 'package:hack_town_front/dtos/event_route.dart';
+
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});
@@ -42,12 +44,15 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
   int selectedBudget = 1000;
   TimeOfDay selectedDuration = TimeOfDay(hour: 1, minute: 0);
 
+
   List<Map<String, String>> eventTypesData = [
     {"id": "dating", "label": "test_page.dating".tr()},
     {"id": "business_meet", "label": "test_page.business_meet".tr()},
     {"id": "walk", "label": "test_page.walk".tr()},
     {"id": "hang_out", "label": "test_page.hang_out".tr()},
   ];
+
+  List<EventRouteDTO> routes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +95,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
+
                   ),
                   const SizedBox(height: 20),
                   Container(
@@ -182,6 +188,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+
                 ],
               ),
             ),
@@ -321,17 +328,15 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
           final response = await sendDataToServer(data);
           Map<String, dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
 
-          // List<dynamic> list = responseData[""];
-          // List<EventRouteDTO> routes = [];
-          //
-          // for(var item in list){
-          //   Map<String, dynamic> map = item;
-          //   routes.add(EventRouteDTO.fromMap(map));
-          // }
-          
-          
-          // EventRouteDTO route = EventRouteDTO.fromMap(responseData);
-          print("---");
+          List<dynamic> list = responseData["routes"];
+
+          for(var item in list){
+            Map<String, dynamic> map = item;
+            routes.add(EventRouteDTO.fromMap(map));
+          }
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => RoutePage(routeData: routes))
+          );
         },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(

@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hack_town_front/widgets/iFrame.dart';
+import 'package:hack_town_front/dtos/event_route.dart';
+import '/pages/route_pages/cinema_page.dart';
+import '/pages/route_pages/restaurant_page.dart';
+import '/pages/route_pages/shop_page.dart';
+import '/pages/route_pages/parking_page.dart';
 
 class RouteButtons extends StatelessWidget {
-  const RouteButtons({super.key});
+  List<EventRouteDTO>? eventRoutes;
+  RouteButtons(this.eventRoutes, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +18,7 @@ class RouteButtons extends StatelessWidget {
         children: [
           buildDropdownItem(
             context,
-            "Cinema",
+            eventRoutes![0].name,
             Icons.movie,
             () {
               Navigator.push(
@@ -27,7 +33,7 @@ class RouteButtons extends StatelessWidget {
           ),
           buildDropdownItem(
             context,
-            "Restaurant",
+            eventRoutes![1].name,
             Icons.restaurant,
             () {
               Navigator.push(
@@ -42,7 +48,7 @@ class RouteButtons extends StatelessWidget {
           ),
           buildDropdownItem(
             context,
-            "Shop",
+            eventRoutes![2].name,
             Icons.shopping_cart,
             () {
               Navigator.push(
@@ -57,7 +63,7 @@ class RouteButtons extends StatelessWidget {
           ),
           buildDropdownItem(
             context,
-            "Parking",
+            eventRoutes![3].name,
             Icons.local_parking,
             () {
               Navigator.push(
