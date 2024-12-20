@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import '/pages/route_pages/cinema_page.dart';
-import '/pages/route_pages/restaurant_page.dart';
-import '/pages/route_pages/shop_page.dart';
-import '/pages/route_pages/parking_page.dart';
+import 'package:hack_town_front/widgets/iFrame.dart';
 
 class RouteButtons extends StatelessWidget {
   const RouteButtons({super.key});
@@ -20,7 +17,11 @@ class RouteButtons extends StatelessWidget {
             () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const CinemaPage()),
+                MaterialPageRoute(
+                  builder: (context) => const IFramePage(
+                    url: "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U&origin=48.4651772,35.0437122&destination=48.4682922,35.0400722&waypoints=48.4655,35.054|48.4656,35.0545",
+                  ),
+                ),
               );
             },
           ),
@@ -31,7 +32,11 @@ class RouteButtons extends StatelessWidget {
             () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const RestaurantPage()),
+                MaterialPageRoute(
+                  builder: (context) => const IFramePage(
+                    url: "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U&origin=48.4651772,35.0437122&destination=48.4682922,35.0400722&waypoints=48.4655,35.054|48.4656,35.0545",
+                  ),
+                ),
               );
             },
           ),
@@ -42,7 +47,11 @@ class RouteButtons extends StatelessWidget {
             () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ShopPage()),
+                MaterialPageRoute(
+                  builder: (context) => const IFramePage(
+                    url: "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U&origin=48.4651772,35.0437122&destination=48.4682922,35.0400722&waypoints=48.4655,35.054|48.4656,35.0545",
+                  ),
+                ),
               );
             },
           ),
@@ -53,7 +62,11 @@ class RouteButtons extends StatelessWidget {
             () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ParkingPage()),
+                MaterialPageRoute(
+                  builder: (context) => const IFramePage(
+                    url: "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U&origin=48.4651772,35.0437122&destination=48.4682922,35.0400722&waypoints=48.4655,35.054|48.4656,35.0545",
+                  ),
+                ),
               );
             },
           ),
