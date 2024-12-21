@@ -1,15 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:hack_town_front/widgets/iFrame.dart';
-import 'package:hack_town_front/dtos/event_route.dart';
-import '../main.dart';
-import '/pages/route_pages/cinema_page.dart';
-import '/pages/route_pages/restaurant_page.dart';
-import '/pages/route_pages/shop_page.dart';
-import '/pages/route_pages/parking_page.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+
+class MapScreen extends StatelessWidget {
+  final LatLng initialPosition;
+
+  const MapScreen({super.key, required this.initialPosition});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter Map'),
+        backgroundColor: Colors.blue,
+      ),
+      body: FlutterMap(
+        options: MapOptions(
+          center: initialPosition,
+          zoom: 6.0,
+        ),
+        children: [
+          TileLayer(
+            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            subdomains: ['a', 'b', 'c'],
+          ),
+          MarkerLayer(
+            markers: [
+              Marker(
+                point: initialPosition,
+                builder: (ctx) => const Icon(
+                  Icons.location_on,
+                  color: Colors.red,
+                  size: 40.0,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class RouteButtons extends StatelessWidget {
-  List<EventRouteDTO>? eventRoutes;
-  RouteButtons(this.eventRoutes, {super.key});
+  const RouteButtons({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,59 +53,14 @@ class RouteButtons extends StatelessWidget {
         children: [
           buildDropdownItem(
             context,
-            eventRoutes![0].name,
-            Icons.movie,
+            "Show Ukraine Map",
+            Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const IFramePage(
-                    url: "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U&origin=48.4651772,35.0437122&destination=48.4682922,35.0400722&waypoints=48.4655,35.054|48.4656,35.0545",
-                  ),
-                ),
-              );
-            },
-          ),
-          buildDropdownItem(
-            context,
-            eventRoutes![1].name,
-            Icons.restaurant,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const IFramePage(
-                    url: "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U&origin=48.4651772,35.0437122&destination=48.4682922,35.0400722&waypoints=48.4655,35.054|48.4656,35.0545",
-                  ),
-                ),
-              );
-            },
-          ),
-          buildDropdownItem(
-            context,
-            eventRoutes![2].name,
-            Icons.shopping_cart,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const IFramePage(
-                    url: "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U&origin=48.4651772,35.0437122&destination=48.4682922,35.0400722&waypoints=48.4655,35.054|48.4656,35.0545",
-                  ),
-                ),
-              );
-            },
-          ),
-          buildDropdownItem(
-            context,
-            eventRoutes![3].name,
-            Icons.local_parking,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const IFramePage(
-                    url: "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U&origin=48.4651772,35.0437122&destination=48.4682922,35.0400722&waypoints=48.4655,35.054|48.4656,35.0545",
+                  builder: (context) => MapScreen(
+                    initialPosition: LatLng(48.3794, 31.1656),
                   ),
                 ),
               );

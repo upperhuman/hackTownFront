@@ -59,7 +59,7 @@ class _DesktopRoutePageState extends State<DesktopRoutePage> {
                   fontSize: 24, 
                 ),
               ),
-                RouteButtons(widget.routeData),
+                RouteButtons(),
               ],
             ),
           ),
@@ -114,7 +114,7 @@ class _MobileRoutePageState extends State<MobileRoutePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                RouteButtons(widget.routeData),
+                RouteButtons(),
               ],
             ),
           ),

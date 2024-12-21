@@ -1,54 +1,21 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:webview_flutter_android/webview_flutter_android.dart';
-import '/pages/main_pages/main_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '/pages/main_pages/main_page.dart';
+import 'package:flutter/material.dart';
+import 'dart:io';
 
 final themeNotifier = ValueNotifier(ThemeMode.light);
 
-class IFramePage extends StatelessWidget {
-  final String url;
-  const IFramePage({Key? key, required this.url}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("IFrame Viewer"),
-      ),
-      body: WebView(
-        initialUrl: url,
-        javascriptMode: JavascriptMode.unrestricted,
-      ),
-    );
-  }
-}
-
 void main() async {
-  // Ensure Flutter bindings are initialized first
-  WidgetsFlutterBinding.ensureInitialized();
-  
   // Initialize localization
   await EasyLocalization.ensureInitialized();
   
   // Load environment variables
   await dotenv.load(fileName: "assets/.env");
   
-  // Initialize WebView platform
-  if (WebViewPlatform.instance == null) {
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      WebViewPlatform.instance = AndroidWebViewPlatform();
-    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-      WebViewPlatform.instance = CupertinoWebViewPlatform();
-    }
-  }
+  WidgetsFlutterBinding.ensureInitialized();
   
-  HttpOverrides.global = new DevHttpOverrides();
-
+  HttpOverrides.global = DevHttpOverrides();
 
   runApp(
     EasyLocalization(
