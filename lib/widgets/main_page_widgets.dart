@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CustomDropdown extends StatelessWidget {
   final String label;
@@ -165,19 +166,47 @@ class FindButton extends StatelessWidget {
         onPressed: () async {
           // Log the collected data
           print('Collected data: $data');
-          final response = await sendDataToServer(data);
-          Map<String, dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
 
-          List<dynamic> list = responseData["routes"];
-          List<EventRouteDTO> routes = [];
-          for (var item in list) {
-            Map<String, dynamic> map = item;
-            routes.add(EventRouteDTO.fromMap(map));
-          }
-
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => RoutePage(routeData: routes)),
+          // Show loading dialog
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return const Center(
+                child: SpinKitFadingCircle(
+                  size: 150,
+                  color: Colors.white,
+                ),
+              );
+            },
           );
+
+          try {
+            final response = await sendDataToServer(data);
+            Map<String, dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+
+            List<dynamic> list = responseData["routes"];
+            List<EventRouteDTO> routes = [];
+            for (var item in list) {
+              Map<String, dynamic> map = item;
+              routes.add(EventRouteDTO.fromMap(map));
+            }
+
+            // Dismiss the loading dialog
+            Navigator.of(context, rootNavigator: true).pop();
+
+            // Navigate to the RoutePage
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => RoutePage(routeData: routes)),
+            );
+
+          } catch (e) {
+            // Handle error and dismiss the loading dialog
+            Navigator.of(context, rootNavigator: true).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Error: $e')),
+            );
+          }
         },
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 40.0),
