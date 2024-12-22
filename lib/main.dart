@@ -4,7 +4,7 @@ import '/pages/main_pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-final themeNotifier = ValueNotifier(ThemeMode.light);
+final themeNotifier = ValueNotifier(ThemeMode.system);
 
 void main() async {
   // Initialize localization

@@ -225,11 +225,6 @@ class FindButton extends StatelessWidget {
 }
 
 Future<http.Response> sendDataToServer(Map<String, dynamic> data) async {
-    final client = HttpClient()
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-
-
     try {
 
       var request = await http.post(
@@ -245,8 +240,8 @@ Future<http.Response> sendDataToServer(Map<String, dynamic> data) async {
       // final response = await request.close();
 
       return request;
-    } finally {
-      client.close();
+    } catch (e) {
+      throw Exception('Error: $e');
     }
   }
 
