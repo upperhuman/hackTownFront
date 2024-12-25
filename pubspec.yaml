@@ -78,7 +78,7 @@ flutter:
     - assets/images/SettingsBackgroundBlack.jpg
     - assets/images/SettingsBackgroundBlack2.jpg
     - assets/translations/
-    - assets/.env
+    - assets/new.env
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

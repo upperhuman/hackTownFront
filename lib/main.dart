@@ -12,7 +12,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   
   // Load environment variables
-  await dotenv.load(fileName: "assets/.env");
+  await dotenv.load(fileName: "assets/new.env");
   
   WidgetsFlutterBinding.ensureInitialized();
   
