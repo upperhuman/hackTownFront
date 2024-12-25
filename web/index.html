@@ -2,20 +2,20 @@
 <html>
 <head>
   <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+   If you are serving your web app in a path other than the root, change the
+   href value below to reflect the base path you are serving from.
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
+   The path provided below has to start and end with a slash "/" in order for
+   it to work correctly.
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+   For more details:
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
 
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
+   This is a placeholder for base href that will be replaced by the value of
+   the `--base-href` argument provided to `flutter build`.
+ -->
+
   <base href="$FLUTTER_BASE_HREF">
-
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
@@ -32,8 +32,6 @@
   <title>hack_town_front</title>
   <link rel="manifest" href="manifest.json">
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U" loading="async"></script>
-
   <script>
     // The value below is injected by flutter build, do not touch.
     const serviceWorkerVersion = null;
@@ -42,8 +40,20 @@
   <script src="flutter.js" defer></script>
 </head>
 <body>
-  <script>
-    window.addEventListener('load', function(ev) {
+<script>
+  window.addEventListener('load', async function(ev) {
+    try {
+      // Load environment variables from assets/new.env
+      const response = await fetch('assets/new.env');
+      const envConfig = await response.text();
+      const GOOGLE_MAP_API = envConfig.match(/GOOGLE_MAP_API='(.*)'/)[1];
+
+      // Dynamically add Google Maps script with API key
+      const mapScript = document.createElement('script');
+      mapScript.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API}`;
+      mapScript.async = true;
+      document.head.appendChild(mapScript);
+
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
@@ -55,7 +65,10 @@
           });
         }
       });
-    });
-  </script>
+    } catch (error) {
+      console.error('Error loading environment variables:', error);
+    }
+  });
+</script>
 </body>
 </html>
