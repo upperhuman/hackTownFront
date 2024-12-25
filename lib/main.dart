@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import '/widgets/tracking_google_map.dart';
 
-final themeNotifier = ValueNotifier(ThemeMode.light);
+final themeNotifier = ValueNotifier(ThemeMode.system);
 
 void main() async {
   // Initialize localization
