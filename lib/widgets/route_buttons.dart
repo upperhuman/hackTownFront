@@ -1,48 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
-class MapScreen extends StatelessWidget {
-  final LatLng initialPosition;
-
-  const MapScreen({super.key, required this.initialPosition});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter Map'),
-        backgroundColor: Colors.blue,
-      ),
-      body: FlutterMap(
-        options: MapOptions(
-          center: initialPosition,
-          zoom: 6.0,
-        ),
-        children: [
-          TileLayer(
-            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            subdomains: ['a', 'b', 'c'],
-          ),
-          MarkerLayer(
-            markers: [
-              Marker(
-                point: initialPosition,
-                builder: (ctx) => const Icon(
-                  Icons.location_on,
-                  color: Colors.red,
-                  size: 40.0,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class RouteButtons extends StatelessWidget {
+/*class RouteButtons extends StatelessWidget {
   const RouteButtons({super.key});
 
   @override
@@ -58,7 +17,7 @@ class RouteButtons extends StatelessWidget {
             () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                /MaterialPageRoute(
                   builder: (context) => MapScreen(
                     initialPosition: LatLng(48.3794, 31.1656),
                   ),
@@ -104,4 +63,4 @@ class RouteButtons extends StatelessWidget {
       ),
     );
   }
-}
+}*/
