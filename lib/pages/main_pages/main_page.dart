@@ -5,6 +5,7 @@ import '/pages/main_pages/user_profile_page.dart';
 import '/widgets/main_page_widgets.dart';
 import '/widgets/navigation_panel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});
@@ -197,6 +198,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  HtmlWidget('''"<iframe title="YouTube video player" src="https://www.youtube.com/embed/yRlwOdCK7Ho"</iframe>"''')
                 ],
               ),
             ),
