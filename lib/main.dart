@@ -1,46 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '/pages/main_pages/main_page.dart';
+import 'package:flutter/material.dart';
+import 'dart:io';
 
 final themeNotifier = ValueNotifier(ThemeMode.light);
 
-class IFramePage extends StatelessWidget {
-  final String url;
-  const IFramePage({Key? key, required this.url}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("IFrame Viewer"),
-      ),
-      body: WebView(
-        initialUrl: url,
-        javascriptMode: JavascriptMode.unrestricted,
-      ),
-    );
-  }
-}
-
 void main() async {
-  // Ensure Flutter bindings are initialized first
-  WidgetsFlutterBinding.ensureInitialized();
-  
   // Initialize localization
   await EasyLocalization.ensureInitialized();
   
   // Load environment variables
-  await dotenv.load(fileName: "assets/.env");
+  await dotenv.load(fileName: "assets/new.env");
   
-  // Initialize WebView platform
-  if (WebViewPlatform.instance == null) {
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      WebViewPlatform.instance = AndroidWebViewPlatform();
-    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-      WebViewPlatform.instance = CupertinoWebViewPlatform();
-    }
-  }
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  HttpOverrides.global = DevHttpOverrides();
 
   runApp(
     EasyLocalization(
@@ -50,7 +25,7 @@ void main() async {
       ],
       path: 'assets/translations',
       fallbackLocale: const Locale('en', 'US'),
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 }
@@ -140,5 +115,13 @@ class ThemedImageWidget extends StatelessWidget {
         return Image.asset(imagePath);
       },
     );
+  }
+}
+
+class DevHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(final SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }

@@ -4,19 +4,25 @@ import 'package:easy_localization/easy_localization.dart';
 import '/widgets/bottom_navigation_panel.dart';
 import '/widgets/navigation_panel.dart';
 import 'package:flutter/material.dart';
+import 'package:hack_town_front/dtos/event_route.dart';
 
 // Route page
 class RoutePage extends StatelessWidget {
-  const RoutePage({super.key});
+  final List<EventRouteDTO>? routeData;
+
+  const RoutePage({
+    super.key,
+    this.routeData,
+  });
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth < constraints.maxHeight) {
-          return const MobileRoutePage();
+          return  MobileRoutePage(routeData: routeData);
         } else {
-          return const DesktopRoutePage();
+          return  DesktopRoutePage(routeData: routeData);
         }
       },
     );
@@ -25,7 +31,8 @@ class RoutePage extends StatelessWidget {
 
 // Route Page Desktop
 class DesktopRoutePage extends StatefulWidget {
-  const DesktopRoutePage({super.key});
+  final List<EventRouteDTO>? routeData;
+  const DesktopRoutePage({super.key,this.routeData,});
 
   @override
   State<DesktopRoutePage> createState() => _DesktopRoutePageState();
@@ -52,7 +59,7 @@ class _DesktopRoutePageState extends State<DesktopRoutePage> {
                   fontSize: 24, 
                 ),
               ),
-                const RouteButtons(),
+                RouteButtons(),
               ],
             ),
           ),
@@ -89,7 +96,8 @@ class _DesktopRoutePageState extends State<DesktopRoutePage> {
 
 // Route Page Mobile
 class MobileRoutePage extends StatefulWidget {
-  const MobileRoutePage({super.key});
+  final List<EventRouteDTO>? routeData;
+  const MobileRoutePage({super.key, this.routeData,});
 
   @override
   State<MobileRoutePage> createState() => _MobileRoutePageState();
@@ -102,7 +110,7 @@ class _MobileRoutePageState extends State<MobileRoutePage> {
       body: Stack(
         children: [
           // Main content
-          const Expanded(
+         Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

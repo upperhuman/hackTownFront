@@ -2,11 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Приложению требуется доступ к вашему местоположению для отображения карт.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Приложению требуется постоянный доступ к вашему местоположению для навигации.</string>
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
+	<key>io.flutter.embedded_views_preview</key><true/>
+	<key>GMSApiKey</key>
+	<string>AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -34,6 +38,10 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
+	<string>To display and track location</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>To display and track location</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>

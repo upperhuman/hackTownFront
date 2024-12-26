@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hack_town_front/widgets/iFrame.dart';
+import 'package:hack_town_front/widgets/google_maps/tracking_google_map.dart';
 
 class RouteButtons extends StatelessWidget {
   const RouteButtons({super.key});
@@ -12,60 +12,52 @@ class RouteButtons extends StatelessWidget {
         children: [
           buildDropdownItem(
             context,
-            "Cinema",
-            Icons.movie,
+            "Show Ukraine Map",
+            Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const IFramePage(
-                    url: "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U&origin=48.4651772,35.0437122&destination=48.4682922,35.0400722&waypoints=48.4655,35.054|48.4656,35.0545",
-                  ),
+                  builder: (context) => GoogleMapsPage(),
                 ),
               );
             },
           ),
           buildDropdownItem(
             context,
-            "Restaurant",
-            Icons.restaurant,
+            "Show Ukraine Map",
+            Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const IFramePage(
-                    url: "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U&origin=48.4651772,35.0437122&destination=48.4682922,35.0400722&waypoints=48.4655,35.054|48.4656,35.0545",
-                  ),
+                  builder: (context) => GoogleMapsPage(),
                 ),
               );
             },
           ),
           buildDropdownItem(
             context,
-            "Shop",
-            Icons.shopping_cart,
+            "Show Ukraine Map",
+            Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const IFramePage(
-                    url: "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U&origin=48.4651772,35.0437122&destination=48.4682922,35.0400722&waypoints=48.4655,35.054|48.4656,35.0545",
-                  ),
+                  builder: (context) => GoogleMapsPage(),
                 ),
               );
             },
           ),
           buildDropdownItem(
             context,
-            "Parking",
-            Icons.local_parking,
+            "Show Ukraine Map",
+            Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const IFramePage(
-                    url: "https://www.google.com/maps/embed/v1/directions?key=AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U&origin=48.4651772,35.0437122&destination=48.4682922,35.0400722&waypoints=48.4655,35.054|48.4656,35.0545",
-                  ),
+                  builder: (context) => GoogleMapsPage(),
                 ),
               );
             },
