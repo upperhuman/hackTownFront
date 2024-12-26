@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:hack_town_front/widgets/google_maps/tracking_google_map.dart';
 
-/*class RouteButtons extends StatelessWidget {
+class RouteButtons extends StatelessWidget {
   const RouteButtons({super.key});
 
   @override
@@ -17,10 +17,47 @@ import 'package:latlong2/latlong.dart';
             () {
               Navigator.push(
                 context,
-                /MaterialPageRoute(
-                  builder: (context) => MapScreen(
-                    initialPosition: LatLng(48.3794, 31.1656),
-                  ),
+                MaterialPageRoute(
+                  builder: (context) => GoogleMapsPage(),
+                ),
+              );
+            },
+          ),
+          buildDropdownItem(
+            context,
+            "Show Ukraine Map",
+            Icons.map,
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GoogleMapsPage(),
+                ),
+              );
+            },
+          ),
+          buildDropdownItem(
+            context,
+            "Show Ukraine Map",
+            Icons.map,
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GoogleMapsPage(),
+                ),
+              );
+            },
+          ),
+          buildDropdownItem(
+            context,
+            "Show Ukraine Map",
+            Icons.map,
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GoogleMapsPage(),
                 ),
               );
             },
@@ -63,4 +100,4 @@ import 'package:latlong2/latlong.dart';
       ),
     );
   }
-}*/
+}

@@ -44,7 +44,10 @@ dependencies:
   latlong2: ^0.9.1
   google_maps_flutter: ^2.10.0
   google_maps_flutter_web: ^0.5.10
-  flutter_widget_from_html: ^0.15.3
+  geolocator: ^11.1.0
+  geolocator_web: ^3.0.0
+  flutter_polyline_points: ^2.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

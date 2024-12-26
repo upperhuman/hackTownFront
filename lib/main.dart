@@ -3,9 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/pages/main_pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import '/widgets/tracking_google_map.dart';
 
-final themeNotifier = ValueNotifier(ThemeMode.system);
+final themeNotifier = ValueNotifier(ThemeMode.light);
 
 void main() async {
   // Initialize localization
@@ -26,7 +25,7 @@ void main() async {
       ],
       path: 'assets/translations',
       fallbackLocale: const Locale('en', 'US'),
-      child: GoogleMapPage(),
+      child: MyApp(),
     ),
   );
 }
