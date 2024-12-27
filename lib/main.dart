@@ -7,6 +7,7 @@ import 'dart:io';
 final themeNotifier = ValueNotifier(ThemeMode.light);
 
 void main() async {
+
   // Initialize localization
   await EasyLocalization.ensureInitialized();
   
@@ -14,8 +15,6 @@ void main() async {
   await dotenv.load(fileName: "assets/new.env");
   
   WidgetsFlutterBinding.ensureInitialized();
-  
-  HttpOverrides.global = DevHttpOverrides();
 
   runApp(
     EasyLocalization(
@@ -115,13 +114,5 @@ class ThemedImageWidget extends StatelessWidget {
         return Image.asset(imagePath);
       },
     );
-  }
-}
-
-class DevHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(final SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
