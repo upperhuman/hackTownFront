@@ -1,7 +1,7 @@
 class EventRouteDTO{
   final int id;
   final String name;
-  late List<LocationDTO> locations;
+  List<LocationDTO> locations = [];
 
   EventRouteDTO(this.id,this.name);
 

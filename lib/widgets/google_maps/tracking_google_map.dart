@@ -27,32 +27,34 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 
   @override
   void initState() {
-    super.initState();
 
     getData();
+
+    super.initState();
 
     WidgetsBinding.instance
     .addPostFrameCallback((_) async => await fetchLocationUpdates());
   }
 
   void getData() async {
-    try {
-      var response = await http.get(
-          Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests/${widget.routeData.id}'),
+    http.Response response;
+    try{
+      response = await http.get(
+          Uri.parse('${dotenv.env["BASE_URL"]!}/api/EventRoutes/${widget.routeData.id}'),
           headers: {
             "Access-Control-Allow-Origin": "*",
             'Content-Type': 'application/json',
             'Accept': '*/*'
           }
       );
-      Map<String, dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+      List<dynamic> responseData = json.decode(utf8.decode(response.bodyBytes)).cast<dynamic>();
 
-      List<dynamic> list = responseData as List;
-      for (var item in list) {
-        Map<String, dynamic> map = item;
-        widget.routeData.locations.add(LocationDTO.fromMap(map));
+      // Clear existing locations and add new ones
+      widget.routeData.locations.clear();
+      for (var item in responseData) {
+        widget.routeData.locations.add(LocationDTO.fromMap(item));
       }
-    } catch (e) {
+    }catch(e){
       throw Exception('Error: $e');
     }
   }
