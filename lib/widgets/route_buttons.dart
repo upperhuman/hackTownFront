@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hack_town_front/widgets/google_maps/tracking_google_map.dart';
 
+import '../dtos/event_route.dart';
+
 class RouteButtons extends StatelessWidget {
-  const RouteButtons({super.key});
+  List<EventRouteDTO>? selectedValue;
+  RouteButtons(this.selectedValue ,{super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,52 +15,52 @@ class RouteButtons extends StatelessWidget {
         children: [
           buildDropdownItem(
             context,
-            "Show Ukraine Map",
+            selectedValue![0].name ?? "Show Ukraine Map",
             Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(),
+                  builder: (context) => GoogleMapsPage(selectedValue![0]),
                 ),
               );
             },
           ),
           buildDropdownItem(
             context,
-            "Show Ukraine Map",
+            selectedValue![1].name ?? "Show Ukraine Map",
             Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(),
+                  builder: (context) => GoogleMapsPage(selectedValue![1]),
                 ),
               );
             },
           ),
           buildDropdownItem(
             context,
-            "Show Ukraine Map",
+            selectedValue![2].name ?? "Show Ukraine Map",
             Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(),
+                  builder: (context) => GoogleMapsPage(selectedValue![2]),
                 ),
               );
             },
           ),
           buildDropdownItem(
             context,
-            "Show Ukraine Map",
+            selectedValue![3].name ?? "Show Ukraine Map",
             Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(),
+                  builder: (context) => GoogleMapsPage(selectedValue![3]),
                 ),
               );
             },

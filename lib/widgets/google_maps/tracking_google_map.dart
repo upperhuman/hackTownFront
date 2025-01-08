@@ -1,12 +1,18 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'package:http/http.dart' as http;
+
+import '../../dtos/event_route.dart';
 import '../../pages/main_pages/user_profile_page.dart';
 
 class GoogleMapsPage extends StatefulWidget {
-  const GoogleMapsPage({super.key});
+  EventRouteDTO routeData;
+  GoogleMapsPage(this.routeData, {super.key});
 
   @override
   State<GoogleMapsPage> createState() => _GoogleMapsPageState();
@@ -23,8 +29,32 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   void initState() {
     super.initState();
 
+    getData();
+
     WidgetsBinding.instance
     .addPostFrameCallback((_) async => await fetchLocationUpdates());
+  }
+
+  void getData() async {
+    try {
+      var response = await http.get(
+          Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests/${widget.routeData.id}'),
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            'Content-Type': 'application/json',
+            'Accept': '*/*'
+          }
+      );
+      Map<String, dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
+
+      List<dynamic> list = responseData as List;
+      for (var item in list) {
+        Map<String, dynamic> map = item;
+        widget.routeData.locations.add(LocationDTO.fromMap(map));
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
   }
 
   @override
