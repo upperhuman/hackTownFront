@@ -3,11 +3,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/pages/main_pages/main_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import '/widgets/tracking_google_map.dart';
 
-final themeNotifier = ValueNotifier(ThemeMode.system);
+final themeNotifier = ValueNotifier(ThemeMode.light);
 
 void main() async {
+
   // Initialize localization
   await EasyLocalization.ensureInitialized();
   
@@ -15,8 +15,6 @@ void main() async {
   await dotenv.load(fileName: "assets/new.env");
   
   WidgetsFlutterBinding.ensureInitialized();
-  
-  HttpOverrides.global = DevHttpOverrides();
 
   runApp(
     EasyLocalization(
@@ -26,7 +24,7 @@ void main() async {
       ],
       path: 'assets/translations',
       fallbackLocale: const Locale('en', 'US'),
-      child: GoogleMapPage(),
+      child: MyApp(),
     ),
   );
 }
@@ -116,13 +114,5 @@ class ThemedImageWidget extends StatelessWidget {
         return Image.asset(imagePath);
       },
     );
-  }
-}
-
-class DevHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(final SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }

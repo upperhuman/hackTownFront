@@ -38,6 +38,10 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
+	<string>To display and track location</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>To display and track location</key>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>

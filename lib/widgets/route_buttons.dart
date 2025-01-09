@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:hack_town_front/widgets/google_maps/tracking_google_map.dart';
 
-/*class RouteButtons extends StatelessWidget {
-  const RouteButtons({super.key});
+import '../dtos/event_route.dart';
+
+class RouteButtons extends StatelessWidget {
+  List<EventRouteDTO>? selectedValue;
+  RouteButtons(this.selectedValue ,{super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,15 +15,52 @@ import 'package:latlong2/latlong.dart';
         children: [
           buildDropdownItem(
             context,
-            "Show Ukraine Map",
+            selectedValue![0].name ?? "Show Ukraine Map",
             Icons.map,
             () {
               Navigator.push(
                 context,
-                /MaterialPageRoute(
-                  builder: (context) => MapScreen(
-                    initialPosition: LatLng(48.3794, 31.1656),
-                  ),
+                MaterialPageRoute(
+                  builder: (context) => GoogleMapsPage(selectedValue![0]),
+                ),
+              );
+            },
+          ),
+          buildDropdownItem(
+            context,
+            selectedValue![1].name ?? "Show Ukraine Map",
+            Icons.map,
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GoogleMapsPage(selectedValue![1]),
+                ),
+              );
+            },
+          ),
+          buildDropdownItem(
+            context,
+            selectedValue![2].name ?? "Show Ukraine Map",
+            Icons.map,
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GoogleMapsPage(selectedValue![2]),
+                ),
+              );
+            },
+          ),
+          buildDropdownItem(
+            context,
+            selectedValue![3].name ?? "Show Ukraine Map",
+            Icons.map,
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => GoogleMapsPage(selectedValue![3]),
                 ),
               );
             },
@@ -63,4 +103,4 @@ import 'package:latlong2/latlong.dart';
       ),
     );
   }
-}*/
+}

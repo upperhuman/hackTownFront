@@ -1,3 +1,4 @@
+
 import 'package:hack_town_front/pages/main_pages/route_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hack_town_front/dtos/event_route.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CustomDropdown extends StatelessWidget {
@@ -15,12 +15,12 @@ class CustomDropdown extends StatelessWidget {
   final ValueChanged<String?> onChanged;
 
   const CustomDropdown({
-    Key? key,
+    super.key,
     required this.label,
     required this.items,
     required this.selectedValue,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +75,11 @@ class TimePickerWidget extends StatelessWidget {
   final ValueChanged<TimeOfDay?> onChanged;
 
   const TimePickerWidget({
-    Key? key,
+    super.key,
     required this.label,
     required this.selectedTime,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -153,10 +153,10 @@ class FindButton extends StatelessWidget {
   final Future<http.Response> Function(Map<String, dynamic>) sendDataToServer;
 
   const FindButton({
-    Key? key,
+    super.key,
     required this.data,
     required this.sendDataToServer,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -206,6 +206,9 @@ class FindButton extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Error: $e')),
             );
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => RoutePage(routeData: [])),
+            );
           }
         },
         style: ElevatedButton.styleFrom(
@@ -225,31 +228,25 @@ class FindButton extends StatelessWidget {
 }
 
 Future<http.Response> sendDataToServer(Map<String, dynamic> data) async {
-    try {
-
-      var request = await http.post(
+  try {
+    var request = await http.post(
         Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests'),
         body: jsonEncode(data),
-        headers: {'Content-Type': 'application/json'}
-        );
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          'Content-Type': 'application/json',
+          'Accept': '*/*'
+        }
+    );
 
-      // final request = await client.postUrl(
-      //     Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests'));
-      // request.headers.set('Content-Type', 'application/json; charset=UTF-8');
-      // request.write(jsonEncode(data));
-      // final response = await request.close();
+    // final request = await client.postUrl(
+    //     Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests'));
+    // request.headers.set('Content-Type', 'application/json; charset=UTF-8');
+    // request.write(jsonEncode(data));
+    // final response = await request.close();
 
-      return request;
-    } catch (e) {
-      throw Exception('Error: $e');
-    }
+    return request;
+  } catch (e) {
+    throw Exception('Error: $e');
   }
-
-  // Future<http.Response> convertHttpClientResponseToHttpResponse(HttpClientResponse response) async {
-  //   final responseData = await response.transform(utf8.decoder).join();
-  //   final headers = <String, String>{};
-  //   response.headers.forEach((name, values) {
-  //     headers[name] = values.join(', ');
-  //   });
-  //   return http.Response(responseData, response.statusCode, headers: headers);
-  // }
+}
