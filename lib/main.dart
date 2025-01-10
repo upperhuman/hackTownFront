@@ -6,14 +6,13 @@ import 'package:flutter/material.dart';
 final themeNotifier = ValueNotifier(ThemeMode.light);
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize localization
   await EasyLocalization.ensureInitialized();
   
   // Load environment variables
   await dotenv.load(fileName: "assets/new.env");
-  
-  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
     EasyLocalization(
