@@ -1,4 +1,5 @@
 
+import 'package:flutter/foundation.dart';
 import 'package:hack_town_front/pages/main_pages/route_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hack_town_front/dtos/event_route.dart';
@@ -165,7 +166,9 @@ class FindButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () async {
           // Log the collected data
-          print('Collected data: $data');
+          if (kDebugMode) {
+            print('Collected data: $data');
+          }
 
           // Show loading dialog
           showDialog(
@@ -180,7 +183,8 @@ class FindButton extends StatelessWidget {
               );
             },
           );
-
+          final navigator = Navigator.of(context, rootNavigator: true);
+          final scaffoldMessenger = ScaffoldMessenger.of(context);
           try {
             final response = await sendDataToServer(data);
             Map<String, dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
@@ -193,20 +197,20 @@ class FindButton extends StatelessWidget {
             }
 
             // Dismiss the loading dialog
-            Navigator.of(context, rootNavigator: true).pop();
+            navigator.pop();
 
             // Navigate to the RoutePage
-            Navigator.of(context).push(
+            navigator.push(
               MaterialPageRoute(builder: (context) => RoutePage(routeData: routes)),
             );
 
           } catch (e) {
             // Handle error and dismiss the loading dialog
-            Navigator.of(context, rootNavigator: true).pop();
-            ScaffoldMessenger.of(context).showSnackBar(
+            navigator.pop();
+            scaffoldMessenger.showSnackBar(
               SnackBar(content: Text('Error: $e')),
             );
-            Navigator.of(context).push(
+            navigator.push(
               MaterialPageRoute(builder: (context) => RoutePage(routeData: [])),
             );
           }
