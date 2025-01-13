@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
+import '../../widgets/positionated_buttons.dart';
 import '../settings_pages/settings_notifications.dart';
-import '../settings_pages/settings_language.dart';
+import '../settings_pages/language.dart/settings_language.dart';
 import '../settings_pages/settings_security.dart';
 import '../settings_pages/settings_region.dart';
 import '../settings_pages/settings_theme.dart';
@@ -17,16 +18,7 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            left: 0,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              iconSize: 45,
-            ),
-          ),
+          PositionatedButtons(),
           const Center(
             child: SettingsButtons(), // Вставляем кнопки в центр
           ),

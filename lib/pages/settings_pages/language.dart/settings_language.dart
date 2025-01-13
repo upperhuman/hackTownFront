@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hack_town_front/main.dart';
-import 'package:hack_town_front/widgets/language_picker.dart';
+import 'package:hack_town_front/pages/settings_pages/language.dart/language_picker.dart';
+import 'package:hack_town_front/widgets/positionated_buttons.dart';
 // import 'package:easy_localization/easy_localization.dart';
 
 class SettingsLanguagePage extends StatelessWidget {
@@ -14,16 +15,7 @@ class SettingsLanguagePage extends StatelessWidget {
           Positioned.fill(
             child: ThemedImageWidget(),
             ),
-          Positioned(
-            left: 0,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              iconSize: 45,
-            ),
-          ),
+          PositionatedButtons(),
           const Align(
             child: LanguageButtons(),
           ),

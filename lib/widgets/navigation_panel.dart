@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '/pages/main_pages/location_page.dart';
-import '/pages/main_pages/route_page.dart';
+import '../pages/route_page/route_page.dart';
 import '/pages/main_pages/calendar_page.dart';
 import '/pages/main_pages/history_page.dart';
 import '/pages/main_pages/settings_page.dart';

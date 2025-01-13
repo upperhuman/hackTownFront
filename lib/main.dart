@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/pages/main_pages/main_page.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 
 final themeNotifier = ValueNotifier(ThemeMode.light);
 

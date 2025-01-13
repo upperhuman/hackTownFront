@@ -7,8 +7,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:http/http.dart' as http;
 
-import '../../dtos/event_route.dart';
-import '../../pages/main_pages/user_profile_page.dart';
+import '../dtos/event_route.dart';
+import '../pages/main_pages/user_profile_page.dart';
 
 class GoogleMapsPage extends StatefulWidget {
   EventRouteDTO routeData;

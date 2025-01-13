@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:hack_town_front/dtos/event_route.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/pages/main_pages/user_profile_page.dart';
-import '/widgets/main_page_widgets.dart';
+import 'main_page_widgets.dart';
 import '/widgets/navigation_panel.dart';
 import 'package:flutter/material.dart';
 
