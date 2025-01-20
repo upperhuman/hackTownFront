@@ -48,6 +48,7 @@ dependencies:
   geolocator_web: ^3.0.0
   flutter_polyline_points: ^2.1.0
   dio: ^5.7.0
+  speech_to_text: ^7.0.0
 
 dev_dependencies:
   flutter_test:
@@ -66,16 +67,6 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   uses-material-design: true
-  fonts:
-    - family: InknutAntiqua
-      fonts:
-        - asset: assets\fonts\InknutAntiqua-Black.ttf
-        - asset: assets\fonts\InknutAntiqua-Bold.ttf
-        - asset: assets\fonts\InknutAntiqua-ExtraBold.ttf
-        - asset: assets\fonts\InknutAntiqua-Light.ttf
-        - asset: assets\fonts\InknutAntiqua-Medium.ttf
-        - asset: assets\fonts\InknutAntiqua-Regular.ttf
-        - asset: assets\fonts\InknutAntiqua-SemiBold.ttf
   assets:
     - assets/images/SettingsBackground.jpg
     - assets/images/SettingsBackground2.jpg

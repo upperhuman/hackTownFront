@@ -46,7 +46,7 @@ class _DesktopRoutePageState extends State<DesktopRoutePage> {
       body: Stack(
         children: [
           // Navigation panel for Desktop 
-          const NavigationPanel(),
+          NavigationPanel(),
           // Main content
           Expanded(
             child: Column(

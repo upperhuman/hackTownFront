@@ -94,7 +94,7 @@ class TimePickerWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(15.0),
+              borderRadius: BorderRadius.circular(15),
             ),
             child: ElevatedButton(
               onPressed: () async {
@@ -212,11 +212,12 @@ class FindButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          backgroundColor: Colors.black12,
+          backgroundColor: Colors.transparent,
+          foregroundColor: Theme.of(context).textTheme.bodyLarge?.color,
         ),
         child: Text(
           "test_page.find".tr(),
-          style: const TextStyle(fontSize: 18, color: Colors.white),
+          style: const TextStyle(fontSize: 15, color: Colors.white),
         ),
       ),
     );

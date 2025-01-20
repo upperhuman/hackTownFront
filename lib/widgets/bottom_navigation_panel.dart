@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hack_town_front/pages/main_pages/settings_page.dart';
+import '/pages/settings_pages/settings_page.dart';
 import '/pages/main_pages/location_page.dart';
 import '../pages/route_page/route_page.dart';
 import '/pages/main_pages/calendar_page.dart';
@@ -62,7 +62,7 @@ class BottomNavigationPanel extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const SettingsPage()),
+                MaterialPageRoute(builder: (context) => SettingsPage()),
               );
             },
             iconSize: 35,

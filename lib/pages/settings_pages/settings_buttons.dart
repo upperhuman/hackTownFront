@@ -1,43 +1,25 @@
 import 'package:easy_localization/easy_localization.dart';
-import '../../widgets/positionated_buttons.dart';
-import '../settings_pages/settings_notifications.dart';
-import '../settings_pages/language.dart/settings_language.dart';
-import '../settings_pages/settings_security.dart';
-import '../settings_pages/settings_region.dart';
-import '../settings_pages/settings_theme.dart';
-import '../settings_pages/settings_faq.dart';
 import 'package:flutter/material.dart';
+import 'language.dart/settings_language.dart';
+import 'settings_faq.dart';
+import 'settings_notifications.dart';
+import 'settings_region.dart';
+import 'settings_security.dart';
+import 'settings_theme.dart';
 
-
-// Settings Page
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          PositionatedButtons(),
-          const Center(
-            child: SettingsButtons(), // Вставляем кнопки в центр
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// Buttons on the Settings page
 class SettingsButtons extends StatelessWidget {
   const SettingsButtons({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center, // Центровка по вертикали
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.transparent, // Убирает фон
+            foregroundColor: Theme.of(context).textTheme.bodyLarge?.color, // Цвет текста
+          ),
           child: Text(
             "settings_page.language".tr(),
             style: TextStyle(
@@ -48,12 +30,16 @@ class SettingsButtons extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SettingsLanguagePage()),
+              MaterialPageRoute(builder: (context) => LanguagePage()),
             );
           },
         ),
         const SizedBox(height: 20),
         TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.transparent, // Убирает фон
+            foregroundColor: Theme.of(context).textTheme.bodyLarge?.color, // Цвет текста
+          ),
           child: Text(
             "settings_page.region".tr(),
             style: TextStyle(
@@ -70,6 +56,10 @@ class SettingsButtons extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.transparent, // Убирает фон
+            foregroundColor: Theme.of(context).textTheme.bodyLarge?.color, // Цвет текста
+          ),
           child: Text(
             "settings_page.theme".tr(),
             style: TextStyle(
@@ -86,6 +76,10 @@ class SettingsButtons extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.transparent, // Убирает фон
+            foregroundColor: Theme.of(context).textTheme.bodyLarge?.color, // Цвет текста
+          ),
           child: Text(
             "settings_page.security".tr(),
             style: TextStyle(
@@ -102,6 +96,10 @@ class SettingsButtons extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.transparent, // Убирает фон
+            foregroundColor: Theme.of(context).textTheme.bodyLarge?.color, // Цвет текста
+          ),
           child: Text(
             "settings_page.notifications".tr(),
             style: TextStyle(
@@ -118,6 +116,10 @@ class SettingsButtons extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.transparent, // Убирает фон
+            foregroundColor: Theme.of(context).textTheme.bodyLarge?.color, // Цвет текста
+          ),
           child: Text(
             "settings_page.faq".tr(),
             style: TextStyle(

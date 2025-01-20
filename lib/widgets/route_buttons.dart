@@ -5,7 +5,7 @@ import '../dtos/event_route.dart';
 
 class RouteButtons extends StatelessWidget {
 
-  const RouteButtons(this.selectedValue ,{super.key});
+  const RouteButtons(this.selectedValue, {super.key});
 
   final List<EventRouteDTO>? selectedValue;
 
@@ -14,60 +14,27 @@ class RouteButtons extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          buildDropdownItem(
+        children: selectedValue?.map((route) {
+          return buildDropdownItem(
             context,
-            selectedValue?[0].name ?? "Show Ukraine Map",
+            route.name,
             Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(selectedValue![0]),
+                  builder: (context) => GoogleMapsPage(route),
                 ),
               );
             },
-          ),
-          buildDropdownItem(
-            context,
-            selectedValue?[1].name ?? "Show Ukraine Map",
-            Icons.map,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(selectedValue![1]),
-                ),
-              );
-            },
-          ),
-          buildDropdownItem(
-            context,
-            selectedValue?[2].name ?? "Show Ukraine Map",
-            Icons.map,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(selectedValue![2]),
-                ),
-              );
-            },
-          ),
-          buildDropdownItem(
-            context,
-            selectedValue?[3].name ?? "Show Ukraine Map",
-            Icons.map,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(selectedValue![3]),
-                ),
-              );
-            },
-          ),
-        ],
+          );
+        }).toList() ??
+            [
+              Text(
+                "No routes available",
+                style: const TextStyle(fontSize: 16, color: Colors.black),
+              ),
+            ],
       ),
     );
   }

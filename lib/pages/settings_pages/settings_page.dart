@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
-import 'language_picker.dart';
+import 'settings_buttons.dart';
 
-class LanguagePage extends StatelessWidget {
-  const LanguagePage({super.key});
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth < constraints.maxHeight) {
-          return const MobileLanguagePage();
+          return const MobileSettingsPage();
         } else {
-          return const DesktopLanguagePage();
+          return const DesktopSettingsPage();
         }
       },
     );
   }
 }
 
-class DesktopLanguagePage extends StatefulWidget {
-  const DesktopLanguagePage({super.key});
+class DesktopSettingsPage extends StatefulWidget {
+  const DesktopSettingsPage({super.key});
 
   @override
-  State<DesktopLanguagePage> createState() => _DesktopLanguagePageState();
+  State<DesktopSettingsPage> createState() => _DesktopSettingsPageState();
 }
 
-class _DesktopLanguagePageState extends State<DesktopLanguagePage> {
-  
+class _DesktopSettingsPageState extends State<DesktopSettingsPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/SettingsBackground2.jpg'),
+            image: AssetImage('assets/images/SettingsBackground.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -42,15 +42,18 @@ class _DesktopLanguagePageState extends State<DesktopLanguagePage> {
             Positioned(
               left: 0,
               child: IconButton(
-                icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
                 iconSize: 40,
               ),
             ),
-            const Align(
-              child: LanguageButtons(),
+            const Center(
+              child: SettingsButtons(),
             ),
           ],
         ),
@@ -59,22 +62,22 @@ class _DesktopLanguagePageState extends State<DesktopLanguagePage> {
   }
 }
 
-class MobileLanguagePage extends StatefulWidget {
-  const MobileLanguagePage({super.key});
+class MobileSettingsPage extends StatefulWidget {
+  const MobileSettingsPage({super.key});
 
   @override
-  State<MobileLanguagePage> createState() => _MobileLanguagePageState();
+  State<MobileSettingsPage> createState() => _MobileSettingsPageState();
 }
 
-class _MobileLanguagePageState extends State<MobileLanguagePage> {
-  
+class _MobileSettingsPageState extends State<MobileSettingsPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/SettingsBackground2.jpg'),
+            image: AssetImage('assets/images/SettingsBackground.jpg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -84,15 +87,18 @@ class _MobileLanguagePageState extends State<MobileLanguagePage> {
               left: 5,
               top: 25,
               child: IconButton(
-                icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: Theme.of(context).iconTheme.color,
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
                 iconSize: 35,
               ),
             ),
-            const Align(
-              child: LanguageButtons(),
+            const Center(
+              child: SettingsButtons(),
             ),
           ],
         ),

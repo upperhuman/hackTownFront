@@ -96,21 +96,3 @@ class MyApp extends StatelessWidget {
     });
   }
 }
-
-class ThemedImageWidget extends StatelessWidget {
-  const ThemedImageWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder<ThemeMode>(
-      valueListenable: themeNotifier,
-      builder: (context, themeMode, child) {
-        final imagePath = themeMode == ThemeMode.dark
-            ? 'assets/images/dark_theme_image.png'
-            : 'assets/images/light_theme_image.png';
-
-        return Image.asset(imagePath);
-      },
-    );
-  }
-}
