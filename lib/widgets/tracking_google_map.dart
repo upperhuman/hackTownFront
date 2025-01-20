@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
@@ -11,8 +12,8 @@ import '../dtos/event_route.dart';
 import '../pages/main_pages/user_profile_page.dart';
 
 class GoogleMapsPage extends StatefulWidget {
-  EventRouteDTO routeData;
-  GoogleMapsPage(this.routeData, {super.key});
+  final EventRouteDTO routeData;
+  const GoogleMapsPage(this.routeData, {super.key});
 
   @override
   State<GoogleMapsPage> createState() => _GoogleMapsPageState();
@@ -144,9 +145,13 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
         currentPosition = LatLng(position.latitude, position.longitude);
       });
 
-      print('Current position: $currentPosition');
+      if (kDebugMode) {
+        print('Current position: $currentPosition');
+      }
     } catch (e) {
-      print('Error occurred: $e');
+      if (kDebugMode) {
+        print('Error occurred: $e');
+      }
     }
   }
 }

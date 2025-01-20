@@ -4,8 +4,10 @@ import 'package:hack_town_front/widgets/tracking_google_map.dart';
 import '../dtos/event_route.dart';
 
 class RouteButtons extends StatelessWidget {
-  List<EventRouteDTO>? selectedValue;
-  RouteButtons(this.selectedValue ,{super.key});
+
+  const RouteButtons(this.selectedValue ,{super.key});
+
+  final List<EventRouteDTO>? selectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class RouteButtons extends StatelessWidget {
         children: [
           buildDropdownItem(
             context,
-            selectedValue![0].name ?? "Show Ukraine Map",
+            selectedValue?[0].name ?? "Show Ukraine Map",
             Icons.map,
             () {
               Navigator.push(
@@ -28,7 +30,7 @@ class RouteButtons extends StatelessWidget {
           ),
           buildDropdownItem(
             context,
-            selectedValue![1].name ?? "Show Ukraine Map",
+            selectedValue?[1].name ?? "Show Ukraine Map",
             Icons.map,
             () {
               Navigator.push(
@@ -41,7 +43,7 @@ class RouteButtons extends StatelessWidget {
           ),
           buildDropdownItem(
             context,
-            selectedValue![2].name ?? "Show Ukraine Map",
+            selectedValue?[2].name ?? "Show Ukraine Map",
             Icons.map,
             () {
               Navigator.push(
@@ -54,7 +56,7 @@ class RouteButtons extends StatelessWidget {
           ),
           buildDropdownItem(
             context,
-            selectedValue![3].name ?? "Show Ukraine Map",
+            selectedValue?[3].name ?? "Show Ukraine Map",
             Icons.map,
             () {
               Navigator.push(

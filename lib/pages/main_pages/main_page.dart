@@ -35,7 +35,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
   bool isKeyboardInput = false;
   String selectedEventType = "dating";
   int selectedNumberOfPeople = 1;
-  int selectedBudget = 1000;
+  int selectedBudget = 10;
   TimeOfDay selectedDuration = TimeOfDay(hour: 1, minute: 0);
 
   List<Map<String, String>> eventTypesData = [
@@ -47,14 +47,11 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
 
   List<EventRouteDTO> routes = [];
 
+  final _budgetItems = List.generate(100, (index) => (index * 10).toString());
+  final _peopleItems = List.generate(100, (index) => (index + 1).toString());
+
   @override
   Widget build(BuildContext context) {
-    eventTypesData = [
-      {"id": "dating", "label": "test_page.dating".tr()},
-      {"id": "business_meet", "label": "test_page.business_meet".tr()},
-      {"id": "walk", "label": "test_page.walk".tr()},
-      {"id": "hang_out", "label": "test_page.hang_out".tr()},
-    ];
     return Scaffold(
       body: Stack(
         children: [
@@ -129,7 +126,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                   const SizedBox(height: 10),
                   CustomDropdown(
                     label: "test_page.number_of_people".tr(),
-                    items: List.generate(100, (index) => (index + 1).toString()),
+                    items: _peopleItems,
                     selectedValue: selectedNumberOfPeople.toString(),
                     onChanged: (value) {
                       setState(() {
@@ -140,7 +137,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                   const SizedBox(height: 10),
                   CustomDropdown(
                     label: "test_page.budget".tr(),
-                    items: List.generate(10000, (index) => (index * 10).toString()),
+                    items: _budgetItems,
                     selectedValue: selectedBudget.toString(),
                     onChanged: (value) {
                       setState(() {
