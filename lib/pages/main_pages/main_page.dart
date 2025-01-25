@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hack_town_front/dtos/event_route.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/pages/main_pages/user_profile_page.dart';
@@ -37,6 +38,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
   int selectedNumberOfPeople = 1;
   int selectedBudget = 10;
   TimeOfDay selectedDuration = TimeOfDay(hour: 1, minute: 0);
+  Position? userLocation;
 
   List<Map<String, String>> eventTypesData = [
     {"id": "dating", "label": "test_page.dating".tr()},
@@ -49,6 +51,49 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
 
   final _budgetItems = List.generate(100, (index) => (index * 10).toString());
   final _peopleItems = List.generate(100, (index) => (index + 1).toString());
+
+  @override
+  void initState() {
+    super.initState();
+    _requestUserLocation();
+  }
+
+  Future<void> _requestUserLocation() async {
+    try {
+      // Проверяем, включены ли сервисы локации
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        throw Exception('Location services are disabled.');
+      }
+
+      // Проверяем разрешения
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          throw Exception('Location permissions are denied.');
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        throw Exception(
+          'Location permissions are permanently denied. We cannot request permissions.',
+        );
+      }
+
+      // Получаем текущее местоположение
+      Position position = await Geolocator.getCurrentPosition();
+      setState(() {
+        userLocation = position;
+      });
+
+      if (userLocation != null) {
+        print('User location: $userLocation');
+      }
+    } catch (e) {
+      print('Error fetching location: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +109,8 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const UserProfilePage()),
+                  MaterialPageRoute(
+                      builder: (context) => const UserProfilePage()),
                 );
               },
               iconSize: 45,
@@ -114,7 +160,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                               ),
                             );
                           }).toList(),
-                          icon: Icon(Icons.arrow_drop_down),
+                          icon: const Icon(Icons.arrow_drop_down),
                           isExpanded: true,
                           dropdownColor: Colors.white,
                           style: const TextStyle(color: Colors.black),
@@ -163,36 +209,11 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                       'peopleCount': selectedNumberOfPeople,
                       'eventTime': selectedDuration.format(context),
                       'costTier': selectedBudget,
+                      'userLocation': userLocation != null
+                          ? '${userLocation!.latitude}, ${userLocation!.longitude}'
+                          : 'Unknown',
                     },
                     sendDataToServer: sendDataToServer,
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    "test_page.or".tr(),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  IconButton(
-                    icon: Icon(Icons.mic_none_outlined, color: Theme.of(context).iconTheme.color),
-                    onPressed: () {
-                      /*Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ...()),
-                      );*/
-                    },
-                    iconSize: 100,
-                  ),
-                  Text(
-                    "test_page.voice".tr(),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
                   ),
                 ],
               ),
@@ -204,14 +225,9 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
   }
 }
 
-class MobileMainPage extends StatefulWidget {
+class MobileMainPage extends StatelessWidget {
   const MobileMainPage({super.key});
 
-  @override
-  State<MobileMainPage> createState() => _MobileMainPageState();
-}
-
-class _MobileMainPageState extends State<MobileMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
