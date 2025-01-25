@@ -1,19 +1,19 @@
 import 'dart:async';
-import 'dart:convert';
+//import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+//import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import 'package:http/http.dart' as http;
-
-import '../dtos/event_route.dart';
-import '../pages/main_pages/user_profile_page.dart';
+//import 'package:http/http.dart' as http;
+//import '../../dtos/event_route.dart';
+import '../../pages/main_pages/user_profile_page.dart';
 
 class GoogleMapsPage extends StatefulWidget {
-  final EventRouteDTO routeData;
-  const GoogleMapsPage(this.routeData, {super.key});
+  const GoogleMapsPage({super.key});
+
+  //final EventRouteDTO routeData;
+  //const GoogleMapsPage(this.routeData, {super.key});
 
   @override
   State<GoogleMapsPage> createState() => _GoogleMapsPageState();
@@ -29,7 +29,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   @override
   void initState() {
 
-    getData();
+    //getData();
 
     super.initState();
 
@@ -37,28 +37,28 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     .addPostFrameCallback((_) async => await fetchLocationUpdates());
   }
 
-  void getData() async {
-    http.Response response;
-    try{
-      response = await http.get(
-          Uri.parse('${dotenv.env["BASE_URL"]!}/api/EventRoutes/${widget.routeData.id}'),
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            'Content-Type': 'application/json',
-            'Accept': '*/*'
-          }
-      );
-      List<dynamic> responseData = json.decode(utf8.decode(response.bodyBytes)).cast<dynamic>();
-
-      // Clear existing locations and add new ones
-      widget.routeData.locations.clear();
-      for (var item in responseData) {
-        widget.routeData.locations.add(LocationDTO.fromMap(item));
-      }
-    }catch(e){
-      throw Exception('Error: $e');
-    }
-  }
+  //void getData() async {
+  //  http.Response response;
+  //  try{
+  //    response = await http.get(
+  //        Uri.parse('${dotenv.env["BASE_URL"]!}/api/EventRoutes/${widget.routeData.id}'),
+  //        headers: {
+  //          "Access-Control-Allow-Origin": "*",
+  //          'Content-Type': 'application/json',
+  //          'Accept': '*/*'
+  //      }
+  // );
+  //    List<dynamic> responseData = json.decode(utf8.decode(response.bodyBytes)).cast<dynamic>();
+  //
+  //    // Clear existing locations and add new ones
+  //    widget.routeData.locations.clear();
+  //    for (var item in responseData) {
+  //       widget.routeData.locations.add(LocationDTO.fromMap(item));
+  //     }
+  //   }catch(e){
+  //     throw Exception('Error: $e');
+  //  }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +134,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     }
   }
 
-      if (permission == LocationPermission.deniedForever) {
+  if (permission == LocationPermission.deniedForever) {
         throw Exception(
             'Location permissions are permanently denied, we cannot request permissions.');
       }

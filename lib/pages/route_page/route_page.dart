@@ -1,11 +1,12 @@
+import 'package:hack_town_front/pages/main_pages/user_profile_page.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:hack_town_front/dtos/event_route.dart';
 import '/widgets/bottom_navigation_panel.dart';
-import '../main_pages/user_profile_page.dart';
-import '../../widgets/route_buttons.dart';
 import '/widgets/navigation_panel.dart';
 import 'package:flutter/material.dart';
+import 'package:hack_town_front/dtos/event_route.dart';
+import 'route_buttons.dart';
 
+// Route page
 class RoutePage extends StatelessWidget {
   final List<EventRouteDTO>? routeData;
 
@@ -28,6 +29,7 @@ class RoutePage extends StatelessWidget {
   }
 }
 
+// Route Page Desktop
 class DesktopRoutePage extends StatefulWidget {
   final List<EventRouteDTO>? routeData;
   const DesktopRoutePage({super.key,this.routeData,});
@@ -39,12 +41,31 @@ class DesktopRoutePage extends StatefulWidget {
 class _DesktopRoutePageState extends State<DesktopRoutePage> {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Stack(
         children: [
-          NavigationPanel(),
+          // Navigation panel for Desktop 
+          const NavigationPanel(),
+          // Main content
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("route_page.choose".tr(),
+                textAlign: 
+                TextAlign.center, 
+                style: const TextStyle( 
+                  fontSize: 24, 
+                ),
+              ),
+                RouteButtons(widget.routeData),
+              ],
+            ),
+          ),
+          // Back button
           Positioned(
-            left: 0,
+            left: 70,
             child: IconButton(
               icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
               onPressed: () {
@@ -67,24 +88,13 @@ class _DesktopRoutePageState extends State<DesktopRoutePage> {
               iconSize: 45,
             ),
           ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "route_page.choose".tr(),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 24),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
   }
 }
 
+// Route Page Mobile
 class MobileRoutePage extends StatefulWidget {
   final List<EventRouteDTO>? routeData;
   const MobileRoutePage({super.key, this.routeData,});
@@ -99,35 +109,33 @@ class _MobileRoutePageState extends State<MobileRoutePage> {
     return Scaffold(
       body: Stack(
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              RouteButtons(widget.routeData),
-            ],
+          // Main content
+         Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RouteButtons(widget.routeData),
+              ],
+            ),
           ),
+          // Back button
           Positioned(
-              left: 5,
-              top: 25,
-              child: IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Theme.of(context).iconTheme.color,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                iconSize: 35,
-              ),
-          ),
-          Positioned(
-            right: 5,
-            top: 25,
             child: IconButton(
-              icon: Icon(Icons.account_circle_outlined,
-                  color: Theme.of(context).iconTheme.color),
+              icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              iconSize: 35,
+            ),
+          ),
+          // User profile button
+          Positioned(
+            right: 0,
+            child: IconButton(
+              icon: Icon(Icons.account_circle_outlined, color: Theme.of(context).iconTheme.color),
               onPressed: () {
                 Navigator.push(
-                  context,
+                  context, 
                   MaterialPageRoute(builder: (context) => const UserProfilePage()),
                 );
               },
@@ -136,7 +144,8 @@ class _MobileRoutePageState extends State<MobileRoutePage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationPanel(),
+      // Navigation panel for Mobile
+      bottomNavigationBar: const BottomNavigationPanel(),
     );
   }
 }

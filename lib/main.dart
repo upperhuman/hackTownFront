@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: Colors.transparent,
           ),
            iconTheme: const IconThemeData(
-            color: Colors.white, // Light theme icon color
+            color: Colors.white,
           ),
           snackBarTheme: const SnackBarThemeData(
             backgroundColor: Colors.black,

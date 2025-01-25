@@ -3,9 +3,8 @@ import '../../dtos/event_route.dart';
 import '../../widgets/tracking_google_map.dart';
 
 class RouteButtons extends StatelessWidget {
-  const RouteButtons({super.key, required this.routeData});
-
-  final EventRouteDTO routeData;
+  const RouteButtons(this.selectedValue ,{super.key});
+  final List<EventRouteDTO>? selectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -15,52 +14,52 @@ class RouteButtons extends StatelessWidget {
         children: [
           buildDropdownItem(
             context,
-            "Show Ukraine Map",
+            selectedValue?[0].name ?? "Show Ukraine Map",
             Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(routeData),
+                  builder: (context) => GoogleMapsPage(),
                 ),
               );
             },
           ),
           buildDropdownItem(
             context,
-            "Show Ukraine Map",
+            selectedValue?[1].name ?? "Show Ukraine Map",
             Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(routeData),
+                  builder: (context) => GoogleMapsPage(),
                 ),
               );
             },
           ),
           buildDropdownItem(
             context,
-            "Show Ukraine Map",
+            selectedValue?[2].name ?? "Show Ukraine Map",
             Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(routeData),
+                  builder: (context) => GoogleMapsPage(),
                 ),
               );
             },
           ),
           buildDropdownItem(
             context,
-            "Show Ukraine Map",
+            selectedValue?[3].name ?? "Show Ukraine Map",
             Icons.map,
             () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(routeData)
+                  builder: (context) => GoogleMapsPage(),
                 ),
               );
             },

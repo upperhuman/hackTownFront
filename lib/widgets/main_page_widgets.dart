@@ -1,6 +1,4 @@
-
 import 'package:flutter/foundation.dart';
-import 'package:hack_town_front/pages/main_pages/route_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hack_town_front/dtos/event_route.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -8,6 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import '../pages/route_page/route_page.dart';
 
 class CustomDropdown extends StatelessWidget {
   final String label;
