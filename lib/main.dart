@@ -10,7 +10,7 @@ void main() async {
 
   // Initialize localization
   await EasyLocalization.ensureInitialized();
-  
+
   // Load environment variables
   await dotenv.load(fileName: "assets/new.env");
 
