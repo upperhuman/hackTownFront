@@ -1,22 +1,19 @@
 import 'dart:async';
-//import 'dart:convert';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'package:http/http.dart' as http;
+import 'package:geolocator/geolocator.dart';
 
 import '../../dtos/event_route.dart';
 import '../../pages/main_pages/user_profile_page.dart';
 
 // GoogleMapsPage widget that displays a Google Map and handles user interactions
 class GoogleMapsPage extends StatefulWidget {
-  const GoogleMapsPage({super.key});
-
-  //final EventRouteDTO routeData;
-  //const GoogleMapsPage(this.routeData, {super.key});
+  final EventRouteDTO routeData;
+  const GoogleMapsPage(this.routeData, {super.key});
 
   @override
   State<GoogleMapsPage> createState() => _GoogleMapsPageState();

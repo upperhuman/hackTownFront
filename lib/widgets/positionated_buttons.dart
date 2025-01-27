@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../pages/main_pages/user_profile_page.dart';
 
 class PositionatedButtons extends StatelessWidget{
+  const PositionatedButtons({super.key});
+
 
   @override
   Widget build(BuildContext context) {

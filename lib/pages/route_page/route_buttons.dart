@@ -3,68 +3,43 @@ import '../../dtos/event_route.dart';
 import '../../widgets/tracking_google_map.dart';
 
 class RouteButtons extends StatelessWidget {
-  const RouteButtons(this.selectedValue ,{super.key});
   final List<EventRouteDTO>? selectedValue;
+
+  const RouteButtons(this.selectedValue, {super.key});
 
   @override
   Widget build(BuildContext context) {
+    // If selectedValue is null or empty, return an empty container
+    if (selectedValue == null || selectedValue!.isEmpty) {
+      return Container(
+        child: Text(
+          "No routes available",
+          style: TextStyle(color: Colors.grey),
+        ),
+      );
+    }
+
+    // Limit the number of buttons to the actual number of routes
+    int routeCount = selectedValue!.length > 4 ? 4 : selectedValue!.length;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          buildDropdownItem(
+        children: List.generate(routeCount, (index) {
+          return buildDropdownItem(
             context,
-            selectedValue?[0].name ?? "Show Ukraine Map",
+            selectedValue![index].name,
             Icons.map,
-            () {
+                () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(),
+                  builder: (context) => GoogleMapsPage(selectedValue![index]),
                 ),
               );
             },
-          ),
-          buildDropdownItem(
-            context,
-            selectedValue?[1].name ?? "Show Ukraine Map",
-            Icons.map,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(),
-                ),
-              );
-            },
-          ),
-          buildDropdownItem(
-            context,
-            selectedValue?[2].name ?? "Show Ukraine Map",
-            Icons.map,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(),
-                ),
-              );
-            },
-          ),
-          buildDropdownItem(
-            context,
-            selectedValue?[3].name ?? "Show Ukraine Map",
-            Icons.map,
-            () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GoogleMapsPage(),
-                ),
-              );
-            },
-          ),
-        ],
+          );
+        }),
       ),
     );
   }

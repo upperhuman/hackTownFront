@@ -256,7 +256,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
   }
 }
 
-class MobileMainPage extends StatelessWidget {
+class MobileMainPage extends StatefulWidget {
   const MobileMainPage({super.key});
 
   @override
