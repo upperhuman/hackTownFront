@@ -42,6 +42,10 @@ class _LanguageButtonsState extends State<LanguageButtons> {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: const BorderSide(color: Colors.black),
+              ),
               fillColor: Colors.white,
               filled: true,
             ),

@@ -32,85 +32,67 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<ThemeMode>(
-        valueListenable: themeNotifier,
-        builder: (context, value, child) {
-          return MaterialApp(
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            debugShowCheckedModeBanner: false,
-            title: 'LocalLens',
-            themeMode: value,
-            theme: ThemeData(
-                useMaterial3: true,
-                primaryColor: Colors.blue,
-                brightness: Brightness.light,
-                scaffoldBackgroundColor: Colors.white,
-                textTheme: const TextTheme(
-                  bodyLarge: TextStyle(color: Colors.black),
-                ),
-                appBarTheme: const AppBarTheme(
-                  backgroundColor: Colors.white,
-                ),
-                iconTheme: const IconThemeData(
-                  color: Colors.black,
-                ),
-                snackBarTheme: const SnackBarThemeData(
-                    backgroundColor: Colors.white,
-                    actionTextColor: Colors.black,
-                    contentTextStyle: TextStyle(
-                        color: Colors.black
-                    )
-                ),
-                bottomAppBarTheme: const BottomAppBarTheme(
-                    color: Colors.white
-                )
-            ),
-            darkTheme: ThemeData(
-                useMaterial3: true,
-                primaryColor: Colors.blueGrey,
-                scaffoldBackgroundColor: Colors.black,
-                brightness: Brightness.dark,
-                textTheme: const TextTheme(
-                  bodyLarge: TextStyle(color: Colors.white),
-                ),
-                appBarTheme: const AppBarTheme(
-                  backgroundColor: Colors.transparent,
-                ),
-                iconTheme: const IconThemeData(
-                  color: Colors.white, // Light theme icon color
-                ),
-                snackBarTheme: const SnackBarThemeData(
-                    backgroundColor: Colors.black,
-                    actionTextColor: Colors.white,
-                    contentTextStyle: TextStyle(
-                        color: Colors.white
-                    )
-                ),
-                bottomAppBarTheme: const BottomAppBarTheme(
-                    color: Colors.black
-                )
-            ),
-            home: MainPage(),
-          );
-        });
-  }
-}
-
-class ThemedImageWidget extends StatelessWidget {
-  const ThemedImageWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder<ThemeMode>(
-      valueListenable: themeNotifier,
-      builder: (context, themeMode, child) {
-        final imagePath = themeMode == ThemeMode.dark
-            ? 'assets/images/dark_theme_image.png'
-            : 'assets/images/light_theme_image.png';
-
-        return Image.asset(imagePath);
-      },
+      valueListenable: themeNotifier, 
+      builder: (context, value, child) {
+      return MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales, 
+        locale: context.locale,
+        debugShowCheckedModeBanner: false,
+        title: 'LocalLens',
+        themeMode: value,
+        theme: ThemeData(
+          useMaterial3: true,
+          primaryColor: Colors.blue,
+          brightness: Brightness.light,
+          scaffoldBackgroundColor: Colors.white,
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(color: Colors.black),
+          ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white,
+          ),
+          iconTheme: const IconThemeData(
+            color: Colors.black,
+          ),
+          snackBarTheme: const SnackBarThemeData(
+            backgroundColor: Colors.white,
+            actionTextColor: Colors.black,
+            contentTextStyle: TextStyle(
+              color: Colors.black
+            )
+          ),
+          bottomAppBarTheme: const BottomAppBarTheme(
+            color: Colors.white
+          )
+        ),
+        darkTheme: ThemeData(
+          useMaterial3: true,
+          primaryColor: Colors.blueGrey,
+          scaffoldBackgroundColor: Colors.black,
+          brightness: Brightness.dark,
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(color: Colors.white),
+          ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.transparent,
+          ),
+           iconTheme: const IconThemeData(
+            color: Colors.white,
+          ),
+          snackBarTheme: const SnackBarThemeData(
+            backgroundColor: Colors.black,
+            actionTextColor: Colors.white,
+            contentTextStyle: TextStyle(
+              color: Colors.white
+            )
+          ),
+          bottomAppBarTheme: const BottomAppBarTheme(
+            color: Colors.black
+          )
+        ),
+      home: MainPage(),
     );
+    });
   }
 }

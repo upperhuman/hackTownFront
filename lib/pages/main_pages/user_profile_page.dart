@@ -1,6 +1,8 @@
 // import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../widgets/positionated_buttons.dart';
+
 // User Profile page
 class UserProfilePage extends StatelessWidget {
   const UserProfilePage({super.key});
@@ -10,16 +12,7 @@ class UserProfilePage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            left: 0,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              iconSize: 45,
-            ),
-          ),
+          PositionatedButtons(),
         ],
       )
     );

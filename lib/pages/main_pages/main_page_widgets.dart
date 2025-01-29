@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:hack_town_front/pages/route_page/route_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hack_town_front/dtos/event_route.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -6,8 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
-import '../pages/route_page/route_page.dart';
 
 class CustomDropdown extends StatelessWidget {
   final String label;
@@ -96,7 +94,7 @@ class TimePickerWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(15.0),
+              borderRadius: BorderRadius.circular(15),
             ),
             child: ElevatedButton(
               onPressed: () async {
@@ -166,9 +164,7 @@ class FindButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () async {
           // Log the collected data
-          if (kDebugMode) {
-            print('Collected data: $data');
-          }
+          print('Collected data: $data');
 
           // Show loading dialog
           showDialog(
@@ -183,8 +179,7 @@ class FindButton extends StatelessWidget {
               );
             },
           );
-          final navigator = Navigator.of(context, rootNavigator: true);
-          final scaffoldMessenger = ScaffoldMessenger.of(context);
+
           try {
             final response = await sendDataToServer(data);
             Map<String, dynamic> responseData = jsonDecode(utf8.decode(response.bodyBytes));
@@ -197,21 +192,18 @@ class FindButton extends StatelessWidget {
             }
 
             // Dismiss the loading dialog
-            navigator.pop();
+            Navigator.of(context, rootNavigator: true).pop();
 
             // Navigate to the RoutePage
-            navigator.push(
+            Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => RoutePage(routeData: routes)),
             );
 
           } catch (e) {
             // Handle error and dismiss the loading dialog
-            navigator.pop();
-            scaffoldMessenger.showSnackBar(
+            Navigator.of(context, rootNavigator: true).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Error: $e')),
-            );
-            navigator.push(
-              MaterialPageRoute(builder: (context) => RoutePage(routeData: [])),
             );
           }
         },
@@ -220,11 +212,12 @@ class FindButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          backgroundColor: Colors.black12,
+          backgroundColor: Colors.transparent,
+          foregroundColor: Theme.of(context).textTheme.bodyLarge?.color,
         ),
         child: Text(
           "test_page.find".tr(),
-          style: const TextStyle(fontSize: 18, color: Colors.white),
+          style: const TextStyle(fontSize: 15, color: Colors.white),
         ),
       ),
     );
@@ -232,25 +225,31 @@ class FindButton extends StatelessWidget {
 }
 
 Future<http.Response> sendDataToServer(Map<String, dynamic> data) async {
-  try {
-    var request = await http.post(
+    try {
+
+      var request = await http.post(
         Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests'),
         body: jsonEncode(data),
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          'Content-Type': 'application/json',
-          'Accept': '*/*'
-        }
-    );
+        headers: {'Content-Type': 'application/json'}
+        );
 
-    // final request = await client.postUrl(
-    //     Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests'));
-    // request.headers.set('Content-Type', 'application/json; charset=UTF-8');
-    // request.write(jsonEncode(data));
-    // final response = await request.close();
+      // final request = await client.postUrl(
+      //     Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests'));
+      // request.headers.set('Content-Type', 'application/json; charset=UTF-8');
+      // request.write(jsonEncode(data));
+      // final response = await request.close();
 
-    return request;
-  } catch (e) {
-    throw Exception('Error: $e');
+      return request;
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
   }
-}
+
+  // Future<http.Response> convertHttpClientResponseToHttpResponse(HttpClientResponse response) async {
+  //   final responseData = await response.transform(utf8.decoder).join();
+  //   final headers = <String, String>{};
+  //   response.headers.forEach((name, values) {
+  //     headers[name] = values.join(', ');
+  //   });
+  //   return http.Response(responseData, response.statusCode, headers: headers);
+  // }
