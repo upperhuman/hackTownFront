@@ -1,10 +1,10 @@
 import 'package:hack_town_front/pages/main_pages/user_profile_page.dart';
-import 'package:hack_town_front/widgets/route_buttons.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '/widgets/bottom_navigation_panel.dart';
 import '/widgets/navigation_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:hack_town_front/dtos/event_route.dart';
+import 'route_buttons.dart';
 
 // Route page
 class RoutePage extends StatelessWidget {

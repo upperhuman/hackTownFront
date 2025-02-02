@@ -2,19 +2,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/pages/main_pages/main_page.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 
 final themeNotifier = ValueNotifier(ThemeMode.light);
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize localization
   await EasyLocalization.ensureInitialized();
-  
+
   // Load environment variables
   await dotenv.load(fileName: "assets/new.env");
-  
-  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
     EasyLocalization(
@@ -80,7 +78,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: Colors.transparent,
           ),
            iconTheme: const IconThemeData(
-            color: Colors.white, // Light theme icon color
+            color: Colors.white,
           ),
           snackBarTheme: const SnackBarThemeData(
             backgroundColor: Colors.black,
@@ -96,23 +94,5 @@ class MyApp extends StatelessWidget {
       home: MainPage(),
     );
     });
-  }
-}
-
-class ThemedImageWidget extends StatelessWidget {
-  const ThemedImageWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ValueListenableBuilder<ThemeMode>(
-      valueListenable: themeNotifier,
-      builder: (context, themeMode, child) {
-        final imagePath = themeMode == ThemeMode.dark
-            ? 'assets/images/dark_theme_image.png'
-            : 'assets/images/light_theme_image.png';
-
-        return Image.asset(imagePath);
-      },
-    );
   }
 }

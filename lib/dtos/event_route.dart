@@ -29,4 +29,5 @@ class LocationDTO{
       stepNumber = map["stepNumber"]
   ;
 
+  
 }

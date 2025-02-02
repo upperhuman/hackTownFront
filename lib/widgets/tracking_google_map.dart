@@ -133,6 +133,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     }
   }
 
+
       if (permission == LocationPermission.deniedForever) {
         throw Exception(
             'Location permissions are permanently denied, we cannot request permissions.');
