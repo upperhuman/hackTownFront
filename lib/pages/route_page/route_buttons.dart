@@ -19,13 +19,10 @@ class RouteButtons extends StatelessWidget {
       );
     }
 
-    // Limit the number of buttons to the actual number of routes
-    int routeCount = selectedValue!.length > 4 ? 4 : selectedValue!.length;
-
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(routeCount, (index) {
+        children: List.generate(selectedValue!.length, (index) {
           return buildDropdownItem(
             context,
             selectedValue![index].name,

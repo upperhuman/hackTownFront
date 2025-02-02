@@ -20,8 +20,6 @@ class GoogleMapsPage extends StatefulWidget {
 
 class _GoogleMapsPageState extends State<GoogleMapsPage> {
   static const cameraPosition = LatLng(48.46428963905694, 35.04401325135935);
-  static const theFirstPoint = LatLng(48.465283363388544, 35.04606230572078);
-  static const theSecondPoint = LatLng(48.46352772173403, 35.07182895404438);
 
   LatLng? currentPosition;
 
@@ -42,16 +40,18 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
       response = await http.get(
           Uri.parse('${dotenv.env["BASE_URL"]!}/api/EventRoutes/${widget.routeData.id}'),
           headers: {
-            "Access-Control-Allow-Origin": "*",
             'Content-Type': 'application/json',
-            'Accept': '*/*'
+            'ngrok-skip-browser-warning': '69420'
           }
       );
-      List<dynamic> responseData = json.decode(utf8.decode(response.bodyBytes)).cast<dynamic>();
+      final decodedResponse = utf8.decode(response.bodyBytes);
+      Map <String, dynamic> responseData = jsonDecode(decodedResponse);
+
+      List<dynamic> list = responseData["locations"];
 
       // Clear existing locations and add new ones
-      widget.routeData.locations.clear();
-      for (var item in responseData) {
+      //widget.routeData.locations.clear();
+      for (var item in list) {
         widget.routeData.locations.add(LocationDTO.fromMap(item));
       }
     }catch(e){
@@ -71,18 +71,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                 target: cameraPosition, 
                 zoom: 13,
               ),
-              markers: {
-                Marker(
-                  markerId: MarkerId("sourceLocation"),
-                  icon: BitmapDescriptor.defaultMarker,
-                  position: theFirstPoint,
-                ),
-                Marker(
-                  markerId: MarkerId("sourceLocation"),
-                  icon: BitmapDescriptor.defaultMarker,
-                  position: theSecondPoint,
-                ),
-              },
+              markers: widget.routeData.locations.map((loc) => location(loc.latitude, loc.longitude)).toSet(),
             ),
           ),
           
@@ -150,4 +139,11 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
       print('Error occurred: $e');
     }
   }
+}
+Marker location(double latitude, double longitude) {
+  return Marker(
+    markerId: MarkerId("sourceLocation"),
+    icon: BitmapDescriptor.defaultMarker,
+    position: LatLng(latitude, longitude),
+  );
 }

@@ -8,6 +8,9 @@ import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import '../dtos/event_route.dart';
+import '../pages/route_page/route_page.dart';
+
 class VoiceInputScreen extends StatefulWidget {
   const VoiceInputScreen({super.key});
 
@@ -24,7 +27,7 @@ class _VoiceInputScreenState extends State<VoiceInputScreen> {
   Timer? _debounce;
   Set<Polyline> _polylines = {};  // Хранение маршрутов
 
-  final String serverUrl = 'https://36ec-51-20-191-32.ngrok-free.app/api/UserRequests';
+  final String serverUrl = '${dotenv.env["BASE_URL"]}/api/UserRequests';
 
   late GoogleMapController _mapController;
   Set<Marker> _markers = {};  // Set to hold the markers
@@ -158,17 +161,18 @@ class _VoiceInputScreenState extends State<VoiceInputScreen> {
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
 
-      // Получаем маршрут по responseData
-      if (responseData['routes'] != null && responseData['routes'].isNotEmpty) {
-        int routeId = responseData['routes'][0]['routeId'];  // Берём первый маршрут
-        String routeName = responseData['routes'][0]['routeName'];  // Название маршрута
-        print("Выбран маршрут: $routeName с ID: $routeId");
 
-        // Запрашиваем маршрут по ID
-        _fetchRoute(routeId);
-      } else {
-        _showSnackBar('No routes received');
+      List<dynamic> list = responseData["routes"];
+      List<EventRouteDTO> routes = [];
+      for (var item in list) {
+        Map<String, dynamic> map = item;
+        routes.add(EventRouteDTO.fromMap(map));
       }
+
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => RoutePage(routeData: routes)),
+      );
+
     } else {
       _showSnackBar('Error sending data: ${response.statusCode}');
     }
