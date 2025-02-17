@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
             color: Colors.black
           )
         ),
-      home: MapScreen(),
+      home: MainPage(),
     );
     });
   }
