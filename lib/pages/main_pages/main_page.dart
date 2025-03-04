@@ -303,8 +303,7 @@ class _MobileMainPageState extends State<MobileMainPage> {
             ),
           ),
           Center(
-            child: SingleChildScrollView(
-              child: Padding(
+            child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -431,7 +430,6 @@ class _MobileMainPageState extends State<MobileMainPage> {
                 ],
               ),
             ),
-            )
           ),
         ],
       ),
