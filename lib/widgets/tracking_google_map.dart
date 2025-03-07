@@ -33,6 +33,10 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     });
   }
 
+  String duration = "";
+  String distance = "";
+  List<String> steps = [];
+
   Future<void> getData() async {
     try {
       final response = await http.get(
@@ -95,54 +99,71 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 }
 
   Future<void> _getRouteWithTraffic() async {
-    if (currentPosition == null || widget.routeData.locations.isEmpty) return;
+  if (currentPosition == null || widget.routeData.locations.isEmpty) return;
 
-    LatLng destination = LatLng(
-      widget.routeData.locations.last.latitude,
-      widget.routeData.locations.last.longitude,
-    );
+  LatLng destination = LatLng(
+    widget.routeData.locations.last.latitude,
+    widget.routeData.locations.last.longitude,
+  );
 
-    final String baseUrl = 'https://maps.googleapis.com/maps/api/directions/json';
-    final String url =
-        '$baseUrl?origin=${currentPosition!.latitude},${currentPosition!.longitude}'
-        '&destination=${destination.latitude},${destination.longitude}'
-        '&mode=driving&traffic_model=best_guess&departure_time=now'
-        '&key=${dotenv.env["GOOGLE_MAP_API"]}';
+  List<String> waypoints = widget.routeData.locations
+      .sublist(0, widget.routeData.locations.length - 1)
+      .map((loc) => '${loc.latitude},${loc.longitude}')
+      .toList();
 
-    try {
-      final response = await http.get(Uri.parse(url));
-      final data = jsonDecode(response.body);
+  final String baseUrl = 'https://maps.googleapis.com/maps/api/directions/json';
+  final String url =
+    '$baseUrl?origin=${currentPosition!.latitude},${currentPosition!.longitude}'
+    '&destination=${destination.latitude},${destination.longitude}'
+    '&mode=driving&traffic_model=best_guess&departure_time=now'
+    '&language=uk'
+    '&key=${dotenv.env["GOOGLE_MAP_API"]}'
+    '${waypoints.isNotEmpty ? '&waypoints=${waypoints.join('|')}' : ''}';
 
-      if (data['status'] == 'OK') {
-        List<LatLng> polylineCoordinates = [];
-        PolylinePoints polylinePoints = PolylinePoints();
+  try {
+    final response = await http.get(Uri.parse(url));
+    final data = jsonDecode(response.body);
 
-        List<PointLatLng> result = polylinePoints.decodePolyline(
-          data['routes'][0]['overview_polyline']['points'],
+    if (data['status'] == 'OK') {
+      List<LatLng> polylineCoordinates = [];
+      PolylinePoints polylinePoints = PolylinePoints();
+      List<PointLatLng> result = polylinePoints.decodePolyline(
+        data['routes'][0]['overview_polyline']['points'],
+      );
+
+      for (var point in result) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      }
+
+      final leg = data['routes'][0]['legs'][0];
+
+      setState(() {
+        _polylines.clear();
+        _polylines.add(
+          Polyline(
+            polylineId: const PolylineId("route_with_traffic"),
+            color: Colors.blue,
+            width: 6,
+            points: polylineCoordinates,
+          ),
         );
 
-        for (var point in result) {
-          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+        duration = leg['duration']['text'];
+        distance = leg['distance']['text'];
+        steps.clear();
+        for (var step in leg['steps']) {
+          String instruction = step['html_instructions'];
+          instruction = instruction.replaceAll(RegExp(r'<[^>]*>'), '');
+          steps.add(instruction);
         }
-
-        setState(() {
-          _polylines.clear();
-          _polylines.add(
-            Polyline(
-              polylineId: const PolylineId("route_with_traffic"),
-              color: Colors.blue,
-              width: 6,
-              points: polylineCoordinates,
-            ),
-          );
-        });
-      } else {
-        throw Exception('Failed to load route: ${data['status']}');
-      }
-    } catch (e) {
-      print('Error fetching route: $e');
+      });
+    } else {
+      throw Exception('Failed to load route: ${data['status']}');
     }
+  } catch (e) {
+    print('Error fetching route: $e');
   }
+}
 
   Set<Marker> _getMarkers() {
     Set<Marker> markers = widget.routeData.locations
@@ -173,13 +194,49 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                 target: cameraPosition,
                 zoom: 13,
               ),
+              
               markers: _getMarkers(),
               polylines: _polylines,
               onMapCreated: (GoogleMapController controller) {
                 _controller.complete(controller);
               },
+              
             ),
           ),
+          Positioned(
+  bottom: 20,
+  left: 10,
+  right: 10,
+  child: Container(
+    padding: EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(10),
+      boxShadow: [
+        BoxShadow(color: Colors.black26, blurRadius: 5),
+      ],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Час в дорозі: $duration", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text("Відстань: $distance", style: TextStyle(fontSize: 16)),
+        SizedBox(height: 10),
+        Text("Інструкції:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        SizedBox(
+          height: 100,
+          child: ListView.builder(
+            itemCount: steps.length,
+            itemBuilder: (context, index) {
+              return Text("• ${steps[index]}", style: TextStyle(fontSize: 14));
+            },
+          ),
+        ),
+      ],
+    ),
+  ),
+),
+
           Positioned(
             left: 0,
             child: IconButton(
