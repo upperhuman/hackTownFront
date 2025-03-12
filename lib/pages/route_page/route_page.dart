@@ -1,4 +1,3 @@
-import 'package:hack_town_front/pages/main_pages/user_profile_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '/widgets/bottom_navigation_panel.dart';
 import '/widgets/navigation_panel.dart';
@@ -6,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:hack_town_front/dtos/event_route.dart';
 import 'route_buttons.dart';
 
-// Route page
 class RoutePage extends StatelessWidget {
   final List<EventRouteDTO>? routeData;
 
@@ -29,7 +27,6 @@ class RoutePage extends StatelessWidget {
   }
 }
 
-// Route Page Desktop
 class DesktopRoutePage extends StatefulWidget {
   final List<EventRouteDTO>? routeData;
   const DesktopRoutePage({super.key,this.routeData,});
@@ -75,7 +72,7 @@ class _DesktopRoutePageState extends State<DesktopRoutePage> {
             ),
           ),
           // User profile button
-          Positioned(
+          /*Positioned(
             right: 0,
             child: IconButton(
               icon: Icon(Icons.account_circle_outlined, color: Theme.of(context).iconTheme.color),
@@ -87,7 +84,7 @@ class _DesktopRoutePageState extends State<DesktopRoutePage> {
               },
               iconSize: 45,
             ),
-          ),
+          ),*/
         ],
       ),
     );
@@ -129,7 +126,7 @@ class _MobileRoutePageState extends State<MobileRoutePage> {
             ),
           ),
           // User profile button
-          Positioned(
+         /* Positioned(
             right: 0,
             child: IconButton(
               icon: Icon(Icons.account_circle_outlined, color: Theme.of(context).iconTheme.color),
@@ -141,7 +138,7 @@ class _MobileRoutePageState extends State<MobileRoutePage> {
               },
               iconSize: 35,
             ),
-          ),
+          ),*/
         ],
       ),
       // Navigation panel for Mobile

@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import '/pages/main_pages/location_page.dart';
-import '../pages/route_page/route_page.dart';
-import '/pages/main_pages/calendar_page.dart';
-import '/pages/main_pages/history_page.dart';
 import '/pages/settings_pages/settings_page.dart';
 
 class NavigationPanel extends StatelessWidget {
@@ -16,7 +12,7 @@ class NavigationPanel extends StatelessWidget {
         children: [
           Column(
             children: [
-              IconButton(
+              /*IconButton(
                 icon: Icon(Icons.location_on_outlined, color: Theme.of(context).iconTheme.color),
                 onPressed: () {
                   Navigator.push(
@@ -58,7 +54,7 @@ class NavigationPanel extends StatelessWidget {
                   );
                 },
                 iconSize: 45,
-              ),
+              ),*/
             ],
           ),
           IconButton(

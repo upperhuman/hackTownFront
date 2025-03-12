@@ -2,12 +2,7 @@
   "settings_page": "Settings",
   "settings_page.language": "Language",
   "select_a_language": "Choose a language",
-  "settings_page.region": "Region",
-  "settings_page.theme": "Theme",
-  "settings_page.security": "Security",
-  "settings_page.notifications": "Notifications",
-  "settings_page.faq": "FAQ",
-  
+
   "test_page.greeting": "Hello, let's determine your preferences",
   "test_page.event_type": "Event type",
   "test_page.dating": "Dating",
@@ -27,10 +22,15 @@
   "test_page.mobile_content": "Content for mobile version",
 
   "route_page.choose": "Choose your route",
-  "route_page.cinema": "Cinema",
-  "route_page.restaurant": "Restaurant",
-  "route_page.shop": "Shop",
-  "route_page.parking": "Parking",
-  
-  "search_modile_bar.find_event": "Find the event..."
+
+  "search_modile_bar.find_event": "Find the event...",
+
+  "voice_confidence": "Confidence",
+  "start_speaking": "Press the button and start speaking",
+
+  "your_location": "Your location",
+
+  "travel_time": "Travel time",
+  "distance": "Distance",
+  "instructions": "Instructions"
 }

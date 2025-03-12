@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:permission_handler/permission_handler.dart';
@@ -5,9 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'dart:convert';
 import 'dart:async';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import '../dtos/event_route.dart';
 import '../pages/route_page/route_page.dart';
 
@@ -21,43 +20,34 @@ class VoiceInputScreen extends StatefulWidget {
 class _VoiceInputScreenState extends State<VoiceInputScreen> {
   late stt.SpeechToText _speech;
   bool _isListening = false;
-  String _text = "Press the button and start speaking";
+  String _text = "start_speaking".tr();
   double _confidence = 1.0;
-  bool shouldSendData = true;  // Добавляем флаг
+  bool shouldSendData = true;
   Timer? _debounce;
-  Set<Polyline> _polylines = {};  // Хранение маршрутов
 
   final String serverUrl = '${dotenv.env["BASE_URL"]}/api/UserRequests';
-
-  late GoogleMapController _mapController;
-  Set<Marker> _markers = {};  // Set to hold the markers
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Voice Input Screen')),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: LatLng(48.46475934204965, 35.043675852637755), // Текущая позиция
-                zoom: 12,
-              ),
-              onMapCreated: (controller) {
-                _mapController = controller;
-              },
-              markers: _markers,
-              polylines: _polylines, // Показываем маршрут
+          Positioned(
+            left: 0,
+            top: 0,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
+              onPressed: () => Navigator.pop(context),
+              iconSize: 45,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
+          Center(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Confidence: ${(_confidence * 100).toStringAsFixed(1)}%',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  "voice_confidence".tr() + ': ${(_confidence * 100).toStringAsFixed(1)}%',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20),
                 Text(
@@ -66,9 +56,16 @@ class _VoiceInputScreenState extends State<VoiceInputScreen> {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 20),
-                FloatingActionButton(
-                  onPressed: _listen,
-                  child: Icon(_isListening ? Icons.mic : Icons.mic_none),
+                SizedBox(
+                  width: 70,
+                  height: 70,
+                  child: FloatingActionButton(
+                    onPressed: _listen,
+                    backgroundColor: Colors.white,
+                    child: _isListening
+                        ? Icon(Icons.mic, color: Colors.red, size: 40)
+                        : Icon(Icons.mic_off, color: Colors.black, size: 40),
+                  ),
                 ),
               ],
             ),
@@ -104,8 +101,7 @@ class _VoiceInputScreenState extends State<VoiceInputScreen> {
         onStatus: (status) {
           print('Status: $status');
           if (status == 'done' && shouldSendData) {
-            _sendDataToServer(_text);
-            shouldSendData = false;  // Блокируем повторную отправку
+            shouldSendData = false;
           }
         },
         onError: (error) {
@@ -147,16 +143,15 @@ class _VoiceInputScreenState extends State<VoiceInputScreen> {
       "text": text.trim()  
     };
 
-    print("Отправляем данные: ${jsonEncode(body)}");
+    print("Sending data: ${jsonEncode(body)}");
 
-    // Отправка данных на сервер
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(body),
     );
 
-    print("Ответ сервера: ${response.body}");
+    print("Server response: ${response.body}");
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
@@ -177,88 +172,13 @@ class _VoiceInputScreenState extends State<VoiceInputScreen> {
       _showSnackBar('Error sending data: ${response.statusCode}');
     }
   } catch (e) {
-    _showSnackBar('Connection error: $e');
-  }
-}
-
-Future<void> _fetchRoute(int routeId) async {
-  final routeUrl = Uri.parse('${dotenv.env["BASE_URL"]!}/api/EventRoutes/$routeId');
-  print("Запрашиваем маршрут: $routeUrl");
-
-  try {
-    final response = await http.get(routeUrl);
-
-    // Проверка кода ответа
-    if (response.statusCode == 200) {
-      // Если статус 200, выводим содержимое ответа
-      print('Ответ от сервера: ${response.body}');
-      
-      // Далее, можно попытаться разобрать ответ и посмотреть его структуру
-      var responseData = jsonDecode(response.body);
-      print('Данные из JSON: $responseData');
-      
-      // Пример получения локаций
-      if (responseData['locations'] != null) {
-        print('Локации: ${responseData['locations']}');
-      } else {
-        print('Нет данных о локациях');
-      }
-    } else {
-      // В случае ошибки на сервере
-      print('Ошибка запроса: ${response.statusCode}');
+      _showSnackBar('Connection error: $e');
     }
-  } catch (e) {
-    print('Ошибка запроса: $e');
   }
-}
-
-void _drawRoute(List<LatLng> routePoints) {
-  final polyline = Polyline(
-    polylineId: PolylineId('route_${DateTime.now().millisecondsSinceEpoch}'),
-    color: Colors.blue,
-    width: 5,
-    points: routePoints,
-  );
-
-  setState(() {
-    _polylines.clear();  // Удаляем старые маршруты
-    _polylines.add(polyline);
-    _moveCameraToRoute(routePoints);  // Перемещаем камеру
-  });
-}
-
-void _moveCameraToRoute(List<LatLng> routePoints) {
-  if (routePoints.isNotEmpty) {
-    _mapController.animateCamera(
-      CameraUpdate.newLatLngBounds(
-        _getBounds(routePoints),
-        50, // Отступ
-      ),
-    );
-  }
-}
-
-LatLngBounds _getBounds(List<LatLng> points) {
-  double minLat = points.first.latitude;
-  double minLng = points.first.longitude;
-  double maxLat = points.first.latitude;
-  double maxLng = points.first.longitude;
-
-  for (LatLng point in points) {
-    if (point.latitude < minLat) minLat = point.latitude;
-    if (point.longitude < minLng) minLng = point.longitude;
-    if (point.latitude > maxLat) maxLat = point.latitude;
-    if (point.longitude > maxLng) maxLng = point.longitude;
-  }
-
-  return LatLngBounds(
-    southwest: LatLng(minLat, minLng),
-    northeast: LatLng(maxLat, maxLng),
-  );
-}
-
 
   void _onSpeechResult(String text) {
+  if (!shouldSendData) return;
+    shouldSendData = false; 
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(Duration(seconds: 3), () {
       _sendDataToServer(text);
@@ -269,21 +189,9 @@ LatLngBounds _getBounds(List<LatLng> points) {
     return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
-  void _addMarker(double latitude, double longitude) {
-    final marker = Marker(
-      markerId: MarkerId('$latitude,$longitude'),
-      position: LatLng(latitude, longitude),
-      infoWindow: InfoWindow(title: 'Route Point'),
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
     );
-  
-  setState(() {
-        _markers.add(marker);
-      });
-    }
-
-    void _showSnackBar(String message) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
-    }
   }
+}

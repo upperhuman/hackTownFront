@@ -6,9 +6,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-
 import '../../dtos/event_route.dart';
-import '../../pages/main_pages/user_profile_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class GoogleMapsPage extends StatefulWidget {
   final EventRouteDTO routeData;
@@ -176,7 +175,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
           markerId: const MarkerId("user_location"),
           position: currentPosition!,
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-          infoWindow: const InfoWindow(title: "Ваша локація"),
+          infoWindow: InfoWindow(title: "your_location".tr()),
         ),
       );
     }
@@ -204,39 +203,38 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
             ),
           ),
           Positioned(
-  bottom: 20,
-  left: 10,
-  right: 10,
-  child: Container(
-    padding: EdgeInsets.all(10),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(10),
-      boxShadow: [
-        BoxShadow(color: Colors.black26, blurRadius: 5),
-      ],
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Час в дорозі: $duration", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-        Text("Відстань: $distance", style: TextStyle(fontSize: 16)),
-        SizedBox(height: 10),
-        Text("Інструкції:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-        SizedBox(
-          height: 100,
-          child: ListView.builder(
-            itemCount: steps.length,
-            itemBuilder: (context, index) {
-              return Text("• ${steps[index]}", style: TextStyle(fontSize: 14));
-            },
-          ),
-        ),
-      ],
-    ),
-  ),
-),
-
+            bottom: 20,
+            left: 10,
+            right: 10,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(color: Colors.black26, blurRadius: 5),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("travel_time".tr() + ": $duration", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    Text("distance".tr() + ": $distance", style: TextStyle(fontSize: 16)),
+                    SizedBox(height: 10),
+                    Text("instructions".tr() + ":", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    SizedBox(
+                      height: 100,
+                      child: ListView.builder(
+                      itemCount: steps.length,
+                      itemBuilder: (context, index) {
+                      return Text("• ${steps[index]}", style: TextStyle(fontSize: 14));
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
           Positioned(
             left: 0,
             child: IconButton(
@@ -245,7 +243,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
               iconSize: 45,
             ),
           ),
-          Positioned(
+          /*Positioned(
             right: 0,
             child: IconButton(
               icon: Icon(Icons.account_circle_outlined, color: Theme.of(context).iconTheme.color),
@@ -255,7 +253,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
               ),
               iconSize: 45,
             ),
-          ),
+          ),*/
         ],
       ),
     );
