@@ -36,6 +36,10 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   String distance = "";
   List<String> steps = [];
 
+  String duration = "";
+  String distance = "";
+  List<String> steps = [];
+
   Future<void> getData() async {
     try {
       final response = await http.get(
@@ -99,7 +103,12 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 
   Future<void> _getRouteWithTraffic() async {
   if (currentPosition == null || widget.routeData.locations.isEmpty) return;
+  if (currentPosition == null || widget.routeData.locations.isEmpty) return;
 
+  LatLng destination = LatLng(
+    widget.routeData.locations.last.latitude,
+    widget.routeData.locations.last.longitude,
+  );
   LatLng destination = LatLng(
     widget.routeData.locations.last.latitude,
     widget.routeData.locations.last.longitude,
@@ -118,11 +127,33 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     '&language=uk'
     '&key=${dotenv.env["GOOGLE_MAP_API"]}'
     '${waypoints.isNotEmpty ? '&waypoints=${waypoints.join('|')}' : ''}';
+  List<String> waypoints = widget.routeData.locations
+      .sublist(0, widget.routeData.locations.length - 1)
+      .map((loc) => '${loc.latitude},${loc.longitude}')
+      .toList();
+
+  final String baseUrl = 'https://maps.googleapis.com/maps/api/directions/json';
+  final String url =
+    '$baseUrl?origin=${currentPosition!.latitude},${currentPosition!.longitude}'
+    '&destination=${destination.latitude},${destination.longitude}'
+    '&mode=driving&traffic_model=best_guess&departure_time=now'
+    '&language=uk'
+    '&key=${dotenv.env["GOOGLE_MAP_API"]}'
+    '${waypoints.isNotEmpty ? '&waypoints=${waypoints.join('|')}' : ''}';
 
   try {
     final response = await http.get(Uri.parse(url));
     final data = jsonDecode(response.body);
+  try {
+    final response = await http.get(Uri.parse(url));
+    final data = jsonDecode(response.body);
 
+    if (data['status'] == 'OK') {
+      List<LatLng> polylineCoordinates = [];
+      PolylinePoints polylinePoints = PolylinePoints();
+      List<PointLatLng> result = polylinePoints.decodePolyline(
+        data['routes'][0]['overview_polyline']['points'],
+      );
     if (data['status'] == 'OK') {
       List<LatLng> polylineCoordinates = [];
       PolylinePoints polylinePoints = PolylinePoints();
@@ -135,7 +166,39 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
       }
 
       final leg = data['routes'][0]['legs'][0];
+      for (var point in result) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      }
 
+      final leg = data['routes'][0]['legs'][0];
+
+      setState(() {
+        _polylines.clear();
+        _polylines.add(
+          Polyline(
+            polylineId: const PolylineId("route_with_traffic"),
+            color: Colors.blue,
+            width: 6,
+            points: polylineCoordinates,
+          ),
+        );
+
+        duration = leg['duration']['text'];
+        distance = leg['distance']['text'];
+        steps.clear();
+        for (var step in leg['steps']) {
+          String instruction = step['html_instructions'];
+          instruction = instruction.replaceAll(RegExp(r'<[^>]*>'), '');
+          steps.add(instruction);
+        }
+      });
+    } else {
+      throw Exception('Failed to load route: ${data['status']}');
+    }
+  } catch (e) {
+    print('Error fetching route: $e');
+  }
+}
       setState(() {
         _polylines.clear();
         _polylines.add(
@@ -193,6 +256,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                 target: cameraPosition,
                 zoom: 13,
               ),
+              
               
               markers: _getMarkers(),
               polylines: _polylines,
