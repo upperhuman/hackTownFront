@@ -1,11 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'language.dart/settings_language.dart';
-import 'settings_faq.dart';
-import 'settings_notifications.dart';
-import 'settings_region.dart';
-import 'settings_security.dart';
-import 'settings_theme.dart';
 
 class SettingsButtons extends StatelessWidget {
   const SettingsButtons({super.key});
@@ -17,8 +12,8 @@ class SettingsButtons extends StatelessWidget {
       children: [
         TextButton(
           style: TextButton.styleFrom(
-            backgroundColor: Colors.transparent, // Убирает фон
-            foregroundColor: Theme.of(context).textTheme.bodyLarge?.color, // Цвет текста
+            backgroundColor: Colors.transparent,
+            foregroundColor: Theme.of(context).textTheme.bodyLarge?.color,
           ),
           child: Text(
             "settings_page.language".tr(),
@@ -35,7 +30,7 @@ class SettingsButtons extends StatelessWidget {
           },
         ),
         const SizedBox(height: 20),
-        TextButton(
+        /*TextButton(
           style: TextButton.styleFrom(
             backgroundColor: Colors.transparent, // Убирает фон
             foregroundColor: Theme.of(context).textTheme.bodyLarge?.color, // Цвет текста
@@ -133,7 +128,7 @@ class SettingsButtons extends StatelessWidget {
               MaterialPageRoute(builder: (context) => const SettingsFAQPage()),
             );
           },
-        ),
+        ),*/
       ],
     );
   }

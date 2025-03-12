@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../pages/main_pages/user_profile_page.dart';
 
 class PositionatedButtons extends StatelessWidget{
   const PositionatedButtons({super.key});
@@ -21,7 +20,7 @@ class PositionatedButtons extends StatelessWidget{
             ),
           ),
           // User profile button
-          Positioned(
+          /*Positioned(
             right: 0,
             child: IconButton(
               icon: Icon(Icons.account_circle_outlined, color: Theme.of(context).iconTheme.color),
@@ -33,7 +32,7 @@ class PositionatedButtons extends StatelessWidget{
               },
               iconSize: 45,
             ),
-          ),
+          ),*/
         ],
       ),
     );

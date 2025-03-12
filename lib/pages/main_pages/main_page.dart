@@ -3,7 +3,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:hack_town_front/dtos/event_route.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../widgets/bottom_navigation_panel.dart';
-import '/pages/main_pages/user_profile_page.dart';
 import 'main_page_widgets.dart';
 import '/widgets/navigation_panel.dart';
 import 'package:flutter/material.dart';
@@ -63,13 +62,11 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
 
   Future<void> _requestUserLocation() async {
     try {
-      // Проверяем, включены ли сервисы локации
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         throw Exception('Location services are disabled.');
       }
 
-      // Проверяем разрешения
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
@@ -84,7 +81,6 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
         );
       }
 
-      // Получаем текущее местоположение
       Position position = await Geolocator.getCurrentPosition();
       setState(() {
         userLocation = position;
@@ -104,9 +100,9 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
       body: Stack(
         children: [
           NavigationPanel(),
-          Positioned(
+          /*Positioned(
             right: 0,
-            child: IconButton(
+            /*child: IconButton(
               icon: Icon(Icons.account_circle_outlined,
                   color: Theme.of(context).iconTheme.color),
               onPressed: () {
@@ -117,8 +113,8 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
                 );
               },
               iconSize: 45,
-            ),
-          ),
+            ),*/
+          ),*/
           Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -287,12 +283,12 @@ class _MobileMainPageState extends State<MobileMainPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
+          /*Positioned(
             right: 5,
             top: 25,
             child: IconButton(
               icon: Icon(Icons.account_circle_outlined,
-                  color: Theme.of(context).iconTheme.color),
+              color: Theme.of(context).iconTheme.color),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -301,7 +297,7 @@ class _MobileMainPageState extends State<MobileMainPage> {
               },
               iconSize: 35,
             ),
-          ),
+          ),*/
           Center(
             child: SingleChildScrollView(
               child: Padding(

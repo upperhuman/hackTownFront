@@ -6,9 +6,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-
 import '../../dtos/event_route.dart';
-import '../../pages/main_pages/user_profile_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class GoogleMapsPage extends StatefulWidget {
   final EventRouteDTO routeData;
@@ -32,6 +31,10 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
       await fetchLocationUpdates();
     });
   }
+
+  String duration = "";
+  String distance = "";
+  List<String> steps = [];
 
   String duration = "";
   String distance = "";
@@ -100,7 +103,12 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
 
   Future<void> _getRouteWithTraffic() async {
   if (currentPosition == null || widget.routeData.locations.isEmpty) return;
+  if (currentPosition == null || widget.routeData.locations.isEmpty) return;
 
+  LatLng destination = LatLng(
+    widget.routeData.locations.last.latitude,
+    widget.routeData.locations.last.longitude,
+  );
   LatLng destination = LatLng(
     widget.routeData.locations.last.latitude,
     widget.routeData.locations.last.longitude,
@@ -119,11 +127,33 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     '&language=uk'
     '&key=${dotenv.env["GOOGLE_MAP_API"]}'
     '${waypoints.isNotEmpty ? '&waypoints=${waypoints.join('|')}' : ''}';
+  List<String> waypoints = widget.routeData.locations
+      .sublist(0, widget.routeData.locations.length - 1)
+      .map((loc) => '${loc.latitude},${loc.longitude}')
+      .toList();
+
+  final String baseUrl = 'https://maps.googleapis.com/maps/api/directions/json';
+  final String url =
+    '$baseUrl?origin=${currentPosition!.latitude},${currentPosition!.longitude}'
+    '&destination=${destination.latitude},${destination.longitude}'
+    '&mode=driving&traffic_model=best_guess&departure_time=now'
+    '&language=uk'
+    '&key=${dotenv.env["GOOGLE_MAP_API"]}'
+    '${waypoints.isNotEmpty ? '&waypoints=${waypoints.join('|')}' : ''}';
 
   try {
     final response = await http.get(Uri.parse(url));
     final data = jsonDecode(response.body);
+  try {
+    final response = await http.get(Uri.parse(url));
+    final data = jsonDecode(response.body);
 
+    if (data['status'] == 'OK') {
+      List<LatLng> polylineCoordinates = [];
+      PolylinePoints polylinePoints = PolylinePoints();
+      List<PointLatLng> result = polylinePoints.decodePolyline(
+        data['routes'][0]['overview_polyline']['points'],
+      );
     if (data['status'] == 'OK') {
       List<LatLng> polylineCoordinates = [];
       PolylinePoints polylinePoints = PolylinePoints();
@@ -136,7 +166,39 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
       }
 
       final leg = data['routes'][0]['legs'][0];
+      for (var point in result) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      }
 
+      final leg = data['routes'][0]['legs'][0];
+
+      setState(() {
+        _polylines.clear();
+        _polylines.add(
+          Polyline(
+            polylineId: const PolylineId("route_with_traffic"),
+            color: Colors.blue,
+            width: 6,
+            points: polylineCoordinates,
+          ),
+        );
+
+        duration = leg['duration']['text'];
+        distance = leg['distance']['text'];
+        steps.clear();
+        for (var step in leg['steps']) {
+          String instruction = step['html_instructions'];
+          instruction = instruction.replaceAll(RegExp(r'<[^>]*>'), '');
+          steps.add(instruction);
+        }
+      });
+    } else {
+      throw Exception('Failed to load route: ${data['status']}');
+    }
+  } catch (e) {
+    print('Error fetching route: $e');
+  }
+}
       setState(() {
         _polylines.clear();
         _polylines.add(
@@ -176,7 +238,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
           markerId: const MarkerId("user_location"),
           position: currentPosition!,
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-          infoWindow: const InfoWindow(title: "Ваша локація"),
+          infoWindow: InfoWindow(title: "your_location".tr()),
         ),
       );
     }
@@ -195,6 +257,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
                 zoom: 13,
               ),
               
+              
               markers: _getMarkers(),
               polylines: _polylines,
               onMapCreated: (GoogleMapController controller) {
@@ -204,39 +267,38 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
             ),
           ),
           Positioned(
-  bottom: 20,
-  left: 10,
-  right: 10,
-  child: Container(
-    padding: EdgeInsets.all(10),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(10),
-      boxShadow: [
-        BoxShadow(color: Colors.black26, blurRadius: 5),
-      ],
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Час в дорозі: $duration", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-        Text("Відстань: $distance", style: TextStyle(fontSize: 16)),
-        SizedBox(height: 10),
-        Text("Інструкції:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-        SizedBox(
-          height: 100,
-          child: ListView.builder(
-            itemCount: steps.length,
-            itemBuilder: (context, index) {
-              return Text("• ${steps[index]}", style: TextStyle(fontSize: 14));
-            },
-          ),
-        ),
-      ],
-    ),
-  ),
-),
-
+            bottom: 20,
+            left: 10,
+            right: 10,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(color: Colors.black26, blurRadius: 5),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("travel_time".tr() + ": $duration", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    Text("distance".tr() + ": $distance", style: TextStyle(fontSize: 16)),
+                    SizedBox(height: 10),
+                    Text("instructions".tr() + ":", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                    SizedBox(
+                      height: 100,
+                      child: ListView.builder(
+                      itemCount: steps.length,
+                      itemBuilder: (context, index) {
+                      return Text("• ${steps[index]}", style: TextStyle(fontSize: 14));
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
           Positioned(
             left: 0,
             child: IconButton(
@@ -245,7 +307,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
               iconSize: 45,
             ),
           ),
-          Positioned(
+          /*Positioned(
             right: 0,
             child: IconButton(
               icon: Icon(Icons.account_circle_outlined, color: Theme.of(context).iconTheme.color),
@@ -255,7 +317,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
               ),
               iconSize: 45,
             ),
-          ),
+          ),*/
         ],
       ),
     );
