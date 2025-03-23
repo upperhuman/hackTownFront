@@ -161,6 +161,10 @@ class _VoiceInputScreenState extends State<VoiceInputScreen> {
 
       print("Server response: ${response.body}");
 
+      if (response.statusCode == 500) {
+        throw Exception('server_error');
+      }
+
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         List<dynamic> list = responseData["routes"];
@@ -170,14 +174,35 @@ class _VoiceInputScreenState extends State<VoiceInputScreen> {
           routes.add(EventRouteDTO.fromMap(map));
         }
 
+
+
         Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => RoutePage(routeData: routes)),
         );
       } else {
         _showSnackBar('Error sending data: ${response.statusCode}');
+
       }
     } catch (e) {
+      String errorMessage = e.toString().contains('server_error')
+          ? 'Спробуйте трохи пізніше'
+          : 'Error: $e';
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Error"),
+          content: Text(errorMessage),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("ОК"),
+            ),
+          ],
+        ),
+      );
+
       _showSnackBar('Connection error: $e');
+
     } finally {
       setState(() => _isLoading = false);
       shouldSendData = true;
