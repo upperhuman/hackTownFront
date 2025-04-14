@@ -9,7 +9,6 @@ class RouteButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // If selectedValue is null or empty, return an empty container
     if (selectedValue == null || selectedValue!.isEmpty) {
       return Container(
         child: Text(
@@ -48,24 +47,22 @@ class RouteButtons extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Container(
           width: 300,
-          height: 50,
+          padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
             color: Colors.grey.shade200,
             borderRadius: BorderRadius.circular(15),
             border: Border.all(color: Colors.black, width: 2),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text(
-                  title,
-                  style: const TextStyle(fontSize: 16, color: Colors.black),
-                ),
+              Text(
+                title,
+                style: const TextStyle(fontSize: 16, color: Colors.black),
+                softWrap: true,
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+              Align(
+                alignment: Alignment.centerRight,
                 child: Icon(icon, color: Colors.black),
               ),
             ],
