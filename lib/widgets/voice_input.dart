@@ -48,7 +48,7 @@ class _VoiceInputScreenState extends State<VoiceInputScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "voice_confidence".tr() + ': ${(_confidence * 100).toStringAsFixed(1)}%',
+                  '${"voice_confidence".tr()}: ${(_confidence * 100).toStringAsFixed(1)}%',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20),
