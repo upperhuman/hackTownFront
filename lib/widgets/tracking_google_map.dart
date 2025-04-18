@@ -11,7 +11,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 class GoogleMapsPage extends StatefulWidget {
   final EventRouteDTO routeData;
-  GoogleMapsPage(this.routeData, {super.key});
+  const GoogleMapsPage(this.routeData, {super.key});
 
   @override
   State<GoogleMapsPage> createState() => _GoogleMapsPageState();
@@ -20,8 +20,8 @@ class GoogleMapsPage extends StatefulWidget {
 class _GoogleMapsPageState extends State<GoogleMapsPage> {
   static const cameraPosition = LatLng(48.46428963905694, 35.04401325135935);
   LatLng? currentPosition;
-  Set<Polyline> _polylines = {};
-  Completer<GoogleMapController> _controller = Completer();
+  final Set<Polyline> _polylines = {};
+  final Completer<GoogleMapController> _controller = Completer();
 
   @override
   void initState() {
@@ -43,14 +43,13 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
         headers: {'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '69420'},
       );
       final decodedResponse = utf8.decode(response.bodyBytes);
-      Map<String, dynamic> responseData = jsonDecode(decodedResponse);
 
-      List<dynamic> list = responseData["locations"];
+      List<dynamic> responseData = jsonDecode(decodedResponse);
+
       widget.routeData.locations.clear();
-      for (var item in list) {
+      for (var item in responseData) {
         widget.routeData.locations.add(LocationDTO.fromMap(item));
       }
-
       await _getRouteWithTraffic();
     } catch (e) {
       print('Error: $e');
@@ -114,7 +113,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     final String url =
         '$baseUrl?origin=${currentPosition!.latitude},${currentPosition!.longitude}'
         '&destination=${destination.latitude},${destination.longitude}'
-        '&mode=driving&traffic_model=best_guess&departure_time=now'
+        '&mode=walking&traffic_model=best_guess&departure_time=now'
         '&language=uk'
         '&key=${dotenv.env["GOOGLE_MAP_API"]}'
         '${waypoints.isNotEmpty ? '&waypoints=${waypoints.join('|')}' : ''}';
@@ -217,10 +216,10 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-    Text("travel_time".tr() + ": $duration", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-    Text("distance".tr() + ": $distance", style: TextStyle(fontSize: 16)),
+    Text("${"travel_time".tr()}: $duration", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+    Text("${"distance".tr()}: $distance", style: TextStyle(fontSize: 16)),
     SizedBox(height: 10),
-    Text("instructions".tr() + ":", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+    Text("${"instructions".tr()}:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
     SizedBox(
     height: 100,
     child: ListView.builder(

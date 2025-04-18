@@ -39,7 +39,7 @@
             android:value="2" />
             <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCE5WTbBE1wj6sOibVurOLXsPwlVqAQP5U" />
+            android:value="AIzaSyCb1gb3AZf1hPKkJivv0CK790XwSguiJ-A" />
     </application>
 
     <!-- Разрешения для работы с Intent (опционально) -->
