@@ -43,8 +43,8 @@
 <script>
   window.addEventListener('load', async function(ev) {
     try {
-      // Load environment variables from assets/new.env
-      const response = await fetch('assets/new.env');
+      // Load environment variables from assets/.env
+      const response = await fetch('assets/.env');
       const envConfig = await response.text();
       const GOOGLE_MAP_API = envConfig.match(/GOOGLE_MAP_API='(.*)'/)[1];
 
