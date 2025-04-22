@@ -1,8 +1,8 @@
-# 1) Збирання
+# 1) Збирання проєкту
 FROM instrumentisto/flutter:latest AS builder
 WORKDIR /app
 
-# Копіюємо код + .env
+# Копіюємо код проєкту
 COPY . .
 
 ARG BASE_URL
@@ -13,14 +13,23 @@ RUN flutter build web --release \
     --dart-define=BASE_URL=$BASE_URL \
     --dart-define=GOOGLE_MAP_API=$GOOGLE_MAP_API
 
-# Запускаємо we
+# Дебагінг: виводимо вміст index.html перед заміною
+RUN echo "=== DEBUG: index.html before sed ===" && \
+    cat build/web/index.html && \
+    echo "=== DEBUG END ==="
 
-# 2) Ніжний nginx
+# Замінюємо плейсхолдер у index.html
+RUN sed -i "s/{{GOOGLE_MAP_API}}/$GOOGLE_MAP_API/g" build/web/index.html
+
+# Дебагінг: виводимо вміст index.html після заміни
+RUN echo "=== DEBUG: index.html after sed ===" && \
+    cat build/web/index.html && \
+    echo "=== DEBUG END ==="
+
+# 2) Nginx для сервірування
 FROM nginx:alpine
-# Копіюємо лише зібраний web
+# Копіюємо зібраний web
 COPY --from=builder /app/build/web /usr/share/nginx/html
-# Видаляємо дефолтний конфіг, якщо хочете свій
-#COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
