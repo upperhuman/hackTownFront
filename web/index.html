@@ -7,30 +7,42 @@
   <title>LocalLens</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="favicon.png">
-  <!-- Flutter сам замінює цей плейсхолдер на число версії вашого service worker -->
+
   <script>
-    const serviceWorkerVersion = "{{flutter_service_worker_version}}";
-    // Під час збірки CI/CD ви можете інжектити сюди свій ключ через шаблонізатор:
-    // наприклад, envsubst або sed замінить '{{GOOGLE_MAP_API}}' на реальний ключ.
-    const INJECTED_GOOGLE_MAP_API = "{{GOOGLE_MAP_API}}";
+    // Этот плейсхолдер Flutter заменит на что-то вроде 12345678 (или оставит {{…}})
+    const rawServiceWorkerVersion = "{{flutter_service_worker_version}}";
+    // Если это число, конвертим в Number, иначе оставляем строкой
+    const serviceWorkerVersion =
+      !isNaN(Number(rawServiceWorkerVersion))
+        ? Number(rawServiceWorkerVersion)
+        : rawServiceWorkerVersion;
+
+    // Объявляем переменную, чтобы избежать ReferenceError
+    // Build-процесс (envsubst/sed) может заменить {{GOOGLE_MAP_API}} на ваш ключ
+    window.INJECTED_GOOGLE_MAP_API = "{{GOOGLE_MAP_API}}";
   </script>
+
+  <!-- подключаем flutter.js -->
   <script src="flutter.js" defer></script>
 </head>
 <body>
 <script>
   window.addEventListener('load', async () => {
     try {
-      // 1) Спробуємо взяти ключ з глобальної JS‑змінної
-      let apiKey = INJECTED_GOOGLE_MAP_API && !INJECTED_GOOGLE_MAP_API.includes('{{')
-        ? INJECTED_GOOGLE_MAP_API
-        : null;
+      // 1) Сначала пробуем взять ключ из глобальной переменной
+      let apiKey =
+        typeof window.INJECTED_GOOGLE_MAP_API === 'string' &&
+        !window.INJECTED_GOOGLE_MAP_API.includes('{{')
+          ? window.INJECTED_GOOGLE_MAP_API
+          : null;
 
-      // 2) Якщо плейсхолдер не був замінений — підвантажимо .env з assets
+      // 2) Если там всё ещё плейсхолдер — подгружаем .env из ассетов
       if (!apiKey) {
         const resp = await fetch('assets/.env');
         const text = await resp.text();
-        const m = text.match(/GOOGLE_MAP_API\s*=\s*['"]?(.+?)['"]?/);
-        apiKey = m?.[1] ?? null;
+        // Ожидаем в .env строку вида GOOGLE_MAP_API=ВашКлюч
+        const match = text.match(/^GOOGLE_MAP_API\s*=\s*(.+)$/m);
+        apiKey = match ? match[1].trim() : null;
       }
 
       if (!apiKey) {
@@ -38,13 +50,13 @@
         return;
       }
 
-      // 3) Динамічно підключаємо скрипт Google Maps
+      // 3) Динамически встраиваем скрипт Google Maps
       const mapScript = document.createElement('script');
       mapScript.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
       mapScript.async = true;
       document.head.appendChild(mapScript);
 
-      // 4) Нарешті, запускаємо Flutter
+      // 4) Запускаем Flutter‑приложение
       _flutter.loader.loadEntrypoint({
         serviceWorker: { serviceWorkerVersion },
         onEntrypointLoaded: engineInitializer => {
