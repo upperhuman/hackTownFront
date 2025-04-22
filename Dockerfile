@@ -4,13 +4,16 @@ WORKDIR /app
 
 # Копіюємо код + .env
 COPY . .
-# Підхоплюємо .env в середовище для --dart-define
+
 ARG BASE_URL
 ARG GOOGLE_MAP_API
-
 # Збираємо web
 RUN flutter pub get
-RUN flutter build web --release
+RUN flutter build web --release \
+    --dart-define=BASE_URL=$BASE_URL \
+    --dart-define=GOOGLE_MAP_API=$GOOGLE_MAP_API
+
+# Запускаємо we
 
 # 2) Ніжний nginx
 FROM nginx:alpine
