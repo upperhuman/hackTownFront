@@ -107,8 +107,15 @@ class _VoiceInputScreenState extends State<VoiceInputScreen> {
         bool available = await _speech.initialize(
           onStatus: (status) {
             print('Status: $status');
-            if (status == 'done' && shouldSendData) {
-              shouldSendData = false;
+            if (status == 'done') {
+              setState(() {
+                _isListening = false;
+              });
+              _speech.stop();
+              if (shouldSendData && _text.trim().isNotEmpty) {
+                shouldSendData = false;
+                _sendDataToServer(_text.trim());
+              }
             }
           },
           onError: (error) {
@@ -123,7 +130,6 @@ class _VoiceInputScreenState extends State<VoiceInputScreen> {
               _text = result.recognizedWords;
               _confidence = result.confidence;
             });
-            _onSpeechResult(_text);
           });
         } else {
           _showSnackBar('Speech recognition is not available');

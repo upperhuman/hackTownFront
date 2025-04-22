@@ -39,8 +39,12 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   Future<void> getData() async {
     try {
       final response = await http.get(
-        Uri.parse('${dotenv.env["BASE_URL"]!}/api/EventRoutes/${widget.routeData.id}'),
-        headers: {'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '69420'},
+        Uri.parse(
+            '${dotenv.env["BASE_URL"]!}/api/EventRoutes/${widget.routeData.id}'),
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': '69420'
+        },
       );
       final decodedResponse = utf8.decode(response.bodyBytes);
 
@@ -109,7 +113,8 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
         .map((loc) => '${loc.latitude},${loc.longitude}')
         .toList();
 
-    final String baseUrl = 'https://maps.googleapis.com/maps/api/directions/json';
+    final String baseUrl =
+        'https://maps.googleapis.com/maps/api/directions/json';
     final String url =
         '$baseUrl?origin=${currentPosition!.latitude},${currentPosition!.longitude}'
         '&destination=${destination.latitude},${destination.longitude}'
@@ -184,63 +189,64 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     return Scaffold(
       body: Stack(
         children: [
-      Positioned.fill(
-      child: GoogleMap(
-      initialCameraPosition: CameraPosition(
-        target: cameraPosition,
-        zoom: 13,
-      ),
-
-
-      markers: _getMarkers(),
-      polylines: _polylines,
-      onMapCreated: (GoogleMapController controller) {
-        _controller.complete(controller);
-      },
-
-    ),
-    ),
-    Positioned(
-    bottom: 20,
-    left: 10,
-    right: 10,
-    child: Container(
-    padding: EdgeInsets.all(10),
-    decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(10),
-    boxShadow: [
-    BoxShadow(color: Colors.black26, blurRadius: 5),
-    ],
-    ),
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-    Text("${"travel_time".tr()}: $duration", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-    Text("${"distance".tr()}: $distance", style: TextStyle(fontSize: 16)),
-    SizedBox(height: 10),
-    Text("${"instructions".tr()}:", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-    SizedBox(
-    height: 100,
-    child: ListView.builder(
-    itemCount: steps.length,
-    itemBuilder: (context, index) {
-    return Text("• ${steps[index]}", style: TextStyle(fontSize: 14));
-    },
-    ),
-    ),
-    ],
-    ),
-    ),
-    ),
-    Positioned(
-    left: 0,
-    child: IconButton(
-    icon: Icon(Icons.arrow_back, color: Theme.of(context).iconTheme.color),
-    onPressed: () => Navigator.pop(context),
-    iconSize: 45,
-    ),
-    ),
+          Positioned.fill(
+            child: GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: cameraPosition,
+                zoom: 13,
+              ),
+              markers: _getMarkers(),
+              polylines: _polylines,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            left: 10,
+            right: 10,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 5)],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("${"travel_time".tr()}: $duration",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text("${"distance".tr()}: $distance",
+                      style: TextStyle(fontSize: 16)),
+                  SizedBox(height: 10),
+                  Text("${"instructions".tr()}:",
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  // Ось тут замість Expanded — зафіксована висота
+                  SizedBox(
+                    height: 100,
+                    child: ListView.builder(
+                      itemCount: steps.length,
+                      itemBuilder: (context, index) {
+                        return Text("• ${steps[index]}",
+                            style: TextStyle(fontSize: 14));
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back,
+                  color: Theme.of(context).iconTheme.color),
+              onPressed: () => Navigator.pop(context),
+              iconSize: 45,
+            ),
+          ),
           /*Positioned(
             right: 0,
             child: IconButton(
