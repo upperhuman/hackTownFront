@@ -13,11 +13,14 @@ void main() async {
 
   // Load environment variables
 
-  if(String.fromEnvironment('BASE_URL').isEmpty || String.fromEnvironment('GOOGLE_MAP_API').isEmpty) {
+  const String BASE_URL = String.fromEnvironment('BASE_URL');
+  const String GOOGLE_MAP_API = String.fromEnvironment('GOOGLE_MAP_API');
+
+  if(BASE_URL.isEmpty || GOOGLE_MAP_API.isEmpty) {
     await dotenv.load(fileName: "assets/.env");
   }
   else {
-    dotenv.load(mergeWith: {'BASE_URL': String.fromEnvironment('BASE_URL'), 'GOOGLE_MAP_API': String.fromEnvironment('GOOGLE_MAP_API')});
+    dotenv.load(mergeWith: {'BASE_URL': BASE_URL, 'GOOGLE_MAP_API': GOOGLE_MAP_API});
   }
 
   runApp(

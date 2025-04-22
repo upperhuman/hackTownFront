@@ -1,71 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!--
+   If you are serving your web app in a path other than the root, change the
+   href value below to reflect the base path you are serving from.
+
+   The path provided below has to start and end with a slash "/" in order for
+   it to work correctly.
+
+   For more details:
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+   This is a placeholder for base href that will be replaced by the value of
+   the `--base-href` argument provided to `flutter build`.
+ -->
+
   <base href="$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <title>LocalLens</title>
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="hack_town_front">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>hack_town_front</title>
   <link rel="manifest" href="manifest.json">
-  <link rel="icon" href="favicon.png">
 
   <script>
-    // Этот плейсхолдер Flutter заменит на что-то вроде 12345678 (или оставит {{…}})
-    const rawServiceWorkerVersion = "{{flutter_service_worker_version}}";
-    // Если это число, конвертим в Number, иначе оставляем строкой
-    const serviceWorkerVersion =
-      !isNaN(Number(rawServiceWorkerVersion))
-        ? Number(rawServiceWorkerVersion)
-        : rawServiceWorkerVersion;
-
-    // Объявляем переменную, чтобы избежать ReferenceError
-    // Build-процесс (envsubst/sed) может заменить {{GOOGLE_MAP_API}} на ваш ключ
-    window.INJECTED_GOOGLE_MAP_API = "{{GOOGLE_MAP_API}}";
+    // The value below is injected by flutter build, do not touch.
+    const serviceWorkerVersion = "{{flutter_service_worker_version}}";
+    const INJECTED_GOOGLE_MAP_API = "{{GOOGLE_MAP_API}}";
   </script>
-
-  <!-- подключаем flutter.js -->
+  <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
 </head>
 <body>
 <script>
-  window.addEventListener('load', async () => {
+  window.addEventListener('load', async function(ev) {
     try {
-      // 1) Сначала пробуем взять ключ из глобальной переменной
-      let apiKey =
-        typeof window.INJECTED_GOOGLE_MAP_API === 'string' &&
-        !window.INJECTED_GOOGLE_MAP_API.includes('{{')
-          ? window.INJECTED_GOOGLE_MAP_API
-          : null;
-
-      // 2) Если там всё ещё плейсхолдер — подгружаем .env из ассетов
+      let apiKey = INJECTED_GOOGLE_MAP_API && !INJECTED_GOOGLE_MAP_API.includes("{{")
+        ? INJECTED_GOOGLE_MAP_API
+        : null;
       if (!apiKey) {
         const resp = await fetch('assets/.env');
         const text = await resp.text();
-        // Ожидаем в .env строку вида GOOGLE_MAP_API=ВашКлюч
-        const match = text.match(/^GOOGLE_MAP_API\s*=\s*(.+)$/m);
-        apiKey = match ? match[1].trim() : null;
+        // припускаємо рядки виду GOOGLE_MAP_API=значення або GOOGLE_MAP_API='значення'
+        const m = text.match(/GOOGLE_MAP_API\s*=\s*['"]?(.+?)['"]?$/m);
+        apiKey = m ? m[1] : null;
       }
 
       if (!apiKey) {
-        console.error('🛑 Google Maps API key not found');
+        console.error("Google Maps API key not found!");
         return;
       }
 
-      // 3) Динамически встраиваем скрипт Google Maps
       const mapScript = document.createElement('script');
       mapScript.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
       mapScript.async = true;
       document.head.appendChild(mapScript);
 
-      // 4) Запускаем Flutter‑приложение
+      // Download main.dart.js
       _flutter.loader.loadEntrypoint({
-        serviceWorker: { serviceWorkerVersion },
-        onEntrypointLoaded: engineInitializer => {
-          engineInitializer.initializeEngine()
-            .then(appRunner => appRunner.runApp());
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            appRunner.runApp();
+          });
         }
       });
-    } catch (err) {
-      console.error('Error initializing app:', err);
+    } catch (error) {
+      console.error('Error loading environment variables:', error);
     }
   });
 </script>
