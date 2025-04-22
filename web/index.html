@@ -4,64 +4,56 @@
   <base href="$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <meta name="description" content="A new Flutter project.">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="hack_town_front">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-  <link rel="icon" type="image/png" href="favicon.png"/>
-  <title>hack_town_front</title>
+  <title>LocalLens</title>
   <link rel="manifest" href="manifest.json">
-
-  <!-- Під час CI/CD збірки ви можете інжектити тут значення -->
+  <link rel="icon" href="favicon.png">
+  <!-- Flutter сам замінює цей плейсхолдер на число версії вашого service worker -->
   <script>
-    // Наприклад, через шаблонізатор підставиться реальний ключ,
-    // або залишиться рядок "{{GOOGLE_MAP_API}}" якщо не задано.
+    const serviceWorkerVersion = "{{flutter_service_worker_version}}";
+    // Під час збірки CI/CD ви можете інжектити сюди свій ключ через шаблонізатор:
+    // наприклад, envsubst або sed замінить '{{GOOGLE_MAP_API}}' на реальний ключ.
     const INJECTED_GOOGLE_MAP_API = "{{GOOGLE_MAP_API}}";
   </script>
-
   <script src="flutter.js" defer></script>
 </head>
 <body>
 <script>
-  window.addEventListener('load', async function() {
+  window.addEventListener('load', async () => {
     try {
-      // спочатку перевіряємо, чи в нас є адекватний ключ
-      let apiKey = INJECTED_GOOGLE_MAP_API && !INJECTED_GOOGLE_MAP_API.includes("{{")
+      // 1) Спробуємо взяти ключ з глобальної JS‑змінної
+      let apiKey = INJECTED_GOOGLE_MAP_API && !INJECTED_GOOGLE_MAP_API.includes('{{')
         ? INJECTED_GOOGLE_MAP_API
         : null;
 
-      // якщо ключа нема — фетчимо з assets/.env
+      // 2) Якщо плейсхолдер не був замінений — підвантажимо .env з assets
       if (!apiKey) {
         const resp = await fetch('assets/.env');
         const text = await resp.text();
-        // припускаємо рядки виду GOOGLE_MAP_API=значення або GOOGLE_MAP_API='значення'
-        const m = text.match(/GOOGLE_MAP_API\s*=\s*['"]?(.+?)['"]?$/m);
-        apiKey = m ? m[1] : null;
+        const m = text.match(/GOOGLE_MAP_API\s*=\s*['"]?(.+?)['"]?/);
+        apiKey = m?.[1] ?? null;
       }
 
       if (!apiKey) {
-        console.error("Google Maps API key not found!");
+        console.error('🛑 Google Maps API key not found');
         return;
       }
 
-      // додаємо скрипт карти
+      // 3) Динамічно підключаємо скрипт Google Maps
       const mapScript = document.createElement('script');
       mapScript.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
       mapScript.async = true;
       document.head.appendChild(mapScript);
 
-      // запускаємо Flutter
+      // 4) Нарешті, запускаємо Flutter
       _flutter.loader.loadEntrypoint({
-        serviceWorker: { serviceWorkerVersion: "{{flutter_service_worker_version}}" },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
+        serviceWorker: { serviceWorkerVersion },
+        onEntrypointLoaded: engineInitializer => {
+          engineInitializer.initializeEngine()
+            .then(appRunner => appRunner.runApp());
         }
       });
-    } catch (e) {
-      console.error("Error initializing app:", e);
+    } catch (err) {
+      console.error('Error initializing app:', err);
     }
   });
 </script>
