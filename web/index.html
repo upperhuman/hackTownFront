@@ -1,72 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-   If you are serving your web app in a path other than the root, change the
-   href value below to reflect the base path you are serving from.
-
-   The path provided below has to start and end with a slash "/" in order for
-   it to work correctly.
-
-   For more details:
-   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-   This is a placeholder for base href that will be replaced by the value of
-   the `--base-href` argument provided to `flutter build`.
- -->
-
   <base href="$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="description" content="A new Flutter project.">
-
-  <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="hack_town_front">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
-
   <title>hack_town_front</title>
   <link rel="manifest" href="manifest.json">
 
+  <!-- Під час CI/CD збірки ви можете інжектити тут значення -->
   <script>
-    // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = "{{flutter_service_worker_version}}";
+    // Наприклад, через шаблонізатор підставиться реальний ключ,
+    // або залишиться рядок "{{GOOGLE_MAP_API}}" якщо не задано.
+    const INJECTED_GOOGLE_MAP_API = "{{GOOGLE_MAP_API}}";
   </script>
-  <!-- This script adds the flutter initialization JS code -->
+
   <script src="flutter.js" defer></script>
 </head>
 <body>
 <script>
-  window.addEventListener('load', async function(ev) {
+  window.addEventListener('load', async function() {
     try {
-      // Load environment variables from assets/.env
-      const response = await fetch('assets/.env');
-      const envConfig = await response.text();
-      const GOOGLE_MAP_API = envConfig.match(/GOOGLE_MAP_API='(.*)'/)[1];
+      // спочатку перевіряємо, чи в нас є адекватний ключ
+      let apiKey = INJECTED_GOOGLE_MAP_API && !INJECTED_GOOGLE_MAP_API.includes("{{")
+        ? INJECTED_GOOGLE_MAP_API
+        : null;
 
-      // Dynamically add Google Maps script with API key
+      // якщо ключа нема — фетчимо з assets/.env
+      if (!apiKey) {
+        const resp = await fetch('assets/.env');
+        const text = await resp.text();
+        // припускаємо рядки виду GOOGLE_MAP_API=значення або GOOGLE_MAP_API='значення'
+        const m = text.match(/GOOGLE_MAP_API\s*=\s*['"]?(.+?)['"]?$/m);
+        apiKey = m ? m[1] : null;
+      }
+
+      if (!apiKey) {
+        console.error("Google Maps API key not found!");
+        return;
+      }
+
+      // додаємо скрипт карти
       const mapScript = document.createElement('script');
-      mapScript.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API}`;
+      mapScript.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
       mapScript.async = true;
       document.head.appendChild(mapScript);
 
-      // Download main.dart.js
+      // запускаємо Flutter
       _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
+        serviceWorker: { serviceWorkerVersion: "{{flutter_service_worker_version}}" },
         onEntrypointLoaded: function(engineInitializer) {
           engineInitializer.initializeEngine().then(function(appRunner) {
             appRunner.runApp();
           });
         }
       });
-    } catch (error) {
-      console.error('Error loading environment variables:', error);
+    } catch (e) {
+      console.error("Error initializing app:", e);
     }
   });
 </script>

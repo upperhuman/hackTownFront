@@ -12,7 +12,13 @@ void main() async {
   await EasyLocalization.ensureInitialized();
 
   // Load environment variables
-  await dotenv.load(fileName: "assets/.env");
+
+  if(String.fromEnvironment('BASE_URL').isEmpty || String.fromEnvironment('GOOGLE_MAP_API').isEmpty) {
+    await dotenv.load(fileName: "assets/.env");
+  }
+  else {
+    dotenv.load(mergeWith: {'BASE_URL': String.fromEnvironment('BASE_URL'), 'GOOGLE_MAP_API': String.fromEnvironment('GOOGLE_MAP_API')});
+  }
 
   runApp(
     EasyLocalization(
