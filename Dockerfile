@@ -7,6 +7,10 @@ COPY . .
 
 ARG BASE_URL
 ARG GOOGLE_MAP_API
+
+ENV GOOGLE_MAP_API=$GOOGLE_MAP_API
+ENV BASE_URL=$BASE_URL
+
 # Збираємо web
 RUN flutter pub get
 RUN flutter build web --release \

@@ -45,20 +45,18 @@ class _DesktopRoutePageState extends State<DesktopRoutePage> {
           // Navigation panel for Desktop 
           const NavigationPanel(),
           // Main content
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("route_page.choose".tr(),
-                textAlign: 
-                TextAlign.center, 
-                style: const TextStyle( 
-                  fontSize: 24, 
-                ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("route_page.choose".tr(),
+              textAlign:
+              TextAlign.center,
+              style: const TextStyle(
+                fontSize: 24,
               ),
-                RouteButtons(widget.routeData),
-              ],
             ),
+              RouteButtons(widget.routeData),
+            ],
           ),
           // Back button
           Positioned(
@@ -107,14 +105,12 @@ class _MobileRoutePageState extends State<MobileRoutePage> {
       body: Stack(
         children: [
           // Main content
-         Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                RouteButtons(widget.routeData),
-              ],
-            ),
-          ),
+         Column(
+           mainAxisAlignment: MainAxisAlignment.center,
+           children: [
+             RouteButtons(widget.routeData),
+           ],
+         ),
           // Back button
           Positioned(
             child: IconButton(

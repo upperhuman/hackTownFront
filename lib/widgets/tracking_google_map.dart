@@ -9,6 +9,8 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import '../../dtos/event_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import '../main.dart';
+
 class GoogleMapsPage extends StatefulWidget {
   final EventRouteDTO routeData;
   const GoogleMapsPage(this.routeData, {super.key});
@@ -40,7 +42,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     try {
       final response = await http.get(
         Uri.parse(
-            '${dotenv.env["BASE_URL"]!}/api/EventRoutes/${widget.routeData.id}'),
+            '$BASE_URL/api/EventRoutes/${widget.routeData.id}'),
         headers: {
           'Content-Type': 'application/json',
           'ngrok-skip-browser-warning': '69420'
@@ -114,16 +116,16 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
         .toList();
 
     final String baseUrl =
-        'https://maps.googleapis.com/maps/api/directions/json';
+        '$BASE_URL/api/EventRoutes/api/directions';
     final String url =
         '$baseUrl?origin=${currentPosition!.latitude},${currentPosition!.longitude}'
         '&destination=${destination.latitude},${destination.longitude}'
         '&mode=walking&traffic_model=best_guess&departure_time=now'
         '&language=uk'
-        '&key=${dotenv.env["GOOGLE_MAP_API"]}'
+        '&key=$GOOGLE_MAP_API'
         '${waypoints.isNotEmpty ? '&waypoints=${waypoints.join('|')}' : ''}';
     try {
-      final response = await http.get(Uri.parse(url));
+      final response = await http.get(Uri.parse(url),headers: {'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '69420'});
       final data = jsonDecode(response.body);
 
       if (data['status'] == 'OK') {

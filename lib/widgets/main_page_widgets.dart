@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import '../main.dart';
 import '../pages/route_page/route_page.dart';
 
 class CustomDropdown extends StatelessWidget {
@@ -234,7 +235,7 @@ class FindButton extends StatelessWidget {
 Future<http.Response> sendDataToServer(Map<String, dynamic> data) async {
   try {
     var request = await http.post(
-        Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests'),
+        Uri.parse('$BASE_URL/api/UserRequests'),
         body: jsonEncode(data),
         headers: {
           "Access-Control-Allow-Origin": "*",

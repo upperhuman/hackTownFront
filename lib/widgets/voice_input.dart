@@ -6,10 +6,10 @@ import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'dart:convert';
 import 'dart:async';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../dtos/event_route.dart';
 import '../pages/route_page/route_page.dart';
+import 'package:hack_town_front/main.dart';
 
 class VoiceInputScreen extends StatefulWidget {
   const VoiceInputScreen({super.key});
@@ -27,7 +27,7 @@ class _VoiceInputScreenState extends State<VoiceInputScreen> {
   bool shouldSendData = true;
   Timer? _debounce;
 
-  final String serverUrl = '${dotenv.env["BASE_URL"]}/api/UserRequests';
+  final String serverUrl = '${BASE_URL}/api/UserRequests';
 
   @override
   Widget build(BuildContext context) {

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import '../../main.dart';
+
 class CustomDropdown extends StatelessWidget {
   final String label;
   final List<String> items;
@@ -251,7 +253,7 @@ Future<http.Response> sendDataToServer(Map<String, dynamic> data) async {
   try {
 
     var request = await http.post(
-        Uri.parse('${dotenv.env["BASE_URL"]!}/api/UserRequests'),
+        Uri.parse('$BASE_URL/api/UserRequests'),
         body: jsonEncode(data),
         headers: {'Content-Type': 'application/json'}
     );

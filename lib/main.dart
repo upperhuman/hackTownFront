@@ -1,9 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/pages/main_pages/main_page.dart';
 import 'package:flutter/material.dart';
+import 'package:universal_html/js.dart' as js;
 
 final themeNotifier = ValueNotifier(ThemeMode.light);
+
+const String BASE_URL = String.fromEnvironment('BASE_URL');
+const String GOOGLE_MAP_API = String.fromEnvironment('GOOGLE_MAP_API');
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,17 +14,8 @@ void main() async {
   // Initialize localization
   await EasyLocalization.ensureInitialized();
 
-  // Load environment variables
 
-  const String BASE_URL = String.fromEnvironment('BASE_URL');
-  const String GOOGLE_MAP_API = String.fromEnvironment('GOOGLE_MAP_API');
-
-  if(BASE_URL.isEmpty || GOOGLE_MAP_API.isEmpty) {
-    await dotenv.load(fileName: "assets/.env");
-  }
-  else {
-    dotenv.load(mergeWith: {'BASE_URL': BASE_URL, 'GOOGLE_MAP_API': GOOGLE_MAP_API});
-  }
+  js.context['GOOGLE_MAP_API'] = GOOGLE_MAP_API;
 
   runApp(
     EasyLocalization(

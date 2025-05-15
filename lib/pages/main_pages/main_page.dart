@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hack_town_front/dtos/event_route.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '../../main.dart';
 import '../../widgets/bottom_navigation_panel.dart';
 import 'main_page_widgets.dart';
 import '/widgets/navigation_panel.dart';
@@ -11,7 +11,7 @@ import '/widgets/voice_input.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({super.key});
-  final String? baseUrl = dotenv.env["BASE_URL"];
+  final String? baseUrl = BASE_URL;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
   bool isKeyboardInput = false;
   String selectedEventType = "dating";
   int selectedNumberOfPeople = 1;
-  int selectedBudget = 10;
+  int selectedBudget = 0;
   TimeOfDay selectedDuration = TimeOfDay(hour: 1, minute: 0);
   Position? userLocation;
 
@@ -51,8 +51,8 @@ class _DesktopMainPageState extends State<DesktopMainPage> {
 
   List<EventRouteDTO> routes = [];
 
-  final _budgetItems = List.generate(100, (index) => (index * 10).toString());
-  final _peopleItems = List.generate(100, (index) => (index + 1).toString());
+  final _budgetItems = List.generate(21, (index) => (index * 1000).toString());
+  final _peopleItems = List.generate(20, (index) => (index + 1).toString());
 
   @override
   void initState() {

@@ -10,12 +10,11 @@
   <meta name="apple-mobile-web-app-title" content="hack_town_front">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
   <link rel="icon" type="image/png" href="favicon.png"/>
-  <title>hack_town_front</title>
+  <title>locallens</title>
   <link rel="manifest" href="manifest.json">
 
   <script>
     window.serviceWorkerVersion = "{{flutter_service_worker_version}}";
-    window.INJECTED_GOOGLE_MAP_API =  process.env.GOOGLE_MAP_API;
   </script>
   <script src="flutter.js" defer></script>
 </head>
@@ -23,20 +22,7 @@
 <script>
   window.addEventListener('load', async function(ev) {
     try {
-      let apiKey = window.INJECTED_GOOGLE_MAP_API && !window.INJECTED_GOOGLE_MAP_API.includes("{{")
-        ? window.INJECTED_GOOGLE_MAP_API
-        : null;
-      if (!apiKey) {
-        const resp = await fetch('assets/.env');
-        const text = await resp.text();
-        const m = text.match(/GOOGLE_MAP_API\s*=\s*['"]?(.+?)['"]?$/m);
-        apiKey = m ? m[1] : null;
-      }
-
-      if (!apiKey) {
-        console.error("Google Maps API key not found!");
-        return;
-      }
+      let apiKey = 'AIzaSyCb1gb3AZf1hPKkJivv0CK790XwSguiJ-A';
 
       const mapScript = document.createElement('script');
       mapScript.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
@@ -45,7 +31,7 @@
 
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
-          serviceWorkerVersion: window.serviceWorkerVersion.toString(),
+          serviceWorkerVersion: window.serviceWorkerVersion,
         },
         onEntrypointLoaded: function(engineInitializer) {
           engineInitializer.initializeEngine().then(function(appRunner) {

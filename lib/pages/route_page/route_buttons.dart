@@ -25,7 +25,7 @@ class RouteButtons extends StatelessWidget {
           return buildDropdownItem(
             context,
             selectedValue![index].name,
-            Icons.map,
+            Icons.map_rounded,
                 () {
               Navigator.push(
                 context,
